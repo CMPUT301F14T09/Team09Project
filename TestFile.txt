@@ -1,3 +1,4 @@
 "Think before you commit. A silly quote will stay in the commit history forver." - Mujda Abbasi
 forever* (sorry it was too tempting =D) - Andy Yao
 git rebase -i [commit with silly quote(s)] :) - Byron Maroney
+errr, hi. - Edrick de Guzman
