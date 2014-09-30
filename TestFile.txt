@@ -3,3 +3,4 @@ forever* (sorry it was too tempting =D) - Andy Yao
 git rebase -i [commit with silly quote(s)] :) - Byron Maroney
 errr, hi. - Edrick de Guzman
 "You miss 100% of the shots you don't take. -Wayne Gretzky -Michael Scott" - Noah Shillington
+"Haha, oops -Lloyd in space" --Shane Brass
