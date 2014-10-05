@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.insertnamehere.MainActivity" >
+    tools:context="cmput301Team09.insertgoodnamehere.MainActivity" >
 
     <TextView
         android:layout_width="wrap_content"

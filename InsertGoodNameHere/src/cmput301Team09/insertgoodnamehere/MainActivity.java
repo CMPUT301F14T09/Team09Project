@@ -1,4 +1,6 @@
-package com.example.insertnamehere;
+package cmput301Team09.insertgoodnamehere;
+
+import com.example.insertnamehere.R;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
