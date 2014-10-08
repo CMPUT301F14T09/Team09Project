@@ -49,6 +49,10 @@ public class Post {
 		return this.replies;
 	}
 	
+	public void addReply(Reply reply) {
+		this.replies.add(reply);
+	}
+	
 	public String toString() {
 		return this.text;
 	}

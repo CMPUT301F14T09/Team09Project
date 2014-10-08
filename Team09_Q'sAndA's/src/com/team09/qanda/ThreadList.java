@@ -29,5 +29,9 @@ public class ThreadList {
 	public ArrayList<Post> getQuestions() {
 		return this.questions;
 	}
+	
+	public void addThread(QuestionThread thread) {
+		threads.add(thread);
+	}
 
 }

@@ -1,5 +1,6 @@
 package com.team09.qanda;
 
+
 public class PostController {
 	//Handles individual posts
 	private Post post;
@@ -14,5 +15,9 @@ public class PostController {
 	
 	public void addDown() {
 		post.setDowns(post.getDowns()+1);
+	}
+	
+	public void addReply(Reply reply) {
+		post.addReply(reply);
 	}
 }
