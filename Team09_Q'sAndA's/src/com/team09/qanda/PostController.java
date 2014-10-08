@@ -15,12 +15,4 @@ public class PostController {
 	public void addDown() {
 		post.setDowns(post.getDowns()+1);
 	}
-	
-	public int getPostUps() {
-		return post.getUps();
-	}
-	
-	public int getPostDowns() {
-		return post.getDowns();
-	}
 }

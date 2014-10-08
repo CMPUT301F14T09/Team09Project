@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class QuestionController {
 	//Handles the questions displayed to the user on the main screen of the application
 	private ThreadList tl;
-	private ArrayList<Thread> threads;
+	private ArrayList<QuestionThread> threads;
 	private ArrayList<Post> questions;
 	
 	public QuestionController() {
@@ -18,13 +18,13 @@ public class QuestionController {
 	}
 	
 	private void populateQuestions() {
-		for (Thread t:threads) {
+		for (QuestionThread t:threads) {
 			questions.add(t.getQuestion());
 		}
 	}
 	
-	public ArrayList<Post> getQuestions() {
-		return questions;
+	public void addQuestion(Post question) {
+		this.questions.add(question);
 	}
 	
 }

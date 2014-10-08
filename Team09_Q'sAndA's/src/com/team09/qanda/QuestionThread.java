@@ -2,7 +2,7 @@ package com.team09.qanda;
 
 import java.util.ArrayList;
 
-public class Thread {
+public class QuestionThread {
 	private Post question;
 	private ArrayList<Post> answers;
 	

@@ -9,6 +9,14 @@ public class Post {
 	private int downs;
 	private ArrayList<Reply> replies;
 	
+	public Post(User author, String text) {
+		this.author=author;
+		this.text=text;
+		this.ups=0;
+		this.downs=0;
+		this.replies=new ArrayList<Reply>();
+	}
+	
 	public int getUps() {
 		return this.ups;
 	}
