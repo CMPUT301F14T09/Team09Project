@@ -1,11 +1,11 @@
 package com.team09.qanda;
 
 
-public class ThreadController {
+public class QuestionThreadController {
 	//Handles individual question threads and its answers
 	private QuestionThread thread;
 	
-	public ThreadController(QuestionThread thread) {
+	public QuestionThreadController(QuestionThread thread) {
 		this.thread=thread;
 	}
 	
