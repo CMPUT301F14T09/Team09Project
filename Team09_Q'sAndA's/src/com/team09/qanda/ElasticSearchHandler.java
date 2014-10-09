@@ -8,7 +8,7 @@ public class ElasticSearchHandler {
 		return new ArrayList<QuestionThread>();
 	}
 	
-	public void saveThreads() {
+	public void saveThreads(ThreadList threadList) {
 		
 	}
 
