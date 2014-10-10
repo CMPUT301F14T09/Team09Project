@@ -1,0 +1,9 @@
+CMPUT301 Team09Project
+
+Changes to master:
+
+Oct. 9, 2014
+- added addReply() method in QuestionThread and QuestionThreadController
+- added attachImage() method in Post and PostHandler
+- added unit test in test suite, PostControllerTest, QuestionThreadControllerTest for Use Case 5-8
+- reformatted Use Cases 5-8

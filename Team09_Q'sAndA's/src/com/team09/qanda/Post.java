@@ -56,5 +56,9 @@ public class Post {
 	public String toString() {
 		return this.text;
 	}
+	
+	public void attachImage() {
+		// TODO
+	}
 
 }

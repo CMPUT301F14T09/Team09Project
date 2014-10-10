@@ -23,4 +23,8 @@ public class QuestionThread {
 		this.answers.add(answer);
 	}
 
+	public void attachImage() {
+		// TODO
+	}
+
 }

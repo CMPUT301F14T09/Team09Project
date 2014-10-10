@@ -1,0 +1,404 @@
+**Use case : Sysadmin does not want pictures to be large ( > 64kb )**
+
+   a) The author can attach an image to a question or an answer by tapping on the “Attach” option on the action bar during the creation of a question or addition of answer.
+
+   b) The author will then be prompted with an app chooser to choose an app to use to import the image from.
+
+   c) The author can tap the Gallery App as the app to import the image from.
+
+   d) Then the author will be presented with the images stored in their device.
+
+   e) The author can tap the image they desire.
+
+   f) The Sysadmin then will check whether the image is > 64kb or not.
+
+   g) If the image is > 64kb, the Sysadmin will reject the image and will inform the Author that the image is too large and that it must be < 64kb. In this case, the Author will be brought back to the Create Question/Add Answer screen.
+
+   h) If the image is < 64kb, the Sysadmin will accept the image and the image will be present in the Create Question/Add Answer editor.
+
+   i) The author can then tap “Submit” to finish their entry.
+
+
+### Use Cases: Sorting
+
+Use Case 1. Sort questions by if they have pictures
+Step 1: Click on the spinner initially entitled, "Sort By", in the action bar of the activity that is displaying the question
+Step 2: Select "Has Pictures" from the drop-list.
+Step 3: The questions are sorted by if they have a picture or not. The spinner is now entitled, "Has Pictures"
+
+Use Case 2. Sort Questions by date/scoring systems(upvotes,most viewed,etc)
+
+i) Sort by Most Recent	
+Step 1: Click on the spinner initially entitled, "Sort By", in the action bar of the activity that is displaying the questions
+Step 2: Select "Most Recent" from the drop-list.
+Step 3: The questions are sorted by date (the newest questions are shown first). The spinner is now entitled, "Most Recent"
+	
+ii) Sort by Oldest	
+Step 1: Click on the spinner initially entitled, "Sort By", in the action bar of the activity that is displaying the questions
+Step 2: Select "Oldest" from the drop-list.
+Step 3: The questions are sorted by date (the oldest questions are shown first). The spinner is now entilted, "Oldest"
+
+iii) Sort by Highest Score (using some sort of Scoring System)
+
+Step 1: Click on the spinner initially entitled, "Sort By", in the action bar of the activity that is displaying the questions
+Step 2: Select "Highest Score" from the drop-list.
+Step 3: The questions are sorted by score (the questions with the Highest Score are shown first). The spinner is now entilted, "Highest Score"
+	
+iv) Sort by Lowest Score(in Scoring System)	
+Step 1: Click on the spinner initially entitled, "Sort By", in the action bar of the activity that is displaying the questions
+Step 2: Select "Lowest Score" from the drop-list.
+Step 3: The questions are sorted by score (the questions with the Lowest Score are shown first). The spinner is now entitled, "Lowest Score"
+
+### Use Cases:Upvotes
+
+Upvote questions/answers of other users
+
+1. Upvote question/answers
+
+The action of upvoting a question/answer is represented by a counter (shown as numeric text) and an upvote button (represented by an arrow). The widgets (or other type of View) that are representing these objects is embedded inside the view representing the state of the question.
+
+Step 1. Click on the upvote button (which is inside the view representing the Question/Answer object).
+Step 2. The counter (which is represented by numeric text) is incremented by one.
+
+### Use case: Push replies, questions and answers online once I get connectivity.  
+Brief description: The application shall attempt to connect to the elastic search server, if successful, any replies, questions, or answers will be pushed to the server.  
+Actors: User/Author, Elasticsearch Server  
+Flow of events:  
+1.The use case begins when the user makes a reply, question, or answer while not connected to elastic search server.  
+2.Application stores information locally until connectivity can be established.  
+3.Once connected, server information is updated to include the new replies, questions, and answers user created while not having connectivity.  
+4.The use case ends successfully.  
+Alternative flows:  
+1.If connection fails, continue storing un-pushed changes locally and push at next available time.  
+2.If the text that is referenced by the replies or answers have been modified, update server and include note that the reply/answer was in reference to a previous version of text.  
+Preconditions  
+Changes have been made by while not connected to elasticsearch server  
+Post conditions  
+Changes have been added to server  
+
+Use case: See freshest comments, by default  
+Brief description:The application shall display comments based on the time they were added to the server and created locally by user if there is no connectivity to elasticsearch server.  
+Actors: User/Author  
+Flow of events:  
+1.The use case begins when the user views the list of comments to a question.  
+2.The list is sorted by time.  
+3.The use case ends successfully.  
+Preconditions  
+Comments have been made to the question  
+Post conditions  
+None.  
+
+Use case: Set username or a default username when opening application for the first time.  
+Brief description: The application shall prompt the user for a username and give the option for a default one when the application is first run.  
+Actors: User/Author  
+Flow of events:  
+1.The use case begins when the user opens the application.  
+2.Application checks that it is the first time opening, by verifying the non-existence of a file stored locally.  
+3.Application prompts user for a username or a default name  
+4.Username is set and added to a local file  
+5.All replies, questions, and answers will now be signed with this username on the server and when viewed by any user.  
+6.The use case ends successfully.  
+Alternative flows:  
+If the text is somehow improperly formatted to be a username, reject and prompt again.  
+Preconditions:  
+First time opening application  
+Post conditions:  
+Username has been set locally and will be attached to user’s replies, questions, and answers.  
+
+### Use case #5 : Add a question
+
+**Primary actor:** User
+
+**Goal:** User adds answer to question
+
+**Trigger:** User presses the "Add Answer" button
+
+**Preconditions:**
+
+1. User has an answer
+
+2. User is viewing a question thread
+
+3. Access to the network
+
+**Postconditions:**
+
+1. Answer is added in the database
+
+2. User can see their answer in the list of answers for the question
+
+**Basic Flow of Events:**
+
+1. User taps a question thread in the thread list
+
+2. User is sent to the question thread screen
+
+3. User adds an answer by tapping "Add Answer"
+
+4. User is sent to another screen to write their answer.
+
+5. User writes out their answer
+
+6. User presses Submit button
+
+### Use case #6 : Add a reply to Question/Answer
+
+**Primary actor:** User
+
+**Goal:** User adds reply to question/answer
+
+**Trigger:** User long-clicks the question/answer and chooses "Reply" from the options
+
+**Preconditions:**
+
+1. User has a reply
+
+2. User is viewing a question thread
+
+3. Access to the network
+
+**Postconditions:**
+
+1. Reply is added in the database
+
+2. User can see their reply below the question/answer they replied to
+
+**Basic Flow of Events:**
+
+1. User taps a question thread in the thread list
+
+2. User is sent to the question thread screen
+
+3. User long-clicks the question or an answer
+
+4. User taps "Reply" from the options
+
+5. A persistent edittext appears at the bottom of the screen
+
+6. User writes out their reply in the edittext
+
+7. User presses Submit button
+
+8. Persistent edittext disappears
+
+### Use case #7a : Attach an image to Question/Answer
+
+**Primary actor:** User
+
+**Goal:** User attaches image to question/answer
+
+**Trigger:** User taps the "Attach" button
+
+**Preconditions:**
+
+1. User is making a question
+
+2. Images exists in local device
+
+3. Access to the network
+
+_Or_
+
+1. User is viewing a question thread
+
+2. User is adding an answer
+
+3. Images exists in local device
+
+4. Access to the network
+
+**Postconditions:**
+
+1. Image is added to the question/answer edittext
+
+2. User can see the image from the submitted question/answer
+
+**Basic Flow of Events:**
+
+1. User taps "Add a Question"
+
+2. User is sent to a make a question screen
+
+3. User taps "Attach" button
+
+4. User chooses an image gallery app from the displayed selection
+
+5. User chooses an image by tapping the desired image
+
+6. Image appears in the edittext
+
+7. User continues writing out the question
+
+8. User submits the question by tapping "Submit"
+
+_Or_
+
+1. User taps a question thread in the thread list
+
+2. User is sent to question thread
+
+3. User taps "Add Answer"
+
+4. User is sent to the add an answer screen
+
+5. User taps"Attach" button
+
+6. User chooses an image gallery app from the displayed selection of compatible apps
+
+7. User chooses an image by tapping the desired image
+
+8. Image appears in the edittext
+
+9. User continues writing out the answer
+
+10. User submits the answer by tapping "Submit"
+
+**Exceptions:**
+
+**Includes:**
+
+**Extends:** 
+
+### Use case #8 : Sysadmin does not want images > 64kb
+
+**Primary actor:** Sysadmin
+
+**Secondary actor:** User
+
+**Goal:** Sysadmin rejects images > 64kb and accepts images < 64kb
+
+**Trigger:** User taps their desired image
+
+**Preconditions:**
+
+1. User is making a question or adding an answer
+
+2. Images exists in local device
+
+3. Images are < 64kb
+
+4. Access to the network
+
+**Postconditions:**
+
+1. Image is added to the question/answer edittext if images < 64kb
+
+_Or_
+
+1. Sysadmin rejects the images and displays "Image file too large. Images must be < 64kb."
+
+2. User can see the image from the submitted question/answer
+
+**Basic Flow of Events:**
+
+1. User taps "Add a Question"
+
+2. User is sent to a make a question screen
+
+3. User taps "Attach" button
+
+4. User chooses an image gallery app from the displayed selection
+
+5. User chooses an image by tapping the desired image
+
+6. Sysadmin determines if image is < 64kb, if not, Sysadmin rejects images and displays "Image file too large. Images must be < 64kb."
+
+7. Image appears in the edittext if image is < 64kb
+
+8. User continues writing out the question
+
+9. User submits the question by tapping "Submit"
+
+_Or_
+
+1. User taps a question thread in the thread list
+
+2. User is sent to question thread
+
+3. User taps "Add Answer"
+
+4. User is sent to the add an answer screen
+
+5. User taps"Attach" button
+
+6. User chooses an image gallery app from the displayed selection of compatible apps
+
+7. User chooses an image by tapping the desired image
+
+8. Sysadmin determines if image is < 64kb, if not, Sysadmin rejects images and displays "Image file too large. 
+Images must be < 64kb."
+
+9. Image appears in the edittext if image is < 64kb
+
+10. User continues writing out the answer
+
+11. User submits the answer by tapping "Submit"
+
+**Use case: Browse Questions (Is this really a use case?) **   
+Primary actor: User   
+Goal: User can browse through questions in a list   
+Trigger: Vertical swipe   
+Preconditions:   
+	1. Internet connection   
+Postconditions:   
+	2. User can view all the questions   
+Basic Flow of Events:   
+	1. User swipes vertically   
+	2. The list scrolls up or down depending on the swipe   
+Exceptions:    
+Includes:   
+Extends:   
+
+**Use case: View a question and its answers**   
+Primary actor: User   
+Goal: User views a thread   
+Trigger: User clicks on a question in the questions' list   
+Preconditions:   
+	1. User is viewing a list of questions   
+	2. Access to the network   
+Postconditions:   
+	1. User can view a thread   
+Basic Flow of Events:   
+	1. User clicks on a question   
+	2. System displays the thread with the question followed by its answers   
+Exceptions:    
+Includes:   
+Extends:   
+
+**Use case: View replies to a question or an answer**   
+Primary actor: User   
+Goal: User views replies   
+Trigger: User presses the See Replies button   
+Preconditions:   
+	1. User is viewing a thread   
+	2. Access to the network   
+Postconditions:   
+	1. User can view the replies   
+Basic Flow of Events:   
+	1. User presses "See replies" button under a question/answer   
+	2. System fetches the replies   
+	3. The replies are displayed under the question/answer   
+Exceptions:   
+Includes:   
+Extends:   
+
+**Use case: Add a question**   
+Primary actor: User   
+Goal: User adds a question   
+Trigger: User presses the Ask a Question button   
+Preconditions:   
+	1. User has a question   
+Postconditions:   
+	1. Question is added in the database   
+	2. User can see their question in the list of questions   
+Basic Flow of Events:   
+	1. User presses "Ask a Question" button   
+	2. System displays text fields for the question and its details   
+	3. User fills out the fields   
+	4. User presses Submit button   
+Exceptions:   
+Includes:   
+Extends:   
+	
+
+

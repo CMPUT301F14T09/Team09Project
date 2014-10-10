@@ -20,4 +20,8 @@ public class PostController {
 	public void addReply(Reply reply) {
 		post.addReply(reply);
 	}
+	
+	public void attachImage() {
+		post.attachImage();
+	}
 }
