@@ -1,6 +1,7 @@
 package com.team09.qanda;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ThreadList {
 	private ElasticSearchHandler esh;
@@ -29,6 +30,16 @@ public class ThreadList {
 	
 	public void addThread(QuestionThread thread) {
 		threads.add(thread);
+	}
+
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+	//convenience function
+	public void addThread(QuestionThread...questionThreads ) {
+		threads.addAll(Arrays.asList(questionThreads));
+		
 	}
 
 }
