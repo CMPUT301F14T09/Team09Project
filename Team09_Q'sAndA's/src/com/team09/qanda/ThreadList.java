@@ -42,4 +42,8 @@ public class ThreadList {
 		
 	}
 
+	public QuestionThread get(int i) {
+		return threads.get(i);
+	}
+
 }

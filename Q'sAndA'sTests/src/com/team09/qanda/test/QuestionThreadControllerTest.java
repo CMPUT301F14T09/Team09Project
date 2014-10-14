@@ -53,5 +53,15 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue("The image is too big!", thrown.equals(false));
 		assertTrue("There is no image!", thrown.equals(false));
 	}
+	
+	// Use Case #2 : View a question and its answers
+	public void testViewThread() {
+		
+	}
+	
+	// Use Case #3 : View replies to a question/answer
+	public void testViewReplies() {
+		
+	}
 
 }
