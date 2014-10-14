@@ -3,8 +3,10 @@ package com.team09.qanda.test;
 import junit.framework.TestCase;
 
 import com.team09.qanda.Post;
+import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
 import com.team09.qanda.QuestionThreadController;
+import com.team09.qanda.Reply;
 import com.team09.qanda.User;
 
 public class QuestionThreadControllerTest extends TestCase {
@@ -56,11 +58,38 @@ public class QuestionThreadControllerTest extends TestCase {
 	
 	// Use Case #2 : View a question and its answers
 	public void testViewThread() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
 		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);
+		
+		pc1.addUp();
+		pc1.addUp();
+		Post apost1 = new Post(new User("Lia"), "Answer 1.");
+		qtc1.addAnswer(apost1);
+		Post apost2 = new Post(new User("Liam"), "Answer 2.");
+		qtc1.addAnswer(apost2);
+		
+		assertEquals("Question 1?", q1.getQuestion().getText());
+		assertEquals("John", q1.getQuestion().getAuthor());
+		assertEquals(2,q1.getAnswers().size());
+		assertEquals(0,q1.getAnswers().get(0).getUps());
 	}
 	
 	// Use Case #3 : View replies to a question/answer
 	public void testViewReplies() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);
+		
+		pc1.addReply(new Reply(new User("Brent"),"Reply 1"));
+		
+		assertEquals(1,qpost1.getReplies().size());
+		assertEquals("Reply 1",qpost1.getReplies().get(0).getText());
+		assertEquals("Brent",qpost1.getReplies().get(0).getAuthor());
 		
 	}
 
