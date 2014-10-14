@@ -15,7 +15,6 @@ public class ThreadList {
 		this.threads=esh.getThreads();
 	}
 
-	
 	public ArrayList<QuestionThread> getThreads() {
 		return this.threads;
 	}

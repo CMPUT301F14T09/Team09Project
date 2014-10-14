@@ -1,5 +1,8 @@
 package com.team09.qanda.test;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import junit.framework.TestCase;
 
 import com.team09.qanda.Post;
@@ -93,4 +96,21 @@ public class QuestionThreadControllerTest extends TestCase {
 		
 	}
 
+	// Use Case 22: As a user, by default, I should see the most fresh comments.
+	public void testDefaultCommentOrder(){
+		Post p1 = new Post(new User("test"), "q1");
+		PostController pc1 = new PostController(p1);
+		
+		Reply reply = new Reply(new User("test1"),"r2");
+		pc1.addReply(reply);
+		pc1.addReply(new Reply(new User("test1"),"r1", new Date(reply.getTimestamp().getTime()-1000)));
+		pc1.addReply(new Reply(new User("test1"),"r3", new Date(reply.getTimestamp().getTime()+1000)));
+			
+	    ArrayList<Reply> comm = p1.getReplies();
+	    for(int i = 1; i < comm.size(); i++){
+	    	if(comm.get(i-1).getTimestamp().compareTo(comm.get(i).getTimestamp()) > 1) {
+	    		fail();
+		    }
+	    }
+	}
 }
