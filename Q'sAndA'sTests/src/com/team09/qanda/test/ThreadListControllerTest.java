@@ -1,5 +1,6 @@
 package com.team09.qanda.test;
 
+import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.MainActivity;
 import com.team09.qanda.Post;
 import com.team09.qanda.PostController;
@@ -62,5 +63,20 @@ public class ThreadListControllerTest extends
 		questions.addThread(q1);
 		
 		assertTrue("Question not added", !questions.getQuestions().isEmpty());
+	}
+	
+	// Use Case #16: Remember which questions I asked
+	public void testStoreMyQuestionsLocally() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);			
+		
+		ThreadList myQuestions = new ThreadList();
+		myQuestions.addThread(q1);
+		LocalStorageHandler lsh = new LocalStorageHandler(myQuestions);
+	
+		assertSame(lsh.getThreadList().get(0), q1);
 	}
 }
