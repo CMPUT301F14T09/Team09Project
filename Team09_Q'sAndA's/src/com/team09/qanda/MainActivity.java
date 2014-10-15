@@ -1,9 +1,11 @@
 package com.team09.qanda;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 public class MainActivity extends Activity { //Main question view
 
@@ -11,6 +13,15 @@ public class MainActivity extends Activity { //Main question view
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//set up the SpinnerAdapter(used for Sorting
+		this.getActionBar().setListNavigationCallbacks(ArrayAdapter.createFromResource(this, R.array.SortChoices, android.R.layout.simple_dropdown_item_1line),new ActionBar.OnNavigationListener() {
+			
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 	}
 
 	@Override

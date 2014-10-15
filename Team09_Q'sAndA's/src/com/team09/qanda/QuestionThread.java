@@ -19,8 +19,16 @@ public class QuestionThread {
 		return this.answers;
 	}
 	
+	public int getNumOfAnswers() {
+		return this.answers.size();
+	}
+	
 	public void addAnswer(Post answer) {
 		this.answers.add(answer);
+	}
+
+	public void attachImage() {
+		// TODO
 	}
 
 }

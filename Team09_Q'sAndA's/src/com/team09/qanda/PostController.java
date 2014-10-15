@@ -13,11 +13,11 @@ public class PostController {
 		post.setUps(post.getUps()+1);
 	}
 	
-	public void addDown() {
-		post.setDowns(post.getDowns()+1);
-	}
-	
 	public void addReply(Reply reply) {
 		post.addReply(reply);
+	}
+	
+	public void attachImage() {
+		post.attachImage();
 	}
 }

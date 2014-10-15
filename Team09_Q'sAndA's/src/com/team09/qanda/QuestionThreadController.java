@@ -12,5 +12,10 @@ public class QuestionThreadController {
 	public void addAnswer(Post answer) {
 		thread.addAnswer(answer);
 	}
+
+	public void attachImage() {
+		// TODO Auto-generated method stub
+		thread.attachImage();
+	}
 	
 }

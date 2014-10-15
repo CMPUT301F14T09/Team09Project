@@ -4,5 +4,11 @@
     <string name="app_name">Team09_Q\'sAndA\'s</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+	<string-array name="SortChoices" >
+	    <item>Has Pictures</item>
+	    <item >Most Recent</item>
+	    <item>Oldest</item>
+	    <item>Most Upvoted</item>
+	    <item>Least Upvoted</item>
+	</string-array>
 </resources>

@@ -1,20 +1,21 @@
 package com.team09.qanda;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Post {
 	private String text;
 	private User author;
 	private int ups;
-	private int downs;
 	private ArrayList<Reply> replies;
+	private Date timestamp;
 	
 	public Post(User author, String text) {
 		this.author=author;
 		this.text=text;
 		this.ups=0;
-		this.downs=0;
 		this.replies=new ArrayList<Reply>();
+		this.timestamp=new Date();
 	}
 	
 	public int getUps() {
@@ -23,14 +24,6 @@ public class Post {
 	
 	public void setUps(int ups) {
 		this.ups=ups;
-	}
-	
-	public int getDowns() {
-		return this.downs;
-	}
-	
-	public void setDowns(int downs) {
-		this.downs=downs;
 	}
 	
 	public User getAuthor() {
@@ -53,8 +46,16 @@ public class Post {
 		this.replies.add(reply);
 	}
 	
+	public Date getTimestamp() {
+		return this.timestamp;
+	}
+	
 	public String toString() {
 		return this.text;
+	}
+	
+	public void attachImage() {
+		// TODO
 	}
 
 }
