@@ -15,6 +15,7 @@ import junit.framework.TestCase;
 
 public class ESHTest extends TestCase
 {
+	//TODO:add use case for loading from ES
 	//Use case 21: As an author, I want to push my replies, questions and answers online once I get connectivity.
 	public void testSavetoServer(){
 		//TODO: need to remove the existing test QuestionThread from server somehow
