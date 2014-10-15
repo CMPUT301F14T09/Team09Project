@@ -1,5 +1,7 @@
 package com.team09.qanda;
 
+import java.util.ArrayList;
+
 
 public class QuestionThreadController {
 	//Handles individual question threads and its answers
@@ -12,10 +14,19 @@ public class QuestionThreadController {
 	public void addAnswer(Post answer) {
 		thread.addAnswer(answer);
 	}
+	
+	public ArrayList<Post> getAnswers() {
+		return thread.getAnswers();
+	}
 
 	public void attachImage() {
 		// TODO Auto-generated method stub
 		thread.attachImage();
+	}
+
+	public void sort() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
