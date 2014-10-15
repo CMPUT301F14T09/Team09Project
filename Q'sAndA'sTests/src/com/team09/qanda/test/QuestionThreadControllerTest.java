@@ -13,7 +13,44 @@ import com.team09.qanda.Reply;
 import com.team09.qanda.User;
 
 public class QuestionThreadControllerTest extends TestCase {
-
+	
+	// Use Case #2 : View a question and its answers
+	public void testViewThread() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);
+		
+		pc1.addUp();
+		pc1.addUp();
+		Post apost1 = new Post(new User("Lia"), "Answer 1.");
+		qtc1.addAnswer(apost1);
+		Post apost2 = new Post(new User("Liam"), "Answer 2.");
+		qtc1.addAnswer(apost2);
+		
+		assertEquals("Question 1?", q1.getQuestion().getText());
+		assertEquals("John", q1.getQuestion().getAuthor());
+		assertEquals(2,q1.getAnswers().size());
+		assertEquals(0,q1.getAnswers().get(0).getUps());
+	}
+	
+	// Use Case #3 : View replies to a question/answer
+	public void testViewReplies() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);
+		
+		pc1.addReply(new Reply(new User("Brent"),"Reply 1"));
+		
+		assertEquals(1,qpost1.getReplies().size());
+		assertEquals("Reply 1",qpost1.getReplies().get(0).getText());
+		assertEquals("Brent",qpost1.getReplies().get(0).getAuthor());
+		
+	}
+	
 	// Use Case #5 : As an author, I want to answer questions by making an answer.
 	public void testAddAnswer() {
 		String message = "What is this?";
@@ -58,45 +95,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue("The image is too big!", thrown.equals(false));
 		assertTrue("There is no image!", thrown.equals(false));
 	}
-	
-	// Use Case #2 : View a question and its answers
-	public void testViewThread() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
-		PostController pc1 = new PostController(qpost1);
-		
-		QuestionThread q1 = new QuestionThread(qpost1);
-		QuestionThreadController qtc1 = new QuestionThreadController(q1);
-		
-		pc1.addUp();
-		pc1.addUp();
-		Post apost1 = new Post(new User("Lia"), "Answer 1.");
-		qtc1.addAnswer(apost1);
-		Post apost2 = new Post(new User("Liam"), "Answer 2.");
-		qtc1.addAnswer(apost2);
-		
-		assertEquals("Question 1?", q1.getQuestion().getText());
-		assertEquals("John", q1.getQuestion().getAuthor());
-		assertEquals(2,q1.getAnswers().size());
-		assertEquals(0,q1.getAnswers().get(0).getUps());
-	}
-	
-	// Use Case #3 : View replies to a question/answer
-	public void testViewReplies() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
-		PostController pc1 = new PostController(qpost1);
-		
-		QuestionThread q1 = new QuestionThread(qpost1);
-		QuestionThreadController qtc1 = new QuestionThreadController(q1);
-		
-		pc1.addReply(new Reply(new User("Brent"),"Reply 1"));
-		
-		assertEquals(1,qpost1.getReplies().size());
-		assertEquals("Reply 1",qpost1.getReplies().get(0).getText());
-		assertEquals("Brent",qpost1.getReplies().get(0).getAuthor());
-		
-	}
-	
-	// Use case 13.2: Most upvoted answers.
+
+	// Use Case #13.2: Most upvoted answers
 	public void testsortAnswersByMostUpVotes(){
 		Post questionText=new Post(new User(),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
@@ -113,7 +113,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertEquals(qctl.getAnswers().get(0),answer2);
 	}
 
-	// Use Case 22: As a user, by default, I should see the most fresh comments.
+	// Use Case #22: As a user, by default, I should see the most fresh comments
 	public void testDefaultCommentOrder(){
 		Post p1 = new Post(new User("test"), "q1");
 		PostController pc1 = new PostController(p1);

@@ -17,20 +17,6 @@ public class ThreadListControllerTest extends
 		super(MainActivity.class);
 	}
 	
-	// Use Case #4 : Add a question
-	public void testAddQuestion() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
-		PostController pc1 = new PostController(qpost1);
-		
-		QuestionThread q1 = new QuestionThread(qpost1);
-		QuestionThreadController qtc1 = new QuestionThreadController(q1);
-		
-		ThreadList questions = new ThreadList();
-		questions.addThread(q1);
-		
-		assertTrue("Question not added", !questions.getQuestions().isEmpty());
-	}
-	
 	// Use Case #1 : Browse questions
 	public void testBrowseQuestions() {
 		Post qpost1 = new Post(new User("John"), "Question 1?");
@@ -63,5 +49,18 @@ public class ThreadListControllerTest extends
 		assertEquals(2, questions.get(1).getNumOfAnswers());
 		assertEquals(2, questions.get(1).getQuestion().getUps());		
 	}
-
+	
+	// Use Case #4 : Add a question
+	public void testAddQuestion() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);
+		
+		ThreadList questions = new ThreadList();
+		questions.addThread(q1);
+		
+		assertTrue("Question not added", !questions.getQuestions().isEmpty());
+	}
 }
