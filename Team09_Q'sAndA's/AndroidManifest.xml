@@ -22,6 +22,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ThreadDisplay"
+            android:label="@string/title_activity_thread_display" >
+        </activity>
+        <activity
+            android:name=".UserThreadsActivity"
+            android:label="@string/title_activity_user_threads" >
+        </activity>
+        <activity
+            android:name=".QuestionThreadActivity"
+            android:label="@string/title_activity_question_thread" >
+        </activity>
+        <activity
+            android:name=".AddQuestionActivity"
+            android:label="@string/title_activity_add_question" >
+        </activity>
+        <activity
+            android:name=".PictureViewActivity"
+            android:label="@string/title_activity_picture_view" >
+        </activity>
     </application>
 
 </manifest>

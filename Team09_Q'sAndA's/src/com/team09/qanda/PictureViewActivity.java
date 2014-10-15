@@ -1,32 +1,22 @@
 package com.team09.qanda;
 
-import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
-public class MainActivity extends ThreadDisplay { //Main question view
+public class PictureViewActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		//set up the SpinnerAdapter(used for Sorting
-		this.getActionBar().setListNavigationCallbacks(ArrayAdapter.createFromResource(this, R.array.SortChoices, android.R.layout.simple_dropdown_item_1line),new ActionBar.OnNavigationListener() {
-			
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		});
+		setContentView(R.layout.activity_picture_view);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.picture_view, menu);
 		return true;
 	}
 
