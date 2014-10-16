@@ -18,4 +18,9 @@ public class ElasticSearchHandler {
 		return true;
 	}
 
+	public ThreadList search(String searchString) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

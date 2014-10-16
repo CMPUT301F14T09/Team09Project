@@ -27,7 +27,11 @@ public class ESHTest extends TestCase
 		Post answer1=new Post(new User(),"Do upvotes work?");
 		qctl.addAnswer(answer1);
 		threadController.addThread(qThread);
-		assertEquals(qctl.answerCount(),3);
+		threadController.addThread(new QuestionThread(new Post(new User(),"Does this work?")));
+		threadController.addThread(new QuestionThread(new Post(new User(),"This will not be returned.")));
+		ElasticSearchHandler esh = new ElasticSearchHandler();
+		ThreadList searchResults = esh.search("do");
+		assertEquals(searchResults.getThreads().size(),2);
 	}
 	
 	//Use case 21: As an author, I want to push my replies, questions and answers online once I get connectivity.
