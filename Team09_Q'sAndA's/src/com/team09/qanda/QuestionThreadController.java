@@ -28,5 +28,9 @@ public class QuestionThreadController {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public int answerCount() {
+		return getAnswers().size();
+	}
 	
 }
