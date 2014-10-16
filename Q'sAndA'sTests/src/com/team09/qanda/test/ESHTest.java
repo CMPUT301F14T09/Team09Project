@@ -8,6 +8,7 @@ import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
 import com.team09.qanda.QuestionThreadController;
 import com.team09.qanda.ThreadList;
+import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
 import junit.framework.TestCase;
@@ -19,15 +20,13 @@ public class ESHTest extends TestCase
 	
 	//Use case #15: Search for questions and answers
 	public void testNumberOfAnswers(){
+		ThreadListController  threadController = new ThreadListController(new ThreadList());
 		Post questionText=new Post(new User(),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
 		Post answer1=new Post(new User(),"Do upvotes work?");
-		Post answer2=new Post(new User(),"Do upvotes work?");
-		Post answer3=new Post(new User(),"Do upvotes work?");
 		qctl.addAnswer(answer1);
-		qctl.addAnswer(answer2);
-		qctl.addAnswer(answer3);
+		threadController.addThread(qThread);
 		assertEquals(qctl.answerCount(),3);
 	}
 	
