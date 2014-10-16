@@ -114,18 +114,18 @@ public class QuestionThreadControllerTest extends TestCase {
 	}
 
 	// Use Case #14: Most upvoted answers
-		public void testNumberOfAnswers(){
-			Post questionText=new Post(new User(),"This is a question.");
-			QuestionThread qThread=new QuestionThread(questionText);
-			QuestionThreadController qctl = new QuestionThreadController(qThread);
-			Post answer1=new Post(new User(),"Do upvotes work?");
-			Post answer2=new Post(new User(),"Do upvotes work?");
-			Post answer3=new Post(new User(),"Do upvotes work?");
-			qctl.addAnswer(answer1);
-			qctl.addAnswer(answer2);
-			qctl.addAnswer(answer3);
-			assertEquals(qctl.answerCount(),3);
-		}
+	public void testNumberOfAnswers(){
+		Post questionText=new Post(new User(),"This is a question.");
+		QuestionThread qThread=new QuestionThread(questionText);
+		QuestionThreadController qctl = new QuestionThreadController(qThread);
+		Post answer1=new Post(new User(),"Do upvotes work?");
+		Post answer2=new Post(new User(),"Do upvotes work?");
+		Post answer3=new Post(new User(),"Do upvotes work?");
+		qctl.addAnswer(answer1);
+		qctl.addAnswer(answer2);
+		qctl.addAnswer(answer3);
+		assertEquals(qctl.answerCount(),3);
+	}
 	
 	// Use Case #22: As a user, by default, I should see the most fresh comments
 	public void testDefaultCommentOrder(){
