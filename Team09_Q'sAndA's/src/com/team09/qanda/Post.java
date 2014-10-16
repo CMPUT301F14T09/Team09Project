@@ -42,7 +42,7 @@ public class Post {
 		return this.replies;
 	}
 	
-	public void addReply(Reply reply) {
+	public void setReply(Reply reply) {
 		this.replies.add(reply);
 	}
 	
@@ -54,7 +54,7 @@ public class Post {
 		return this.text;
 	}
 	
-	public void attachImage() {
+	public void setImage() {
 		// TODO
 	}
 

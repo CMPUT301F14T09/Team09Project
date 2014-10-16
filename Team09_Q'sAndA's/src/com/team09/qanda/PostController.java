@@ -14,10 +14,10 @@ public class PostController {
 	}
 	
 	public void addReply(Reply reply) {
-		post.addReply(reply);
+		post.setReply(reply);
 	}
 	
 	public void attachImage() {
-		post.attachImage();
+		post.setImage();
 	}
 }
