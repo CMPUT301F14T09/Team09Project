@@ -21,7 +21,7 @@ public class QuestionThreadController {
 
 	public void attachImage() {
 		// TODO Auto-generated method stub
-		thread.attachImage();
+		thread.setImage();
 	}
 
 	public void sort() {

@@ -19,9 +19,9 @@ public class sortableArrayAdapterTest extends ActivityInstrumentationTestCase2<M
 		questions.clear();
 		QuestionThread NoPicture=new QuestionThread(new Post(new User(),"No picture?"));
 		Post pic1=new Post(new User(),"Hello?");
-		pic1.attachImage();
+		pic1.setImage();
 		Post pic2=new Post(new User(),"Does this work?");
-		pic2.attachImage();
+		pic2.setImage();
 		questions.addThread(new QuestionThread(pic1),new QuestionThread(pic2),NoPicture);
 		assertEquals(srt.getPosition(NoPicture),0);
 	}

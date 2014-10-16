@@ -27,7 +27,7 @@ public class QuestionThread {
 		this.answers.add(answer);
 	}
 
-	public void attachImage() {
+	public void setImage() {
 		// TODO
 	}
 
