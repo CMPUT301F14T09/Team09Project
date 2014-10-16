@@ -12,7 +12,7 @@ public class QuestionThreadController {
 	}
 	
 	public void addAnswer(Post answer) {
-		thread.addAnswer(answer);
+		thread.setAnswer(answer);
 	}
 	
 	public ArrayList<Post> getAnswers() {

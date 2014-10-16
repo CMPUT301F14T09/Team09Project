@@ -23,7 +23,7 @@ public class QuestionThread {
 		return this.answers.size();
 	}
 	
-	public void addAnswer(Post answer) {
+	public void setAnswer(Post answer) {
 		this.answers.add(answer);
 	}
 
