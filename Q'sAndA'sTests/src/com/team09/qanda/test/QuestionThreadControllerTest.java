@@ -101,11 +101,11 @@ public class QuestionThreadControllerTest extends TestCase {
 		Post questionText=new Post(new User(),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		Post answer1=new Post(new User(),"Do upvotes work?");
+		Post answer1=new Post(new User(),"Second Best Answer");
 		answer1.setUps(1);
-		Post answer2=new Post(new User(),"Do upvotes work?");
+		Post answer2=new Post(new User(),"Best Answer");
 		answer2.setUps(2);
-		Post answer3=new Post(new User(),"Do upvotes work?");
+		Post answer3=new Post(new User(),"Worst Answer");
 		qctl.addAnswer(answer1);
 		qctl.addAnswer(answer2);
 		qctl.addAnswer(answer3);
