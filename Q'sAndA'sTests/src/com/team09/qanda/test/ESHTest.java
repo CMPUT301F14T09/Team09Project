@@ -16,6 +16,21 @@ import junit.framework.TestCase;
 public class ESHTest extends TestCase
 {
 	//TODO:add use case for loading from ES
+	
+	//Use case #15: Search for questions and answers
+	public void testNumberOfAnswers(){
+		Post questionText=new Post(new User(),"This is a question.");
+		QuestionThread qThread=new QuestionThread(questionText);
+		QuestionThreadController qctl = new QuestionThreadController(qThread);
+		Post answer1=new Post(new User(),"Do upvotes work?");
+		Post answer2=new Post(new User(),"Do upvotes work?");
+		Post answer3=new Post(new User(),"Do upvotes work?");
+		qctl.addAnswer(answer1);
+		qctl.addAnswer(answer2);
+		qctl.addAnswer(answer3);
+		assertEquals(qctl.answerCount(),3);
+	}
+	
 	//Use case 21: As an author, I want to push my replies, questions and answers online once I get connectivity.
 	public void testSavetoServer(){
 		//TODO: need to remove the existing test QuestionThread from server somehow
