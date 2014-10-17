@@ -93,7 +93,6 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		srt.clear();
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
-		
 		Post txt=new Post(new User(),"Do upvotes work?");
 		txt.setUps(2);
 		Post txt2=new Post(new User(),"Do upvotes work?");
