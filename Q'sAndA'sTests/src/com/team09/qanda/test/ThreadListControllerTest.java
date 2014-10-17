@@ -79,8 +79,9 @@ public class ThreadListControllerTest extends
 		ThreadListController cn1=new ThreadListController(myQuestions);
 		cn1.addThread(q1);
 		
-		LocalStorageHandler lsh = new LocalStorageHandler(myQuestions);
+		//LocalStorageHandler lsh = new LocalStorageHandler(myQuestions);
+		LocalStorageHandler lsh = new LocalStorageHandler();
 	
-		assertSame(lsh.getThreadList().get(0), q1);
+		assertSame(lsh.getThreadList("MyQuestions.txt").get(0), q1);
 	}
 }

@@ -5,11 +5,13 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
+import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.Post;
 import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
 import com.team09.qanda.QuestionThreadController;
 import com.team09.qanda.Reply;
+import com.team09.qanda.ThreadList;
 import com.team09.qanda.User;
 
 public class QuestionThreadControllerTest extends TestCase {
@@ -171,5 +173,19 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue(txt.getUps()==1);
 		cn1.addUp();
 		assertTrue(txt.getUps()==2);
+	}
+	
+	//Use case 17: Read later
+	public void testReadLater() {
+		LocalStorageHandler handler=new LocalStorageHandler();
+		Post question=new Post(new User(),"Can I read these things later?");
+		QuestionThread qt=new QuestionThread(question);
+		handler.saveQuestionThread(qt, "Later.txt");
+		ThreadList laters=handler.getThreadList("Later.txt");
+		ArrayList<String> qs=new ArrayList<String>();
+		for (Post q:laters.getQuestions()) {
+			qs.add(q.getText());
+		}
+		assertTrue(qs.contains("Can I read these things later?"));
 	}
 }
