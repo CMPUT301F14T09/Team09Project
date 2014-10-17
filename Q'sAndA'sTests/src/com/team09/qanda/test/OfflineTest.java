@@ -29,8 +29,10 @@ public class OfflineTest extends ActivityInstrumentationTestCase2<QuestionThread
 		QuestionThread qt=new QuestionThread(question);
 		handler.saveQuestionThread(qt, "Favourite.txt");
 		handler.saveQuestionThread(qt, "Later.txt");
+		
 		WifiManager wifi=(WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		wifi.setWifiEnabled(false);
+		
 		ThreadList favs=handler.getThreadList("Favourite.txt");
 		ThreadList laters=handler.getThreadList("Later.txt");
 		ArrayList<String> favQs=new ArrayList<String>();
@@ -41,7 +43,20 @@ public class OfflineTest extends ActivityInstrumentationTestCase2<QuestionThread
 		for (Post q:laters.getQuestions()) {
 			laterQs.add(q.getText());
 		}
+		
 		assertTrue(favQs.contains("Offline? No way"));
 		assertTrue(laterQs.contains("Offline? No way"));
+	}
+	
+	//Use case 20: Author offline
+	public void testOfflineAuthor() {
+		WifiManager wifi=(WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		wifi.setWifiEnabled(false);
+		
+		LocalStorageHandler handler=new LocalStorageHandler();
+		String userQuestion="I'm writing this offline";
+		handler.saveText(userQuestion, "Offline.txt");
+		String stillQuestion=handler.getText("Offline.txt");
+		assertEquals(userQuestion, stillQuestion);
 	}
 }

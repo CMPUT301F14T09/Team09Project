@@ -19,5 +19,13 @@ public class LocalStorageHandler {
 		ThreadListController cont=new ThreadListController(tl);
 		cont.addThread(qt);
 	}
+	
+	public void saveText(String text, String filename) {
+		
+	}
+	
+	public String getText(String filename) {
+		return "";
+	}
 
 }
