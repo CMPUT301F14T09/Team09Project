@@ -70,8 +70,27 @@ public class QuestionThreadControllerTest extends TestCase {
 	}
 
 	// Use Case #7 : As an author, I want to attach a picture to my questions or my answers.
+	public void testInsertImageInQuestion() {
+		String message = "What is this?";
+		String answer = "This is Sparta.";
+		String name = "John";
+		String auth = "Pete";
+		User a = new User(name);
+		User a2 = new User(auth);
+		Post q = new Post(a, message);
+		Post ans = new Post(a2, answer);
+		// Make a question thread
+		QuestionThread qThread = new QuestionThread(q);
+		// Create a question thread controller
+		QuestionThreadController qctl = new QuestionThreadController(qThread);
+		qctl.addAnswer(ans);
+		// Attach image in question using question thread controller
+		qctl.attachImage();
+		assertTrue("There is no image!", q.isImageSet());
+	}
+	
 	// Use Case #8 : As a sysadmin, I do not want the pictures to be large (> 64kb).
-	public void testInsertImageInAnswer() {
+	public void testSysadminCheckImageOnQuestionThread() {
 		String message = "What is this?";
 		String answer = "This is Sparta.";
 		String name = "John";
