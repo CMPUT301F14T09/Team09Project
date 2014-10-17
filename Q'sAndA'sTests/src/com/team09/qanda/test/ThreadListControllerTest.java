@@ -7,6 +7,7 @@ import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
 import com.team09.qanda.QuestionThreadController;
 import com.team09.qanda.ThreadList;
+import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -42,8 +43,9 @@ public class ThreadListControllerTest extends
 		qtc2.addAnswer(new Post(new User(), "Answer 3."));
 		
 		ThreadList questions = new ThreadList();
-		questions.addThread(q1);
-		questions.addThread(q2);
+		ThreadListController cn1=new ThreadListController(questions);
+		cn1.addThread(q1);
+		cn1.addThread(q2);
 		
 		assertEquals("Question 1?", questions.get(0).getQuestion().getText());
 		assertEquals("John", questions.get(0).getQuestion().getAuthor());
@@ -58,9 +60,9 @@ public class ThreadListControllerTest extends
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);
-		
 		ThreadList questions = new ThreadList();
-		questions.addThread(q1);
+		ThreadListController cn1=new ThreadListController(questions);
+		cn1.addThread(q1);
 		
 		assertTrue("Question not added", !questions.getQuestions().isEmpty());
 	}
@@ -74,7 +76,9 @@ public class ThreadListControllerTest extends
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);			
 		
 		ThreadList myQuestions = new ThreadList();
-		myQuestions.addThread(q1);
+		ThreadListController cn1=new ThreadListController(myQuestions);
+		cn1.addThread(q1);
+		
 		LocalStorageHandler lsh = new LocalStorageHandler(myQuestions);
 	
 		assertSame(lsh.getThreadList().get(0), q1);

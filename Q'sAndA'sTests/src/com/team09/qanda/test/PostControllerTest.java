@@ -49,6 +49,7 @@ public class PostControllerTest extends TestCase {
 		User a = new User(name);
 		User a2 = new User(auth);
 		User a3 = new User(replyName);
+		
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -58,7 +59,8 @@ public class PostControllerTest extends TestCase {
 		qctl.addAnswer(ans);
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
 		Reply r = new Reply(a3,reply);
-		qctl.addReply(r);
+		PostController p=new PostController(q);
+		p.addReply(r);
 		assertTrue("There is 1 reply", !q.getReplies().isEmpty());
 	}
 
