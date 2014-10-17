@@ -42,8 +42,8 @@ public class Post {
 		return this.replies;
 	}
 	
-	public void setReply(Reply reply) {
-		this.replies.add(reply);
+	public void setReplies(ArrayList<Reply> replies) {
+		this.replies=replies;
 	}
 	
 	public Date getTimestamp() {

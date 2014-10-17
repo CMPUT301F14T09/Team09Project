@@ -13,7 +13,7 @@ public class Reply {
 		this.timestamp=new Date();
 	}
 	
-	//overloaded contructor to test default order
+	//overloaded constructor to test default order
 	public Reply(User author, String text, Date date) {
 		this.author=author;
 		this.text=text;

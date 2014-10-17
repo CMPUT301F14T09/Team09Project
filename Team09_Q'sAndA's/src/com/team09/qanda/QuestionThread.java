@@ -23,12 +23,8 @@ public class QuestionThread {
 		return this.answers.size();
 	}
 	
-	public void setAnswer(Post answer) {
-		this.answers.add(answer);
-	}
-	
-	public void setReply(Reply reply) {
-		this.question.setReply(reply);
+	public void setAnswers(ArrayList<Post> answers) {
+		this.answers=answers;
 	}
 
 	public void setImage() {

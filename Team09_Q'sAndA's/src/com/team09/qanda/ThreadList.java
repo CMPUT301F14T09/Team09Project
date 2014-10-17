@@ -27,8 +27,8 @@ public class ThreadList {
 		return questions;
 	}
 	
-	public void addThread(QuestionThread thread) {
-		threads.add(thread);
+	public void setThreads(ArrayList<QuestionThread> threads) {
+		this.threads=threads;
 	}
 
 	public void clear() {

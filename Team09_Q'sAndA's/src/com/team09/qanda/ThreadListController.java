@@ -1,5 +1,7 @@
 package com.team09.qanda;
 
+import java.util.ArrayList;
+
 
 public class ThreadListController {
 	//Handles the questions displayed to the user on the main screen of the application
@@ -10,7 +12,9 @@ public class ThreadListController {
 	}
 	
 	public void addThread(QuestionThread thread) {
-		tl.addThread(thread);
+		ArrayList<QuestionThread> threads=tl.getThreads();
+		threads.add(thread);
+		tl.setThreads(threads);
 	}
 	
 }

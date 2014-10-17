@@ -12,7 +12,9 @@ public class QuestionThreadController {
 	}
 	
 	public void addAnswer(Post answer) {
-		thread.setAnswer(answer);
+		ArrayList<Post> answers=thread.getAnswers();
+		answers.add(answer);
+		thread.setAnswers(answers);
 	}
 	
 	public ArrayList<Post> getAnswers() {
@@ -34,11 +36,6 @@ public class QuestionThreadController {
 	}
 	public void addUp(){
 		thread.getQuestion().setUps(thread.getQuestion().getUps()+1);
-	}
-
-	public void addReply(Reply r) {
-		thread.getQuestion().setReply(r);
-		
 	}
 	
 }
