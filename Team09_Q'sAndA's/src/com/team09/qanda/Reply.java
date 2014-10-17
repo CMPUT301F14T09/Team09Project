@@ -2,7 +2,7 @@ package com.team09.qanda;
 
 import java.util.Date;
 
-public class Reply {
+public class Reply extends QModel<QView> {
 	private String text;
 	private User author;
 	private Date timestamp;
