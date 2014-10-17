@@ -58,7 +58,7 @@ public class Post {
 		// TODO
 	}
 
-	public boolean isImageSet() {
+	public Boolean isImageSet() {
 		// TODO Auto-generated method stub
 		return false;
 	}
