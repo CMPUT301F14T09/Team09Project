@@ -35,7 +35,8 @@ public class QuestionThreadController {
 		return getAnswers().size();
 	}
 	public void addUp(){
-		thread.getQuestion().setUps(thread.getQuestion().getUps()+1);
+		PostController temp=new PostController(thread.getQuestion());
+		temp.addUp();
 	}
 	
 }
