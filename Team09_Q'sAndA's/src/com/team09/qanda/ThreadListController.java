@@ -17,4 +17,8 @@ public class ThreadListController {
 		tl.setThreads(threads);
 	}
 	
+	public void clear() {
+		tl.setThreads(new ArrayList<QuestionThread>());
+	}
+	
 }
