@@ -60,12 +60,10 @@ public class PostControllerTest extends TestCase {
 		QuestionThread qThread = new QuestionThread(q);
 		// Create a question thread controller
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		// Create a post controller
-		PostController pctl = new PostController(q);
 		qctl.addAnswer(ans);
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
 		Reply r = new Reply(a3,reply);
-		pctl.addReply(r);
+		qctl.addReply(r);
 		assertTrue("There is 1 reply", !q.getReplies().isEmpty());
 	}
 

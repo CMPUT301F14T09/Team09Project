@@ -26,6 +26,10 @@ public class QuestionThread {
 	public void setAnswer(Post answer) {
 		this.answers.add(answer);
 	}
+	
+	public void setReply(Reply reply) {
+		this.question.setReply(reply);
+	}
 
 	public void setImage() {
 		// TODO

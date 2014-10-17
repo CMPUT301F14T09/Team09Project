@@ -35,5 +35,10 @@ public class QuestionThreadController {
 	public void addUp(){
 		thread.getQuestion().setUps(thread.getQuestion().getUps()+1);
 	}
+
+	public void addReply(Reply r) {
+		thread.getQuestion().setReply(r);
+		
+	}
 	
 }
