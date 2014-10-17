@@ -144,4 +144,13 @@ public class QuestionThreadControllerTest extends TestCase {
 		    }
 	    }
 	}
+	//Use Case 11: Upvote a Question
+	public void testUpVotes(){
+		Post txt=new Post(new User(),"Do upvotes work?");
+		QuestionThreadController cn1=new QuestionThreadController(new QuestionThread(txt));
+		cn1.addUp();
+		assertTrue(txt.getUps()==1);
+		cn1.addUp();
+		assertTrue(txt.getUps()==2);
+	}
 }

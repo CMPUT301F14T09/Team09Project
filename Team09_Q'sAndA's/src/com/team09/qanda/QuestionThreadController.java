@@ -32,5 +32,8 @@ public class QuestionThreadController {
 	public int answerCount() {
 		return getAnswers().size();
 	}
+	public void addUp(){
+		thread.getQuestion().setUps(thread.getQuestion().getUps()+1);
+	}
 	
 }

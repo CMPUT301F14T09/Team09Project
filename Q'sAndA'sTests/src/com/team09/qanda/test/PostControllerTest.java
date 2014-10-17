@@ -97,6 +97,7 @@ public class PostControllerTest extends TestCase {
 		assertTrue("The image is too big!", thrown.equals(false));
 		assertTrue("There is no image!", thrown.equals(false));
 	}
+	//Use Case 12: Upvote an Answer
 	public void testUpVotes(){
 		Post txt=new Post(new User(),"Do upvotes work?");
 		PostController cn1=new PostController(txt);
