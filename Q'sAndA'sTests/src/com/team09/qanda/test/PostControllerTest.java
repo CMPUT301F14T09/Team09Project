@@ -15,7 +15,6 @@ public class PostControllerTest extends TestCase {
 	public void testAddReplytoAnswer() {
 		String message = "What is this?";
 		String answer = "This is Sparta.";
-		String reply = "This is cool!";
 		String reply2 = "Your face is cool.";
 		String name = "John";
 		String auth = "Pete";
@@ -30,12 +29,8 @@ public class PostControllerTest extends TestCase {
 		// Create a question thread controller
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
 		// Create a post controller
-		PostController pctlq = new PostController(q);
 		qctl.addAnswer(ans);
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
-		Reply r = new Reply(a3,reply);
-		pctlq.addReply(r);
-		assertTrue("There is 1 reply in the question.", !q.getReplies().isEmpty());
 		Reply r2 = new Reply(a3, reply2);
 		// Make a Post Controller for answer
 		PostController pctla = new PostController(ans);
