@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 public class MainActivity extends ThreadDisplay { //Main question view
-	private ArrayAdapter<? super String> spinner;
+	private ArrayAdapter<CharSequence> spinner;
 	private ActionBar.OnNavigationListener listener;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends ThreadDisplay { //Main question view
 		return super.onOptionsItemSelected(item);
 	}
 	//for testing purposes
-	public ArrayAdapter getSpinnerAdapter(){
+	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
 		return spinner;
 	}
 	public ActionBar.OnNavigationListener getNavigationListener(){
