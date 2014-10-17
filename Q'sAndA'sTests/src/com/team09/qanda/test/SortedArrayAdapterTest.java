@@ -13,7 +13,6 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ArrayAdapter;
 
 public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	ThreadList questions=new ThreadList();
 	SortedArrayAdapter srt;
 	MainActivity testAct;
 	ArrayAdapter<CharSequence> spinner;
@@ -24,7 +23,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		spinner=testAct.getSpinnerAdapter();
 	}
 	public void testSortbyHasPictures(){
-		questions.clear();
+		ThreadList questions=new ThreadList();
 		srt.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");
@@ -45,7 +44,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		assertEquals(srt.getPosition(NoPicture),0);
 	}
 	public void testsortByMostRecent(){
-		questions.clear();
+		ThreadList questions=new ThreadList();
 		srt.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Recent");
@@ -63,7 +62,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 
 	}
 	public void testsortByOldest(){
-		questions.clear();
+		ThreadList questions=new ThreadList();
 		srt.clear();
 		//get the position of the  "Oldest" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Oldest");
@@ -82,7 +81,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 
 	}
 	public void testsortByMostUpVotes(){
-		questions.clear();
+		ThreadList questions=new ThreadList();
 		srt.clear();
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Upvoted");
@@ -106,7 +105,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		assertEquals(srt.getPosition(most),0);
 	}
 	public void testsortByLeastUpvotes(){
-		questions.clear();
+		ThreadList questions=new ThreadList();
 		srt.clear();
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
