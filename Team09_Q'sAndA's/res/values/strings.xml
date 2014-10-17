@@ -4,19 +4,14 @@
     <string name="app_name">Team09_Q\'sAndA\'s</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
-    <string-array name="SortChoices">
-        <item>Has Pictures</item>
-        <item>Most Recent</item>
-        <item>Oldest</item>
-        <item>Most Upvoted</item>
-        <item>Least Upvoted</item>
-    </string-array>
-
     <string name="title_activity_thread_display">ThreadDisplay</string>
     <string name="title_activity_user_threads">UserThreadsActivity</string>
     <string name="title_activity_question_thread">QuestionThreadActivity</string>
     <string name="title_activity_add_question">AddQuestionActivity</string>
     <string name="title_activity_picture_view">PictureViewActivity</string>
-
+    <string name="sort_HasPicture">HasPicture</string>
+    <string name="sort_MostRecent">MostRecent</string>
+    <string name="sort_Oldest">Oldest</string>
+    <string name="sort_MostUpvotes">Most Upvoted</string>
+    <string name="sort_LeastUpvoted">Least Upvoted</string>
 </resources>

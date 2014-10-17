@@ -7,20 +7,18 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
 public class MainActivity extends ThreadDisplay { //Main question view
-
+	private ArrayAdapter<? super String> spinner;
+	private ActionBar.OnNavigationListener listener;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//set up the SpinnerAdapter(used for Sorting
-		this.getActionBar().setListNavigationCallbacks(ArrayAdapter.createFromResource(this, R.array.SortChoices, android.R.layout.simple_dropdown_item_1line),new ActionBar.OnNavigationListener() {
-			
+		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				// TODO Auto-generated method stub
 				return false;
 			}
-		});
+		};
 	}
 
 	@Override
@@ -40,5 +38,12 @@ public class MainActivity extends ThreadDisplay { //Main question view
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	//for testing purposes
+	public ArrayAdapter getSpinnerAdapter(){
+		return spinner;
+	}
+	public ActionBar.OnNavigationListener getNavigationListener(){
+		return listener;
 	}
 }
