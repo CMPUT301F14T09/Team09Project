@@ -3,7 +3,7 @@ package com.team09.qanda;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Post {
+public class Post extends QModel<QView> {
 	private String text;
 	private User author;
 	private int ups;
@@ -24,14 +24,11 @@ public class Post {
 	
 	public void setUps(int ups) {
 		this.ups=ups;
+		notifyViews();
 	}
 	
 	public User getAuthor() {
 		return this.author;
-	}
-	
-	public void setAuthor(User author) {
-		this.author=author;
 	}
 	
 	public String getText() {
@@ -42,8 +39,9 @@ public class Post {
 		return this.replies;
 	}
 	
-	public void setReply(Reply reply) {
-		this.replies.add(reply);
+	public void setReplies(ArrayList<Reply> replies) {
+		this.replies=replies;
+		notifyViews();
 	}
 	
 	public Date getTimestamp() {

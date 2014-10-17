@@ -1,9 +1,8 @@
 package com.team09.qanda;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class ThreadList {
+public class ThreadList extends QModel<QView> {
 	private ElasticSearchHandler esh;
 	private ArrayList<QuestionThread> threads;
 	
@@ -27,18 +26,9 @@ public class ThreadList {
 		return questions;
 	}
 	
-	public void addThread(QuestionThread thread) {
-		threads.add(thread);
-	}
-
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-	//convenience function
-	public void addThread(QuestionThread...questionThreads ) {
-		threads.addAll(Arrays.asList(questionThreads));
-		
+	public void setThreads(ArrayList<QuestionThread> threads) {
+		this.threads=threads;
+		notifyViews();
 	}
 
 	public QuestionThread get(int i) {

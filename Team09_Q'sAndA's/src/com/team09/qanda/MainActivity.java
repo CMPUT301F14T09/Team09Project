@@ -1,12 +1,13 @@
 package com.team09.qanda;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
-public class MainActivity extends ThreadDisplay { //Main question view
+public class MainActivity extends Activity { //Main question view
 	private ArrayAdapter<CharSequence> spinner;
 	private ActionBar.OnNavigationListener listener;
 	@Override

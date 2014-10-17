@@ -2,7 +2,7 @@ package com.team09.qanda;
 
 import java.util.ArrayList;
 
-public class QuestionThread {
+public class QuestionThread extends QModel<QView> {
 	private Post question;
 	private ArrayList<Post> answers;
 	
@@ -23,12 +23,9 @@ public class QuestionThread {
 		return this.answers.size();
 	}
 	
-	public void setAnswer(Post answer) {
-		this.answers.add(answer);
-	}
-	
-	public void setReply(Reply reply) {
-		this.question.setReply(reply);
+	public void setAnswers(ArrayList<Post> answers) {
+		this.answers=answers;
+		notifyViews();
 	}
 
 	public void setImage() {

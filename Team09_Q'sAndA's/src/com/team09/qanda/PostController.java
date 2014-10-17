@@ -1,5 +1,7 @@
 package com.team09.qanda;
 
+import java.util.ArrayList;
+
 
 public class PostController {
 	//Handles individual posts
@@ -14,7 +16,9 @@ public class PostController {
 	}
 	
 	public void addReply(Reply reply) {
-		post.setReply(reply);
+		ArrayList<Reply> replies=post.getReplies();
+		replies.add(reply);
+		post.setReplies(replies);
 	}
 	
 	public void attachImage() {

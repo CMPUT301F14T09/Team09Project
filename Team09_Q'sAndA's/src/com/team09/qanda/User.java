@@ -1,6 +1,6 @@
 package com.team09.qanda;
 
-public class User {
+public class User extends QModel<QView> {
 	private String name;
 	
 	public User() {
@@ -13,6 +13,7 @@ public class User {
 	
 	public void setName(String name) {
 		this.name=name;
+		notifyViews();
 	}
 	
 	public String getName() {

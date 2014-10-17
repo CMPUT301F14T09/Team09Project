@@ -2,7 +2,7 @@ package com.team09.qanda;
 
 import java.util.Date;
 
-public class Reply {
+public class Reply extends QModel<QView> {
 	private String text;
 	private User author;
 	private Date timestamp;
@@ -13,7 +13,7 @@ public class Reply {
 		this.timestamp=new Date();
 	}
 	
-	//overloaded contructor to test default order
+	//overloaded constructor to test default order
 	public Reply(User author, String text, Date date) {
 		this.author=author;
 		this.text=text;
