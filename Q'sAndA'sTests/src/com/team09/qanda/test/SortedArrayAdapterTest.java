@@ -5,6 +5,7 @@ import com.team09.qanda.Post;
 import com.team09.qanda.QuestionThread;
 import com.team09.qanda.SortedArrayAdapter;
 import com.team09.qanda.ThreadList;
+import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
 import android.content.Context;
@@ -27,13 +28,18 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		srt.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");
-		
+
 		QuestionThread NoPicture=new QuestionThread(new Post(new User(),"No picture?"));
+		// Make ThreadListController
+		ThreadListController tlc = new ThreadListController(questions);
 		Post pic1=new Post(new User(),"Hello?");
 		pic1.setImage();
 		Post pic2=new Post(new User(),"Does this work?");
 		pic2.setImage();
-		questions.addThread(new QuestionThread(pic1),new QuestionThread(pic2),NoPicture);
+		// Add threads using controller
+		tlc.addThread(new QuestionThread(pic1));
+		tlc.addThread(new QuestionThread(pic2));
+		tlc.addThread(NoPicture);
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(NoPicture),0);
@@ -43,15 +49,18 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		srt.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Recent");
-		
+		// Make ThreadListController
+		ThreadListController tlc = new ThreadListController(questions);
 		QuestionThread first=new QuestionThread(new Post(new User(),"am I first?"));
 		QuestionThread second=new QuestionThread(new Post(new User(),"am I second?"));
 		QuestionThread third=new QuestionThread(new Post(new User(),"am I third?"));
-		questions.addThread(third,second,first);
+		tlc.addThread(third);
+		tlc.addThread(second);
+		tlc.addThread(first);
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(third),2);
-		
+
 	}
 	public void testsortByOldest(){
 		questions.clear();
@@ -61,19 +70,23 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		QuestionThread first=new QuestionThread(new Post(new User(),"am I first?"));
 		QuestionThread second=new QuestionThread(new Post(new User(),"am I second?"));
 		QuestionThread third=new QuestionThread(new Post(new User(),"am I third?"));
-		questions.addThread(first,second,third);
-	    
+		// Make ThreadListController
+		ThreadListController tlc = new ThreadListController(questions);
+		tlc.addThread(first);
+		tlc.addThread(second);
+		tlc.addThread(third);
+
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(third),0);
-		
+
 	}
 	public void testsortByMostUpVotes(){
 		questions.clear();
 		srt.clear();
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Upvoted");
-		
+
 		Post txt=new Post(new User(),"Do upvotes work?");
 		txt.setUps(2);
 		Post txt2=new Post(new User(),"Do upvotes work?");
@@ -82,7 +95,11 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt);
 		QuestionThread least=new QuestionThread(txt);
-		questions.addThread(least,middle,most);
+		// Make ThreadListController
+		ThreadListController tlc = new ThreadListController(questions);
+		tlc.addThread(least);
+		tlc.addThread(middle);
+		tlc.addThread(most);
 
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
@@ -101,10 +118,14 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt);
 		QuestionThread least=new QuestionThread(txt);
-		questions.addThread(most,middle,least);
+		// Make ThreadListController
+		ThreadListController tlc = new ThreadListController(questions);
+		tlc.addThread(most);
+		tlc.addThread(middle);
+		tlc.addThread(least);
 		srt.sortByMostUpVoted();
 		assertEquals(srt.getPosition(least),0);
-		
+
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(most),0);
