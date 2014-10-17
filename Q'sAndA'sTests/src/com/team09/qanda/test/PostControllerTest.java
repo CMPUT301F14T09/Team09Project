@@ -70,7 +70,6 @@ public class PostControllerTest extends TestCase {
 	}
 
 	// Use Case #7 : As an author, I want to attach a picture to my questions or my answers.
-	// Use Case #8 : As a sysadmin, I do not want the pictures to be large (> 64kb).
 	public void testInsertImageInAnswer() {
 		String message = "What is this?";
 		String answer = "This is Sparta.";
@@ -86,17 +85,37 @@ public class PostControllerTest extends TestCase {
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
 		qctl.addAnswer(ans);
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
-		Boolean thrown = false;
 		// Create a post (answer) controller
 		PostController pctl = new PostController(ans);
-		try {
-			pctl.attachImage();
-		} catch (IllegalArgumentException e) {
-			thrown = true;
-		}
-		assertTrue("The image is too big!", thrown.equals(false));
-		assertTrue("There is no image!", thrown.equals(false));
+		pctl.attachImage();
+		assertTrue("Image is not set!", ans.isImageSet());
 	}
-
-
+	
+	// Use Case #8 : As a sysadmin, I do not want the pictures to be large (> 64kb).
+		public void testSysadminCheckImageOnAnswer() {
+			String message = "What is this?";
+			String answer = "This is Sparta.";
+			String name = "John";
+			String auth = "Pete";
+			User a = new User(name);
+			User a2 = new User(auth);
+			Post q = new Post(a, message);
+			Post ans = new Post(a2, answer);
+			// Make a question thread
+			QuestionThread qThread = new QuestionThread(q);
+			// Create a question thread controller
+			QuestionThreadController qctl = new QuestionThreadController(qThread);
+			qctl.addAnswer(ans);
+			assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
+			Boolean thrown = false;
+			// Create a post (answer) controller
+			PostController pctl = new PostController(ans);
+			try {
+				pctl.attachImage();
+			} catch (IllegalArgumentException e) {
+				thrown = true;
+			}
+			assertTrue("The image is too big!", thrown.equals(false));
+			assertTrue("There is no image!", ans.isImageSet().equals(true));
+		}
 }
