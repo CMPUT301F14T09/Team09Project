@@ -42,7 +42,7 @@ public class PostControllerTest extends TestCase {
 		pctla.addReply(r2);
 		assertTrue("THere is 1 reply in the answer.", !ans.getReplies().isEmpty());
 	}
-	
+
 	// Use Case #6 : As an author, I want to reply to questions and answers to clarify things.
 	public void testAddReplytoQuestion() {
 		String message = "What is this?";
@@ -99,32 +99,32 @@ public class PostControllerTest extends TestCase {
 		cn1.addUp();
 		assertTrue(txt.getUps()==2);
 	}
-	
+
 	// Use Case #8 : As a sysadmin, I do not want the pictures to be large (> 64kb).
-		public void testSysadminCheckImageOnAnswer() {
-			String message = "What is this?";
-			String answer = "This is Sparta.";
-			String name = "John";
-			String auth = "Pete";
-			User a = new User(name);
-			User a2 = new User(auth);
-			Post q = new Post(a, message);
-			Post ans = new Post(a2, answer);
-			// Make a question thread
-			QuestionThread qThread = new QuestionThread(q);
-			// Create a question thread controller
-			QuestionThreadController qctl = new QuestionThreadController(qThread);
-			qctl.addAnswer(ans);
-			assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
-			Boolean thrown = false;
-			// Create a post (answer) controller
-			PostController pctl = new PostController(ans);
-			try {
-				pctl.attachImage();
-			} catch (IllegalArgumentException e) {
-				thrown = true;
-			}
-			assertTrue("The image is too big!", thrown.equals(false));
-			assertTrue("There is no image!", ans.isImageSet().equals(true));
+	public void testSysadminCheckImageOnAnswer() {
+		String message = "What is this?";
+		String answer = "This is Sparta.";
+		String name = "John";
+		String auth = "Pete";
+		User a = new User(name);
+		User a2 = new User(auth);
+		Post q = new Post(a, message);
+		Post ans = new Post(a2, answer);
+		// Make a question thread
+		QuestionThread qThread = new QuestionThread(q);
+		// Create a question thread controller
+		QuestionThreadController qctl = new QuestionThreadController(qThread);
+		qctl.addAnswer(ans);
+		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
+		Boolean thrown = false;
+		// Create a post (answer) controller
+		PostController pctl = new PostController(ans);
+		try {
+			pctl.attachImage();
+		} catch (IllegalArgumentException e) {
+			thrown = true;
 		}
+		assertTrue("The image is too big!", thrown.equals(false));
+		assertTrue("There is no image!", ans.isImageSet().equals(true));
+	}
 }
