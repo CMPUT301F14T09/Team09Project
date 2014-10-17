@@ -103,6 +103,6 @@ public class PostControllerTest extends TestCase {
 		cn1.addUp();
 		assertTrue(txt.getUps()==1);
 		cn1.addUp();
-		assertTrue(txt.getUps()==1);
+		assertTrue(txt.getUps()==2);
 	}
 }
