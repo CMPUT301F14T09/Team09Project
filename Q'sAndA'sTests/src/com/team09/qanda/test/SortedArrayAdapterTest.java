@@ -11,12 +11,12 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ArrayAdapter;
 
-public class sortableArrayAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	ThreadList questions=new ThreadList();
 	SortedArrayAdapter srt;
 	MainActivity testAct;
 	ArrayAdapter<CharSequence> spinner;
-	public sortableArrayAdapterTest() {
+	public SortedArrayAdapterTest() {
 		super(MainActivity.class);
 		testAct=getActivity();
 		srt=new SortedArrayAdapter(testAct,android.R.layout.simple_list_item_1);
