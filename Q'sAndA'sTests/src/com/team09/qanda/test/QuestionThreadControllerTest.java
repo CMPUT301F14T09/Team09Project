@@ -188,4 +188,19 @@ public class QuestionThreadControllerTest extends TestCase {
 		}
 		assertTrue(qs.contains("Can I read these things later?"));
 	}
+	
+	//Use case 18: Favourite questions
+	public void testFavourite() {
+		LocalStorageHandler handler=new LocalStorageHandler();
+		Post question=new Post(new User(),"This is my favourite");
+		QuestionThread qt=new QuestionThread(question);
+		handler.saveQuestionThread(qt, "Favourite.txt");
+		ThreadList favs=handler.getThreadList("Favourite.txt");
+		ArrayList<String> qs=new ArrayList<String>();
+		for (Post q:favs.getQuestions()) {
+			qs.add(q.getText());
+		}
+		assertTrue(qs.contains("This is my favourite"));
+	}
+
 }
