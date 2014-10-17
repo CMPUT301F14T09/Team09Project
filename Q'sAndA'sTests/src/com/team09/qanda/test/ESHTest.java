@@ -38,13 +38,14 @@ public class ESHTest extends TestCase
 	public void testSavetoServer(){
 		//TODO: need to remove the existing test QuestionThread from server somehow
 		ThreadList thread = new ThreadList();
+		ThreadListController  threadController = new ThreadListController(thread);
 		ArrayList<QuestionThread> old = (ArrayList<QuestionThread>)thread.getThreads().clone();
 		ElasticSearchHandler esh = new ElasticSearchHandler();
 		QuestionThread q1 = new QuestionThread(new Post(new User("test"), "testq"));
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);
 		
 		qtc1.addAnswer(new Post(new User("test2"), "testa"));
-		thread.addThread(q1);
+		threadController.addThread(q1);
 		
 		esh.saveThreads(); //Add to server
 		
