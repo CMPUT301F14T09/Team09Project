@@ -17,6 +17,7 @@ public class ElasticSearchHandler {
 	//compare with threads currently on server and only add what is new
 	//DONT OVERWRITE SERVER
 	public boolean saveThreads(ThreadList thread) {
+		thread.refresh();
 		return true;
 	}
 
