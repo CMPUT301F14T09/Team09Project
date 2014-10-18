@@ -132,7 +132,6 @@ public class QuestionThreadControllerTest extends TestCase {
 		qctl.addAnswer(answer1);
 		qctl.addAnswer(answer2);
 		qctl.addAnswer(answer3);
-		qctl.sort();
 		assertEquals(qThread.getAnswers().get(0),answer2);
 	}
 
