@@ -150,6 +150,34 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertEquals(qThread.answerCount(),3);
 	}
 	
+	//Use case 17: Read later
+	public void testReadLater() {
+		LocalStorageHandler handler=new LocalStorageHandler();
+		Post question=new Post(new User(),"Can I read these things later?");
+		QuestionThread qt=new QuestionThread(question);
+		handler.saveQuestionThread(qt, "Later.txt");
+		ThreadList laters=handler.getThreadList("Later.txt");
+		ArrayList<String> qs=new ArrayList<String>();
+		for (Post q:laters.getQuestions()) {
+			qs.add(q.getText());
+		}
+		assertTrue(qs.contains("Can I read these things later?"));
+	}
+		
+	//Use case 18: Favourite questions
+	public void testFavourite() {
+		LocalStorageHandler handler=new LocalStorageHandler();
+		Post question=new Post(new User(),"This is my favourite");
+		QuestionThread qt=new QuestionThread(question);
+		handler.saveQuestionThread(qt, "Favourite.txt");
+		ThreadList favs=handler.getThreadList("Favourite.txt");
+		ArrayList<String> qs=new ArrayList<String>();
+		for (Post q:favs.getQuestions()) {
+			qs.add(q.getText());
+		}
+		assertTrue(qs.contains("This is my favourite"));
+	}
+	
 	// Use Case #22: As a user, by default, I should see the most fresh comments
 	public void testDefaultCommentOrder(){
 		Post p1 = new Post(new User("test"), "q1");
@@ -166,33 +194,6 @@ public class QuestionThreadControllerTest extends TestCase {
 	    		fail();
 		    }
 	    }
-	}
-	//Use case 17: Read later
-	public void testReadLater() {
-		LocalStorageHandler handler=new LocalStorageHandler();
-		Post question=new Post(new User(),"Can I read these things later?");
-		QuestionThread qt=new QuestionThread(question);
-		handler.saveQuestionThread(qt, "Later.txt");
-		ThreadList laters=handler.getThreadList("Later.txt");
-		ArrayList<String> qs=new ArrayList<String>();
-		for (Post q:laters.getQuestions()) {
-			qs.add(q.getText());
-		}
-		assertTrue(qs.contains("Can I read these things later?"));
-	}
-	
-	//Use case 18: Favourite questions
-	public void testFavourite() {
-		LocalStorageHandler handler=new LocalStorageHandler();
-		Post question=new Post(new User(),"This is my favourite");
-		QuestionThread qt=new QuestionThread(question);
-		handler.saveQuestionThread(qt, "Favourite.txt");
-		ThreadList favs=handler.getThreadList("Favourite.txt");
-		ArrayList<String> qs=new ArrayList<String>();
-		for (Post q:favs.getQuestions()) {
-			qs.add(q.getText());
-		}
-		assertTrue(qs.contains("This is my favourite"));
 	}
 
 }
