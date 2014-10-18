@@ -31,6 +31,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		Post apost2 = new Post(new User("Liam"), "Answer 2.");
 		qtc1.addAnswer(apost2);
 		
+		// Testing functionality to be used to display all the components
+		// of a question thread
 		assertEquals("Question 1?", q1.getQuestion().getText());
 		assertEquals("John", q1.getQuestion().getAuthor());
 		assertEquals(2,q1.getAnswers().size());

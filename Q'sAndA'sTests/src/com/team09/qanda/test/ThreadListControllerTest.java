@@ -47,7 +47,8 @@ public class ThreadListControllerTest extends
 		cn1.addThread(q1);
 		cn1.addThread(q2);
 		
-		// Test functionality to be used in implementing getView() method of our custom adapter
+		// Testing functionality to be used in implementing getView() method
+		// of our custom adapter for displaying the main questions' list
 		assertEquals("Question 1?", questions.get(0).getQuestion().getText());
 		assertEquals("John", questions.get(0).getQuestion().getAuthor());
 		assertEquals(2, questions.get(1).answerCount());
