@@ -119,6 +119,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue("There is no image!", q.isImageSet().equals(true));
 	}
 
+		
 	// Use Case #13.2: Most upvoted answers
 	public void testsortAnswersByMostUpVotes(){
 		Post questionText=new Post(new User(),"This is a question.");
@@ -136,7 +137,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertEquals(qThread.getAnswers().get(0),answer2);
 	}
 
-	// Use Case #14: Most upvoted answers
+	// Use Case #14: Number of answers
 	public void testNumberOfAnswers(){
 		Post questionText=new Post(new User(),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
