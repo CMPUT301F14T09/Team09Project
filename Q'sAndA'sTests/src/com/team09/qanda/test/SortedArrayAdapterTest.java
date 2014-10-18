@@ -22,6 +22,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		srt=new SortedArrayAdapter(testAct,android.R.layout.simple_list_item_1);
 		spinner=testAct.getSpinnerAdapter();
 	}
+	//Use Case 9
 	public void testSortbyHasPictures(){
 		ThreadList questions=new ThreadList();
 		srt.clear();
@@ -43,6 +44,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(NoPicture),0);
 	}
+	//Use Case 10.1
 	public void testsortByMostRecent(){
 		ThreadList questions=new ThreadList();
 		srt.clear();
@@ -61,6 +63,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		assertEquals(srt.getPosition(third),2);
 
 	}
+	//Use Case 10.2
 	public void testsortByOldest(){
 		ThreadList questions=new ThreadList();
 		srt.clear();
@@ -80,6 +83,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		assertEquals(srt.getPosition(third),0);
 
 	}
+	//Use Case 10.3
 	public void testsortByMostUpVotes(){
 		ThreadList questions=new ThreadList();
 		srt.clear();
@@ -104,6 +108,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(most),0);
 	}
+	//Use Case 10.4
 	public void testsortByLeastUpvotes(){
 		ThreadList questions=new ThreadList();
 		srt.clear();
