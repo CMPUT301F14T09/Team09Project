@@ -7,10 +7,10 @@ public class ThreadList extends QModel<QView> {
 	private ArrayList<QuestionThread> threads;
 	
 	public ThreadList() {
-		retrieveThreads();
+		refresh();
 	}
 	
-	private void retrieveThreads() {
+	public void refresh() {
 		this.threads=esh.getThreads();
 	}
 

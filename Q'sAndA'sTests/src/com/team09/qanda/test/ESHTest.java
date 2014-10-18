@@ -43,7 +43,7 @@ public class ESHTest extends TestCase
 		
 		if (thread.getQuestions().contains(testp)) {
 			esh.delete(testp);
-			thread = new ThreadList();
+			thread.refresh();
 		}
 		
 		QuestionThread q1 = new QuestionThread(testp);
