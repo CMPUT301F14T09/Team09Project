@@ -85,16 +85,7 @@ public class PostControllerTest extends TestCase {
 		pctl.attachImage();
 		assertTrue("Image is not set!", ans.isImageSet());
 	}
-	//Use Case 11, 12: Upvote a Question/Answer
-	public void testUpVotes(){
-		Post txt=new Post(new User(),"Do upvotes work?");
-		PostController cn1=new PostController(txt);
-		cn1.addUp();
-		assertTrue(txt.getUps()==1);
-		cn1.addUp();
-		assertTrue(txt.getUps()==2);
-	}
-
+	
 	// Use Case #8 : As a sysadmin, I do not want the pictures to be large (> 64kb).
 	public void testSysadminCheckImageOnAnswer() {
 		String message = "What is this?";
@@ -121,5 +112,15 @@ public class PostControllerTest extends TestCase {
 		}
 		assertTrue("The image is too big!", thrown.equals(false));
 		assertTrue("There is no image!", ans.isImageSet().equals(true));
+	}
+	
+	//Use Case 11, 12: Upvote a Question/Answer
+	public void testUpVotes(){
+		Post txt=new Post(new User(),"Do upvotes work?");
+		PostController cn1=new PostController(txt);
+		cn1.addUp();
+		assertTrue(txt.getUps()==1);
+		cn1.addUp();
+		assertTrue(txt.getUps()==2);
 	}
 }
