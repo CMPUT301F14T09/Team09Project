@@ -14,7 +14,9 @@ public class ElasticSearchHandler {
 	}
 
 	//returns boolean of whether the threads were successfully saved or not
-	public boolean saveThreads() {
+	//compare with threads currently on server and only add what is new
+	//DONT OVERWRITE SERVER
+	public boolean saveThreads(ThreadList thread) {
 		return true;
 	}
 

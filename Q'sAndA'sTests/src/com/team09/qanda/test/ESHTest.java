@@ -16,8 +16,6 @@ import junit.framework.TestCase;
 
 public class ESHTest extends TestCase
 {
-	//TODO:add use case for loading from ES
-	
 	//Use case #15: Search for questions and answers
 	public void testNumberOfAnswers(){
 		ThreadListController  threadController = new ThreadListController(new ThreadList());
@@ -35,21 +33,36 @@ public class ESHTest extends TestCase
 	}
 	
 	//Use case 21: As an author, I want to push my replies, questions and answers online once I get connectivity.
+	//test save works by removing(if exists) and re-adding a test post
 	public void testSavetoServer(){
-		//TODO: need to remove the existing test QuestionThread from server somehow
+		Post testp = new Post(new User("test"), "testq");
 		ThreadList thread = new ThreadList();
 		ThreadListController  threadController = new ThreadListController(thread);
 		ArrayList<QuestionThread> old = (ArrayList<QuestionThread>)thread.getThreads().clone();
 		ElasticSearchHandler esh = new ElasticSearchHandler();
-		QuestionThread q1 = new QuestionThread(new Post(new User("test"), "testq"));
+		
+		if (thread.getQuestions().contains(testp)) {
+			esh.delete(testp);
+			thread = new ThreadList();
+		}
+		
+		QuestionThread q1 = new QuestionThread(testp);
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);
 		
 		qtc1.addAnswer(new Post(new User("test2"), "testa"));
 		threadController.addThread(q1);
 		
-		esh.saveThreads(); //Add to server
+		esh.saveThreads(thread); //Add to server
 		
+		//confirm questionthread object was added
 		assertTrue(esh.getThreads().size() > old.size());
+	}
+	
+	//Use case 21(kinda?):  As an author, I want to push my replies, questions and answers online once I get connectivity.
+	//testing load thread from server
+	public void testLoadfromServer(){
+		ElasticSearchHandler esh = new ElasticSearchHandler();
+		assertTrue(esh.getThreads()!=null);
 	}
 }
 
