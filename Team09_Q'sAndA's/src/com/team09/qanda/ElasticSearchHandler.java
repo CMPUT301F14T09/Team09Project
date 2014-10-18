@@ -18,6 +18,13 @@ public class ElasticSearchHandler {
 		return true;
 	}
 
+	//method is only here for testing purposes, deleting content from elastic search
+	//server is not in requirements
+	//return boolean of whether the delete was successful or not
+	public boolean delete(Post p){
+		return true;
+	}
+	
 	public ThreadList search(String searchString) {
 		// TODO Auto-generated method stub
 		return null;
