@@ -87,7 +87,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
 		qctl.addAnswer(ans);
 		// Attach image in question using question thread controller
-		qctl.attachImage();
+		q.setImage();
 		assertTrue("There is no image!", q.isImageSet());
 	}
 	
@@ -109,7 +109,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
 		Boolean thrown = false;
 		try {
-			qctl.attachImage();
+			q.setImage();
 		} catch (IllegalArgumentException e) {
 			thrown = true;
 		}
@@ -131,7 +131,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		qctl.addAnswer(answer2);
 		qctl.addAnswer(answer3);
 		qctl.sort();
-		assertEquals(qctl.getAnswers().get(0),answer2);
+		assertEquals(qThread.getAnswers().get(0),answer2);
 	}
 
 	// Use Case #14: Most upvoted answers
@@ -145,7 +145,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		qctl.addAnswer(answer1);
 		qctl.addAnswer(answer2);
 		qctl.addAnswer(answer3);
-		assertEquals(qctl.answerCount(),3);
+		assertEquals(qThread.answerCount(),3);
 	}
 	
 	// Use Case #22: As a user, by default, I should see the most fresh comments
@@ -168,7 +168,7 @@ public class QuestionThreadControllerTest extends TestCase {
 	//Use Case 11: Upvote a Question
 	public void testUpVotes(){
 		Post txt=new Post(new User(),"Do upvotes work?");
-		QuestionThreadController cn1=new QuestionThreadController(new QuestionThread(txt));
+		PostController cn1=new PostController(txt);
 		cn1.addUp();
 		assertTrue(txt.getUps()==1);
 		cn1.addUp();

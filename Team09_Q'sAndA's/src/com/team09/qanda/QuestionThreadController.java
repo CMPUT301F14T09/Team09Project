@@ -16,27 +16,10 @@ public class QuestionThreadController {
 		answers.add(answer);
 		thread.setAnswers(answers);
 	}
-	
-	public ArrayList<Post> getAnswers() {
-		return thread.getAnswers();
-	}
-
-	public void attachImage() {
-		// TODO Auto-generated method stub
-		thread.setImage();
-	}
 
 	public void sort() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public int answerCount() {
-		return getAnswers().size();
-	}
-	public void addUp(){
-		PostController temp=new PostController(thread.getQuestion());
-		temp.addUp();
 	}
 	
 }

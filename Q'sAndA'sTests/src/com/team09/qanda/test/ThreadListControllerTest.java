@@ -49,7 +49,7 @@ public class ThreadListControllerTest extends
 		
 		assertEquals("Question 1?", questions.get(0).getQuestion().getText());
 		assertEquals("John", questions.get(0).getQuestion().getAuthor());
-		assertEquals(2, questions.get(1).getNumOfAnswers());
+		assertEquals(2, questions.get(1).answerCount());
 		assertEquals(2, questions.get(1).getQuestion().getUps());		
 	}
 	

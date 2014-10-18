@@ -19,17 +19,13 @@ public class QuestionThread extends QModel<QView> {
 		return this.answers;
 	}
 	
-	public int getNumOfAnswers() {
+	public int answerCount() {
 		return this.answers.size();
 	}
 	
 	public void setAnswers(ArrayList<Post> answers) {
 		this.answers=answers;
 		notifyViews();
-	}
-
-	public void setImage() {
-		// TODO
 	}
 
 }
