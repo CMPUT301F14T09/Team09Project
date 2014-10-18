@@ -92,8 +92,8 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		txt2.setUps(1);
 		Post txt3=new Post(new User(),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
-		QuestionThread middle=new QuestionThread(txt);
-		QuestionThread least=new QuestionThread(txt);
+		QuestionThread middle=new QuestionThread(txt2);
+		QuestionThread least=new QuestionThread(txt3);
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
 		tlc.addThread(least);
@@ -115,8 +115,8 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		txt2.setUps(1);
 		Post txt3=new Post(new User(),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
-		QuestionThread middle=new QuestionThread(txt);
-		QuestionThread least=new QuestionThread(txt);
+		QuestionThread middle=new QuestionThread(txt2);
+		QuestionThread least=new QuestionThread(txt3);
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
 		tlc.addThread(most);
@@ -128,5 +128,34 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(most),0);
+	}
+	public void testSmokeTests(){
+		ThreadList questions=new ThreadList();
+		Post txt=new Post(new User(),"Do upvotes work?");
+		txt.setUps(2);
+		Post txt2=new Post(new User(),"Do upvotes work?");
+		txt2.setUps(1);
+		Post txt3=new Post(new User(),"Do upvotes work?");
+		txt3.setImage();
+		QuestionThread most=new QuestionThread(txt);
+		QuestionThread middle=new QuestionThread(txt2);
+		QuestionThread least=new QuestionThread(txt3);
+		// Make ThreadListController
+		ThreadListController tlc = new ThreadListController(questions);
+		tlc.addThread(most);
+		tlc.addThread(middle);
+		tlc.addThread(least);
+		
+		srt.sortByMostUpVoted();
+		assertEquals(srt.getPosition(most),0);
+		
+		srt.sortByLeastUpVoted();
+		assertEquals(srt.getPosition(most),2);
+		
+		srt.sortByHasPictures();
+		assertEquals(srt.getPosition(least),0);
+		
+		srt.sortByOldest();
+		assertEquals(srt.getPosition(least),2);
 	}
 }

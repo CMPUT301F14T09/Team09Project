@@ -12,7 +12,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void sortByHasPictures(ThreadList questions) {
+	public void sortByHasPictures() {
 		// TODO Auto-generated method stub
 		sort(new Comparator<QuestionThread>(){
 			@Override
@@ -24,7 +24,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		});
 	}
 
-	public void sortByMostRecent(ThreadList questions) {
+	public void sortByMostRecent() {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
@@ -56,6 +56,11 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 			}
 			
 		});
+	}
+
+	public void sortByOldest() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
