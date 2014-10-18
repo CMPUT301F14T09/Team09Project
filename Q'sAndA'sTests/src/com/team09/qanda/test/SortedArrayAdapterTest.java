@@ -8,7 +8,6 @@ import com.team09.qanda.ThreadList;
 import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
-import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ArrayAdapter;
 
@@ -127,8 +126,6 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(most);
 		tlc.addThread(middle);
 		tlc.addThread(least);
-		srt.sortByMostUpVoted();
-		assertEquals(srt.getPosition(least),0);
 
 		//choose Sorting Option
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
