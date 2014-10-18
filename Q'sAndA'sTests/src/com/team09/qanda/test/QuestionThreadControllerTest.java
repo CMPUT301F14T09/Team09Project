@@ -118,8 +118,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue("The image is too big!", thrown.equals(false));
 		assertTrue("There is no image!", q.isImageSet().equals(true));
 	}
-
-		
+	
 	// Use Case #13.2: Most upvoted answers
 	public void testsortAnswersByMostUpVotes(){
 		Post questionText=new Post(new User(),"This is a question.");

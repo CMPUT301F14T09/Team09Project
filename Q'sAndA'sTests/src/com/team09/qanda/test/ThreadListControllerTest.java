@@ -69,6 +69,33 @@ public class ThreadListControllerTest extends
 		assertTrue("Question not added", !questions.getQuestions().isEmpty());
 	}
 	
+	// Use Case #13.1: Most upvoted questions
+	public void testsortQuestionsByMostUpVotes(){
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		Post qpost2 = new Post(new User("John"), "Question 2?");
+		PostController pc2 = new PostController(qpost2);
+		pc2.addUp();
+		pc2.addUp();
+		Post qpost3 = new Post(new User("Bob"), "Question 3?");
+		PostController pc3 = new PostController(qpost3);
+		pc3.addUp();
+
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThread q2 = new QuestionThread(qpost2);
+		QuestionThread q3 = new QuestionThread(qpost3);
+		
+		ThreadList myQuestions = new ThreadList();
+		ThreadListController cn1=new ThreadListController(myQuestions);
+		cn1.addThread(q1);
+		cn1.addThread(q2);
+		cn1.addThread(q3);
+	
+		assertSame(myQuestions.getThreads().get(0), q2);
+		assertSame(myQuestions.getThreads().get(1), q3);
+		assertSame(myQuestions.getThreads().get(2), q1);
+	}
+	
 	// Use Case #16: Remember which questions I asked
 	public void testStoreMyQuestionsLocally() {
 		Post qpost1 = new Post(new User("John"), "Question 1?");
@@ -81,7 +108,6 @@ public class ThreadListControllerTest extends
 		ThreadListController cn1=new ThreadListController(myQuestions);
 		cn1.addThread(q1);
 		
-		//LocalStorageHandler lsh = new LocalStorageHandler(myQuestions);
 		LocalStorageHandler lsh = new LocalStorageHandler();
 	
 		assertSame(lsh.getThreadList("MyQuestions.txt").get(0), q1);
