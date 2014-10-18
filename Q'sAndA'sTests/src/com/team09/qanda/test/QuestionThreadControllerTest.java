@@ -167,16 +167,6 @@ public class QuestionThreadControllerTest extends TestCase {
 		    }
 	    }
 	}
-	//Use Case 11: Upvote a Question
-	public void testUpVotes(){
-		Post txt=new Post(new User(),"Do upvotes work?");
-		PostController cn1=new PostController(txt);
-		cn1.addUp();
-		assertTrue(txt.getUps()==1);
-		cn1.addUp();
-		assertTrue(txt.getUps()==2);
-	}
-	
 	//Use case 17: Read later
 	public void testReadLater() {
 		LocalStorageHandler handler=new LocalStorageHandler();

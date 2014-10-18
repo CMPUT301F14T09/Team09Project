@@ -85,7 +85,7 @@ public class PostControllerTest extends TestCase {
 		pctl.attachImage();
 		assertTrue("Image is not set!", ans.isImageSet());
 	}
-	//Use Case 12: Upvote an Answer
+	//Use Case 11, 12: Upvote a Question/Answer
 	public void testUpVotes(){
 		Post txt=new Post(new User(),"Do upvotes work?");
 		PostController cn1=new PostController(txt);
