@@ -7,6 +7,7 @@ public class Post extends QModel<QView> {
 	private String text;
 	private User author;
 	private int ups;
+	private boolean hasPictures;
 	private ArrayList<Reply> replies;
 	private Date timestamp;
 	
@@ -54,11 +55,11 @@ public class Post extends QModel<QView> {
 	
 	public void setImage() {
 		// TODO
+		hasPictures=true;
 	}
 
 	public Boolean isImageSet() {
-		// TODO Auto-generated method stub
-		return false;
+		return hasPictures;
 	}
 
 }

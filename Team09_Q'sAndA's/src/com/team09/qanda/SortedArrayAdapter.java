@@ -16,8 +16,13 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				// TODO Auto-generated method stub
-				return 0;
+				if(lhs.getQuestion().isImageSet() && rhs.getQuestion().isImageSet()){
+					return 0;
+				}
+				else if(lhs.getQuestion().isImageSet() && !rhs.getQuestion().isImageSet()){
+					return -1;
+				}
+				return 1;
 			}
 			
 		});
@@ -27,7 +32,13 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				return lhs.getQuestion().getTimestamp().compareTo(rhs.getQuestion().getTimestamp());
+				if(lhs.getQuestion().getUps()>rhs.getQuestion().getUps()){
+					return -1;
+				}
+				else if(lhs.getQuestion().getUps()<rhs.getQuestion().getUps()){
+					return 1;
+				}
+				return 0;
 			}
 			
 		});
@@ -37,7 +48,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				return 0;
+				return Integer.valueOf(lhs.getQuestion().getUps()).compareTo(rhs.getQuestion().getUps());
 			}
 			
 		});
@@ -48,11 +59,11 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				if(lhs.getQuestion().getTimestamp().before(rhs.getQuestion().getTimestamp())){
-					return 1;
-				}
-				else if(lhs.getQuestion().getTimestamp().after(rhs.getQuestion().getTimestamp())){
+				if(lhs.getQuestion().getUps()>rhs.getQuestion().getUps()){
 					return -1;
+				}
+				else if(lhs.getQuestion().getUps()<rhs.getQuestion().getUps()){
+					return 1;
 				}
 				return 0;
 			}
@@ -61,7 +72,13 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 	}
 
 	public void sortByOldest() {
-		// TODO Auto-generated method stub
+		sort(new Comparator<QuestionThread>(){
+			@Override
+			public int compare(QuestionThread lhs, QuestionThread rhs) {
+				return lhs.getQuestion().getTimestamp().compareTo(rhs.getQuestion().getTimestamp());
+			}
+			
+		});
 		
 	}
 

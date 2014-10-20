@@ -1,5 +1,7 @@
 package com.team09.qanda.test;
 
+import java.util.Arrays;
+
 import com.team09.qanda.MainActivity;
 import com.team09.qanda.Post;
 import com.team09.qanda.QuestionThread;
@@ -9,6 +11,7 @@ import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ArrayAdapter;
 
 public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
@@ -17,11 +20,15 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 	ArrayAdapter<CharSequence> spinner;
 	public SortedArrayAdapterTest() {
 		super(MainActivity.class);
+		
+	}
+	@Override
+	public void setUp() throws Exception{
+		super.setUp();
 		testAct=getActivity();
 		srt=new SortedArrayAdapter(testAct,android.R.layout.simple_list_item_1);
 		spinner=testAct.getSpinnerAdapter();
 	}
-	
 	//Use Case 9
 	public void testSortbyHasPictures(){
 		ThreadList questions=new ThreadList();
@@ -136,8 +143,9 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(srt.getPosition(most),0);
 	}
-	
 	public void testSmokeTests(){
+		srt.clear();
+		
 		ThreadList questions=new ThreadList();
 		Post txt=new Post(new User(),"Do upvotes work?");
 		txt.setUps(2);
@@ -153,6 +161,7 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(most);
 		tlc.addThread(middle);
 		tlc.addThread(least);
+		srt.addAll(questions.getThreads());
 		
 		srt.sortByMostUpVoted();
 		assertEquals(srt.getPosition(most),0);
@@ -165,5 +174,38 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		
 		srt.sortByOldest();
 		assertEquals(srt.getPosition(least),2);
+	}
+	//ThreadList not implemented... testSmokeTest method will always fail
+	public void testMiniSmokeTests(){
+		srt.clear();
+		Post txt=new Post(new User(),"Do upvotes work?");
+		txt.setUps(2);
+		Post txt2=new Post(new User(),"Do upvotes work?");
+		txt2.setUps(1);
+		Post txt3=new Post(new User(),"Do upvotes work?");
+		txt3.setImage();
+		QuestionThread most=new QuestionThread(txt);
+		QuestionThread middle=new QuestionThread(txt2);
+		QuestionThread least=new QuestionThread(txt3);
+		srt.addAll(Arrays.asList(new QuestionThread[]{most,middle,least}));
+		srt.sortByMostUpVoted();
+		assertEquals(srt.getPosition(most),0);
+		
+		
+		srt.sortByMostUpVoted();
+		assertEquals(srt.getPosition(most),0);
+		
+		srt.sortByLeastUpVoted();
+		assertEquals(srt.getPosition(most),2);
+		
+		srt.sortByHasPictures();
+		assertEquals(srt.getPosition(least),0);
+		
+		srt.sortByOldest();
+		assertEquals(srt.getPosition(least),0);
+		
+		srt.sortByMostRecent();
+		assertEquals(srt.getPosition(least),2);
+		
 	}
 }
