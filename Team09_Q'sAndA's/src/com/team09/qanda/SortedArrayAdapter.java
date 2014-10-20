@@ -37,12 +37,6 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				if(lhs.getQuestion().getTimestamp().before(rhs.getQuestion().getTimestamp())){
-					return 1;
-				}
-				else if(lhs.getQuestion().getTimestamp().after(rhs.getQuestion().getTimestamp())){
-					return -1;
-				}
 				return 0;
 			}
 			
@@ -54,7 +48,12 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				// TODO Auto-generated method stub
+				if(lhs.getQuestion().getTimestamp().before(rhs.getQuestion().getTimestamp())){
+					return 1;
+				}
+				else if(lhs.getQuestion().getTimestamp().after(rhs.getQuestion().getTimestamp())){
+					return -1;
+				}
 				return 0;
 			}
 			
