@@ -1,5 +1,6 @@
 package com.team09.qanda.test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.team09.qanda.ElasticSearchHandler;
@@ -52,17 +53,25 @@ public class ESHTest extends TestCase
 		qtc1.addAnswer(new Post(new User("test2"), "testa"));
 		threadController.addThread(q1);
 		
-		esh.saveThreads(thread); //Add to server
+		try {
+			esh.saveThreads(thread);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //Add to server
 		
 		//confirm questionthread object was added
-		assertTrue(esh.getThreads().size() > old.size());
+		assertTrue(esh.getThreads(10).contains(testp));
 	}
 	
 	//Use case 21(kinda?):  As an author, I want to push my replies, questions and answers online once I get connectivity.
 	//testing load thread from server
 	public void testLoadfromServer(){
 		ElasticSearchHandler esh = new ElasticSearchHandler();
-		assertTrue(esh.getThreads()!=null);
+		assertTrue(esh.getThreads(10)!=null);
 	}
 }
 
