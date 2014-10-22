@@ -7,11 +7,12 @@
     <string name="title_activity_thread_display">ThreadDisplay</string>
     <string name="title_activity_user_threads">UserThreadsActivity</string>
     <string name="title_activity_question_thread">QuestionThreadActivity</string>
-    <string name="title_activity_add_question">AddQuestionActivity</string>
+    <string name="title_activity_add_question">Add a Question...</string>
     <string name="title_activity_picture_view">PictureViewActivity</string>
     <string name="sort_HasPicture">HasPicture</string>
     <string name="sort_MostRecent">MostRecent</string>
     <string name="sort_Oldest">Oldest</string>
     <string name="sort_MostUpvotes">Most Upvoted</string>
     <string name="sort_LeastUpvoted">Least Upvoted</string>
+    <string name="add_question_hint">Write question here...</string>
 </resources>
