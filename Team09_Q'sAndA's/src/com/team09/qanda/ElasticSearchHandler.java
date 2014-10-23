@@ -11,6 +11,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -28,6 +29,7 @@ public class ElasticSearchHandler {
 	
 	public ElasticSearchHandler(){
 		//URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t09/";
+		//TODO: URL is my current local elasticsearch server for easier testing/debugging
 		String URL = "http://localhost:9200/test/";
 	}
 	
@@ -151,6 +153,30 @@ public class ElasticSearchHandler {
 	//server is not in requirements
 	//return boolean of whether the delete was successful or not
 	public boolean delete(Post p){
+		//TODO:http string currently invalid need to deal with ids
+		HttpDelete httpDelete = new HttpDelete(URL + "999");
+		httpDelete.addHeader("Accept","application/json");
+
+		try{
+			HttpResponse response = httpclient.execute(httpDelete);
+		
+			String status = response.getStatusLine().toString();
+			System.out.println(status);
+		
+			HttpEntity entity = response.getEntity();
+			BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+			String output;
+			System.err.println("Output from Server -> ");
+			while ((output = br.readLine()) != null) {
+				System.err.println(output);
+			}
+			EntityUtils.consume(entity);
+		} catch (Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		
+		httpDelete.releaseConnection();
 		return true;
 	}
 	
