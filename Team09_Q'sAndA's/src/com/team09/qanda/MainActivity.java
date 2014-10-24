@@ -52,7 +52,7 @@ public class MainActivity extends Activity{ //Main question view
 		return listener;
 	}
 	
-	/** TESTING PURPOSES - to test AddQuestionActivity*/
+	/** TESTING PURPOSES - to open and test AddQuestionActivity */
 	public void testButton(MenuItem item) {
 	    Intent intent = new Intent(this, AddQuestionActivity.class);
 	    startActivity(intent);
