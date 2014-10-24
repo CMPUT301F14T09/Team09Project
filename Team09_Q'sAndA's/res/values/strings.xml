@@ -18,4 +18,7 @@
     <string name="attach_image">Attach</string>
     <string name="submit_question_btn">Submit Question</string>
     <string name="askAQuestion">Ask a Question</string>
+    <string name="save_question">Save</string>
+    <string name="favourite_question">Favourite</string>
+    <string name="favourites">Favourites</string>
 </resources>
