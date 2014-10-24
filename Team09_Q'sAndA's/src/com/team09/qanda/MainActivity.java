@@ -2,10 +2,13 @@ package com.team09.qanda;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 public class MainActivity extends Activity{ //Main question view
 	private ArrayAdapter<CharSequence> spinner;
@@ -47,4 +50,11 @@ public class MainActivity extends Activity{ //Main question view
 	public ActionBar.OnNavigationListener getNavigationListener(){
 		return listener;
 	}
+	
+	/** TESTING PURPOSES - to test AddQuestionActivity*/
+	public void testButton(MenuItem item) {
+	    Intent intent = new Intent(this, AddQuestionActivity.class);
+	    startActivity(intent);
+	}
+	
 }

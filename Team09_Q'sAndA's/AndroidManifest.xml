@@ -36,7 +36,8 @@
         </activity>
         <activity
             android:name=".AddQuestionActivity"
-            android:label="@string/title_activity_add_question" >
+            android:label="@string/title_activity_add_question"
+            android:parentActivityName="com.team09.qanda.MainActivity" >
         </activity>
         <activity
             android:name=".PictureViewActivity"
