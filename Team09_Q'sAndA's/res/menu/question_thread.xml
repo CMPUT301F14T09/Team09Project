@@ -14,5 +14,12 @@
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/save_question"/>
+    
+    <item
+        android:id="@+id/favourite_question"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_menu_add"
+        android:title="@string/favourite_question"/>
 
 </menu>
