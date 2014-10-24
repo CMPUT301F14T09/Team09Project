@@ -22,4 +22,5 @@
     <string name="favourite_question">Favourite</string>
     <string name="favourites">Favourites</string>
     <string name="user_questions">My Questions</string>
+    <string name="saved_questions">Saved</string>
 </resources>
