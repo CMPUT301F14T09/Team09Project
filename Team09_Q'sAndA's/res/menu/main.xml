@@ -12,6 +12,13 @@
         android:title="Test" 
         android:onClick="testButton"
         android:showAsAction="ifRoom"/>
+    
+    <item 
+        android:id="@+id/test_qthread_item" 
+        android:title="QThread" 
+        android:onClick="testQThreadButton"
+        android:showAsAction="ifRoom"/>
+    
 	<item
         android:id="@+id/action_search"
 		android:title="ActionSearch"
