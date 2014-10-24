@@ -12,5 +12,10 @@
         android:title="Test" 
         android:onClick="testButton"
         android:showAsAction="ifRoom"/>
+	<item
+        android:id="@+id/action_search"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_search" />
+
 
 </menu>

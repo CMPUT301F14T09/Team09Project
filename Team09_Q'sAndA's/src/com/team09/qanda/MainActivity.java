@@ -17,6 +17,7 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		getActionBar().setDisplayShowTitleEnabled(false);
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
