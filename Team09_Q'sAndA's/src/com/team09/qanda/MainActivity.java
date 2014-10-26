@@ -2,6 +2,8 @@ package com.team09.qanda;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.SearchView;
 
 public class MainActivity extends Activity{ //Main question view
 	private ArrayAdapter<CharSequence> spinner;
@@ -30,6 +33,8 @@ public class MainActivity extends Activity{ //Main question view
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		getSearchView(menu).setSearchableInfo(getSearchManager().getSearchableInfo(getComponentName()));
+	    getSearchView(menu).setIconifiedByDefault(true);
 		return true;
 	}
 
@@ -62,6 +67,12 @@ public class MainActivity extends Activity{ //Main question view
 	public void testQThreadButton(MenuItem item) {
 	    Intent intent = new Intent(this, QuestionThreadActivity.class);
 	    startActivity(intent);
+	}
+	private SearchManager getSearchManager(){
+		return (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	}
+	private SearchView getSearchView(Menu menu){
+		return (SearchView) menu.findItem(R.id.action_search).getActionView();
 	}
 	
 }
