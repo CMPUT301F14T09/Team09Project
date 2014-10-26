@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.SearchView;
 
 public class MainActivity extends Activity{ //Main question view
+	
 	private ArrayAdapter<CharSequence> spinner;
 	private ActionBar.OnNavigationListener listener;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
