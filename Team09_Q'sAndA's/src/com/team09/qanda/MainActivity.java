@@ -1,5 +1,7 @@
 package com.team09.qanda;
 
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -11,24 +13,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.SearchView;
 
 public class MainActivity extends Activity{ //Main question view
 	
 	private ArrayAdapter<CharSequence> spinner;
 	private ActionBar.OnNavigationListener listener;
+	private ThreadList threads;
+	private SortedArrayAdapter adapter;
+	private ListView mainThreadsList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		getActionBar().setDisplayShowTitleEnabled(false);
+		
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 				return false;
 			}
 		};
+		
+		mainThreadsList = (ListView) findViewById(R.id.MainListView);
+		
 	}
 
 	@Override
@@ -51,6 +62,55 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		//threads.refresh(0, 10);
+		threads = new ThreadList();
+		populateList();
+		adapter = new SortedArrayAdapter(this, R.layout.main_row_layout, threads);
+		mainThreadsList.setAdapter(adapter);
+	}
+	
+	public void setAdapter(SortedArrayAdapter adapter){
+		this.adapter = adapter;
+	}
+	
+	
+	/** TESTING PURPOSES - to create a list of threads **/
+	private void populateList() {
+		Post qpost1 = new Post(new User("John"), "Question 1?");
+		PostController pc1 = new PostController(qpost1);
+		
+		QuestionThread q1 = new QuestionThread(qpost1);
+		QuestionThreadController qtc1 = new QuestionThreadController(q1);
+		
+		pc1.addUp();
+		pc1.addUp();
+		qtc1.addAnswer(new Post(new User(), "Answer 1."));
+		
+		Post qpost2 = new Post(new User(), "Question 2?");
+		PostController pc2 = new PostController(qpost2);
+		
+		QuestionThread q2 = new QuestionThread(qpost2);
+		QuestionThreadController qtc2 = new QuestionThreadController(q2);
+		
+		pc2.addUp();
+		pc2.addUp();
+		qtc2.addAnswer(new Post(new User(), "Answer 2."));
+		qtc2.addAnswer(new Post(new User(), "Answer 3."));
+		
+		ThreadListController cn1=new ThreadListController(threads);
+		cn1.addThread(q1);
+		cn1.addThread(q2);
+		
+		
+	}
+	
+	
 	//for testing purposes
 	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
 		return spinner;

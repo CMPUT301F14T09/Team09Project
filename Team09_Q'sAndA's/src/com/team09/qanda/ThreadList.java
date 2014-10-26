@@ -8,7 +8,8 @@ public class ThreadList extends QModel<QView> {
 	
 	public ThreadList() {
 		//TODO: need to fix refresh because of design change
-		refresh(0, 10);
+		//refresh(0, 10);
+		threads = new ArrayList<QuestionThread>();
 	}
 	
 	public void refresh(int sortStyle, int numQuestions) {

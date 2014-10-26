@@ -10,11 +10,12 @@
 
     <ListView
         android:id="@+id/MainListView"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/askQuestionButton"
         android:layout_alignLeft="@+id/askQuestionButton"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+		android:scrollbars="vertical" >
 
     </ListView>
 
