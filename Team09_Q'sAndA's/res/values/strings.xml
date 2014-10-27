@@ -26,5 +26,6 @@
     <string name="action_Search">Find</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="see_replies">See Replies</string>
+    <string name="loadMore">Load More</string>
 
 </resources>

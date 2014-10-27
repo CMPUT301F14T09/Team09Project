@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -55,6 +56,10 @@ public class MainActivity extends Activity{ //Main question view
 		
 		mainThreadsList = (ListView) findViewById(R.id.MainListView);
 		
+		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
+                false);
+		mainThreadsList.addFooterView(footer);
+		
 	}
 
 	@Override
@@ -92,6 +97,7 @@ public class MainActivity extends Activity{ //Main question view
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
 		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
 		mainThreadsList.setAdapter(adapter);
+		
 		
 		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -133,9 +139,16 @@ public class MainActivity extends Activity{ //Main question view
 		qtc2.addAnswer(new Post(new User(), "Answer 2."));
 		qtc2.addAnswer(new Post(new User(), "Answer 3."));
 		
+		QuestionThread q3 = new QuestionThread(qpost1);
+		QuestionThread q4 = new QuestionThread(qpost1);
+		QuestionThread q5 = new QuestionThread(qpost1);
+		
 		ThreadListController cn1=new ThreadListController(threads);
 		cn1.addThread(q1);
 		cn1.addThread(q2);
+		//cn1.addThread(q3);
+		//cn1.addThread(q4);
+		//cn1.addThread(q5);
 		
 		
 	}
