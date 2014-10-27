@@ -20,6 +20,9 @@ public class QuestionThreadActivity extends Activity {
 		TextView question = (TextView) findViewById(R.id.threadQuestion);
 		question.setText(thread.getQuestion().getText());
 		
+		TextView author = (TextView) findViewById(R.id.threadQuestionAuthor);
+		author.setText(thread.getQuestion().getAuthor().getName());
+		
 	}
 
 	@Override
