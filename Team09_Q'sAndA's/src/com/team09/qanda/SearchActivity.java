@@ -39,11 +39,9 @@ public class SearchActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	private void getSearchQuery(Intent intent){
-		
 		if(Intent.ACTION_SEARCH.equals(intent.getAction())){
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			// Add code for searching (for the the ESH) here
-			
 		}
 		else{
 			Toast.makeText(this, "No Search Query... closing the activity",Toast.LENGTH_LONG).show();
