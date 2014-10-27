@@ -21,8 +21,7 @@ public class MainActivity extends Activity{ //Main question view
 	private ArrayAdapter<CharSequence> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads;
-	private ArrayAdapter<QuestionThread> testAdapter;
-	private SortedArrayAdapter adapter;
+	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
 	
 	@Override
@@ -76,7 +75,7 @@ public class MainActivity extends Activity{ //Main question view
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new SortedArrayAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
 		mainThreadsList.setAdapter(adapter);
 	}
 

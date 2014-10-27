@@ -10,19 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
+public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 
-	//private ThreadList threads;
 	private ArrayList<QuestionThread> threads;
 	private Context context;
 	
-	public SortedArrayAdapter(Context context, int layoutResourceId, ArrayList<QuestionThread> threads) {
+	public ThreadListAdapter(Context context, int layoutResourceId, ArrayList<QuestionThread> threads) {
 		super(context, layoutResourceId, threads);
 		this.threads = threads;
 		this.context = context;
 		// TODO Auto-generated constructor stub
 	}
 
+	@Deprecated
 	public void sortByHasPictures() {
 		sort(new Comparator<QuestionThread>(){
 			@Override
@@ -38,7 +38,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 			
 		});
 	}
-
+	@Deprecated
 	public void sortByMostRecent() {
 		sort(new Comparator<QuestionThread>(){
 			@Override
@@ -54,7 +54,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 			
 		});
 	}
-
+	@Deprecated
 	public void sortByLeastUpVoted() {
 		sort(new Comparator<QuestionThread>(){
 			@Override
@@ -65,7 +65,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		});
 		
 	}
-
+	@Deprecated
 	public void sortByMostUpVoted() {
 		sort(new Comparator<QuestionThread>(){
 			@Override
@@ -81,7 +81,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 			
 		});
 	}
-
+	@Deprecated
 	public void sortByOldest() {
 		sort(new Comparator<QuestionThread>(){
 			@Override
