@@ -1,5 +1,6 @@
 package com.team09.qanda;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import android.content.Context;
@@ -11,11 +12,12 @@ import android.widget.TextView;
 
 public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 
-	private ThreadList threads;
+	//private ThreadList threads;
+	private ArrayList<QuestionThread> threads;
 	private Context context;
 	
-	public SortedArrayAdapter(Context context, int layoutResourceId, ThreadList threads) {
-		super(context, layoutResourceId);
+	public SortedArrayAdapter(Context context, int layoutResourceId, ArrayList<QuestionThread> threads) {
+		super(context, layoutResourceId, threads);
 		this.threads = threads;
 		this.context = context;
 		// TODO Auto-generated constructor stub
@@ -104,8 +106,8 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		QuestionThread thread = threads.get(position);
 		
 		question.setText(thread.getQuestion().getText());
-		points.setText(thread.getQuestion().getUps() + "Point(s)");
-		answers.setText(thread.getAnswers().size() + "Answer(s)");
+		points.setText(thread.getQuestion().getUps() + " Point(s)");
+		answers.setText(thread.getAnswers().size() + " Answer(s)");
 		
 		return convertView;
 	}

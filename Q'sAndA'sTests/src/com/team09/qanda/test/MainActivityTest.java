@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.test.ViewAsserts;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
@@ -33,12 +34,14 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	
 	@UiThreadTest
 	public void testListQuestions() {
-		MainActivity lts = getActivity();
-		int oldLength = lts.getAdapter().getCount();
+		MainActivity ma = getActivity();
+		int oldLength = ma.getAdapter().getCount();
 		
 		//makeTweet("Hello");
 		//ArrayAdapter<NormalTweetModel> aa = lts.getAdapter();
 		assertEquals(2, oldLength);
+		
+		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
 		
 		//assertTrue(aa.getItem(aa.getCount()-1) instanceof NormalTweetModel);
 		
