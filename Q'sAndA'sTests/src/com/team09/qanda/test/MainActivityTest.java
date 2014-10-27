@@ -5,34 +5,37 @@ import java.util.Arrays;
 import com.team09.qanda.MainActivity;
 import com.team09.qanda.Post;
 import com.team09.qanda.QuestionThread;
-import com.team09.qanda.SortedArrayAdapter;
+import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.ThreadList;
 import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ArrayAdapter;
 
-public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	SortedArrayAdapter srt;
-	MainActivity testAct;
+public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	ThreadListAdapter adapter;
+	MainActivity mainAct;
 	ArrayAdapter<CharSequence> spinner;
-	public SortedArrayAdapterTest() {
+	
+	public MainActivityTest() {
 		super(MainActivity.class);
 		
 	}
 	@Override
 	public void setUp() throws Exception{
 		super.setUp();
-		testAct=getActivity();
-		srt=new SortedArrayAdapter(testAct,android.R.layout.simple_list_item_1);
-		spinner=testAct.getSpinnerAdapter();
+		mainAct=getActivity();
+		adapter=new ThreadListAdapter(mainAct,android.R.layout.simple_list_item_1);
+		spinner=mainAct.getSpinnerAdapter();
 	}
 	//Use Case 9
 	public void testSortbyHasPictures(){
 		ThreadList questions=new ThreadList();
-		srt.clear();
+		adapter.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");
 
@@ -48,14 +51,14 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(new QuestionThread(pic2));
 		tlc.addThread(NoPicture);
 		//choose Sorting Option
-		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(srt.getPosition(NoPicture),0);
+		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
+		assertEquals(adapter.getPosition(NoPicture),0);
 	}
 	
 	//Use Case 10.1
 	public void testsortByMostRecent(){
 		ThreadList questions=new ThreadList();
-		srt.clear();
+		adapter.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Recent");
 		// Make ThreadListController
@@ -67,15 +70,15 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(second);
 		tlc.addThread(first);
 		//choose Sorting Option
-		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(srt.getPosition(third),2);
+		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
+		assertEquals(adapter.getPosition(third),2);
 
 	}
 	
 	//Use Case 10.2
 	public void testsortByOldest(){
 		ThreadList questions=new ThreadList();
-		srt.clear();
+		adapter.clear();
 		//get the position of the  "Oldest" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Oldest");
 		QuestionThread first=new QuestionThread(new Post(new User(),"am I first?"));
@@ -88,15 +91,15 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(third);
 
 		//choose Sorting Option
-		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(srt.getPosition(third),0);
+		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
+		assertEquals(adapter.getPosition(third),0);
 
 	}
 	
 	//Use Case 10.3
 	public void testsortByMostUpVotes(){
 		ThreadList questions=new ThreadList();
-		srt.clear();
+		adapter.clear();
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Upvoted");
 
@@ -115,14 +118,14 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(most);
 
 		//choose Sorting Option
-		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(srt.getPosition(most),0);
+		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
+		assertEquals(adapter.getPosition(most),0);
 	}
 	
 	//Use Case 10.4
 	public void testsortByLeastUpvotes(){
 		ThreadList questions=new ThreadList();
-		srt.clear();
+		adapter.clear();
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
 		Post txt=new Post(new User(),"Do upvotes work?");
@@ -140,72 +143,19 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 		tlc.addThread(least);
 
 		//choose Sorting Option
-		testAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(srt.getPosition(most),0);
+		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
+		assertEquals(adapter.getPosition(most),0);
 	}
-	public void testSmokeTests(){
-		srt.clear();
+	
+	@UiThreadTest
+	public void testListQuestions() {
+		MainActivity ma = getActivity();
+		int oldLength = ma.getAdapter().getCount();
 		
-		ThreadList questions=new ThreadList();
-		Post txt=new Post(new User(),"Do upvotes work?");
-		txt.setUps(2);
-		Post txt2=new Post(new User(),"Do upvotes work?");
-		txt2.setUps(1);
-		Post txt3=new Post(new User(),"Do upvotes work?");
-		txt3.setImage();
-		QuestionThread most=new QuestionThread(txt);
-		QuestionThread middle=new QuestionThread(txt2);
-		QuestionThread least=new QuestionThread(txt3);
-		// Make ThreadListController
-		ThreadListController tlc = new ThreadListController(questions);
-		tlc.addThread(most);
-		tlc.addThread(middle);
-		tlc.addThread(least);
-		srt.addAll(questions.getThreads());
+		assertEquals(2, oldLength);
 		
-		srt.sortByMostUpVoted();
-		assertEquals(srt.getPosition(most),0);
-		
-		srt.sortByLeastUpVoted();
-		assertEquals(srt.getPosition(most),2);
-		
-		srt.sortByHasPictures();
-		assertEquals(srt.getPosition(least),0);
-		
-		srt.sortByOldest();
-		assertEquals(srt.getPosition(least),2);
-	}
-	//ThreadList not implemented... testSmokeTest method will always fail
-	public void testMiniSmokeTests(){
-		srt.clear();
-		Post txt=new Post(new User(),"Do upvotes work?");
-		txt.setUps(2);
-		Post txt2=new Post(new User(),"Do upvotes work?");
-		txt2.setUps(1);
-		Post txt3=new Post(new User(),"Do upvotes work?");
-		txt3.setImage();
-		QuestionThread most=new QuestionThread(txt);
-		QuestionThread middle=new QuestionThread(txt2);
-		QuestionThread least=new QuestionThread(txt3);
-		srt.addAll(Arrays.asList(new QuestionThread[]{most,middle,least}));
-		srt.sortByMostUpVoted();
-		assertEquals(srt.getPosition(most),0);
-		
-		
-		srt.sortByMostUpVoted();
-		assertEquals(srt.getPosition(most),0);
-		
-		srt.sortByLeastUpVoted();
-		assertEquals(srt.getPosition(most),2);
-		
-		srt.sortByHasPictures();
-		assertEquals(srt.getPosition(least),0);
-		
-		srt.sortByOldest();
-		assertEquals(srt.getPosition(least),0);
-		
-		srt.sortByMostRecent();
-		assertEquals(srt.getPosition(least),2);
+		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
 		
 	}
+	
 }
