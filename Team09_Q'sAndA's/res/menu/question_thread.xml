@@ -1,12 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.team09.qanda.QuestionThreadActivity" >
-
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
     
     <item
         android:id="@+id/save_question"
@@ -21,5 +15,23 @@
         android:showAsAction="ifRoom"
         android:icon="@drawable/btn_star_holo_light"
         android:title="@string/favourite_question"/>
+    
+    <item
+        android:id="@+id/favourites"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/favourites"/>
+    
+    <item
+        android:id="@+id/saved_questions"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/saved_questions"/>
+    
+    <item
+        android:id="@+id/user_questions"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/user_questions"/>
 
 </menu>
