@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class QuestionThreadActivity extends Activity {
 	
@@ -16,7 +17,8 @@ public class QuestionThreadActivity extends Activity {
 		
 		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
 		
-		
+		TextView question = (TextView) findViewById(R.id.threadQuestion);
+		question.setText(thread.getQuestion().getText());
 		
 	}
 

@@ -8,5 +8,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team09.qanda.QuestionThreadActivity" >
 
+    <TextView
+        android:id="@+id/threadQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
