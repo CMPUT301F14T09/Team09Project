@@ -51,39 +51,6 @@ public class ElasticSearchHandler {
 		return json;
 	}
 	
-	private QuestionThread getQuestions(){
-		QuestionThread q = null;
-		try{
-			//TODO:http string currently invalid need to deal with ids
-			HttpGet getRequest = new HttpGet(URL+"999?pretty=1");
-
-			getRequest.addHeader("Accept","application/json");
-
-			HttpResponse response = httpclient.execute(getRequest);
-
-			String status = response.getStatusLine().toString();
-			System.out.println(status);
-
-			String json = getEntityContent(response);
-
-			Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<QuestionThread>>(){}.getType();
-			ElasticSearchResponse<QuestionThread> esResponse = gson.fromJson(json, elasticSearchResponseType);
-			q = esResponse.getSource();
-			
-			getRequest.releaseConnection();
-
-		} catch (ClientProtocolException e) {
-
-			e.printStackTrace();
-
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		}
-		
-		return q;
-	}
-	
 	//this version defaults to sort by upvotes
 	//could change the design of this method to reduce repetition
 	//more overloading could be done for when no arguments are passed
@@ -98,15 +65,38 @@ public class ElasticSearchHandler {
 	//overloaded more specific version, for sorting
 	//this is default version
 	public ArrayList<QuestionThread> getThreads(int sortStyle, int numQuestions) {
-		ThreadList thread = null;
 		ArrayList<QuestionThread> qs = new ArrayList<QuestionThread>();
-		
 		//TODO: need to do sorting somewhere
-		for(int i = 0; i < numQuestions; i++){
-			qs.add(getQuestions());
-		}
 		
-		return thread.getThreads();
+		HttpGet getRequest = new HttpGet(URL + "_search?&" +
+				java.net.URLEncoder.encode("{\"query\":{\"match_all\":{}}, \"size\":"+ numQuestions+ "}\",\"UTF-8"));
+		getRequest.setHeader("Accept","application/json");
+		HttpResponse response;
+		String json = "";
+		try {
+			response = httpclient.execute(getRequest);
+			String status = response.getStatusLine().toString();
+			System.out.println(status);
+			json = getEntityContent(response);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<QuestionThread>>(){}.getType();
+		ElasticSearchSearchResponse<QuestionThread> esResponse = gson.fromJson(json, elasticSearchSearchResponseType);
+		System.err.println(esResponse);
+		for (ElasticSearchResponse<QuestionThread> r : esResponse.getHits()) {
+			QuestionThread q = r.getSource();
+			System.err.println(q);
+			qs.add(q);
+		}
+		getRequest.releaseConnection();
+		
+		return qs;
 	}
 
 	private boolean saveQuestions(QuestionThread q) {
@@ -187,7 +177,7 @@ public class ElasticSearchHandler {
 	//return boolean of whether the delete was successful or not
 	public boolean delete(Post p){
 		//TODO:http string currently invalid need to deal with ids
-		HttpDelete httpDelete = new HttpDelete(URL + "999");
+		HttpDelete httpDelete = new HttpDelete(URL + p.hashCode());
 		httpDelete.addHeader("Accept","application/json");
 
 		try{

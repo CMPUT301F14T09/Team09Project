@@ -64,7 +64,7 @@ public class ESHTest extends TestCase
 		} //Add to server
 		
 		//confirm questionthread object was added
-		assertTrue(esh.getThreads(10).contains(testp));
+		assertTrue(esh.getThreads(10).contains(old));
 	}
 	
 	//Use case 21(kinda?):  As an author, I want to push my replies, questions and answers online once I get connectivity.
