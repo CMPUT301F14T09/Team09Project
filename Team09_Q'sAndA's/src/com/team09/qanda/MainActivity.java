@@ -2,6 +2,8 @@ package com.team09.qanda;
 
 import java.util.ArrayList;
 
+
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
@@ -11,10 +13,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends Activity{ //Main question view
 	
@@ -77,8 +82,23 @@ public class MainActivity extends Activity{ //Main question view
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
 		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
 		mainThreadsList.setAdapter(adapter);
+		
+		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
 	}
 
+	public void displayThread(QuestionThread thread) {
+		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
+		intent.putExtra("Selected Thread", thread);
+		startActivity(intent);
+	}
 	
 	
 	/** TEMPORARY - to create a list of threads **/
@@ -109,6 +129,9 @@ public class MainActivity extends Activity{ //Main question view
 		
 		
 	}
+	
+
+	
 	
 	//for testing purposes
 	public ThreadListAdapter getAdapter(){

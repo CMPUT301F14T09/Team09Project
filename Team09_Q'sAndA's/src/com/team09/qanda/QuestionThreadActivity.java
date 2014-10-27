@@ -6,11 +6,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class QuestionThreadActivity extends Activity {
+	
+	private QuestionThread thread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_thread);
+		
+		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
+		
+		
+		
 	}
 
 	@Override

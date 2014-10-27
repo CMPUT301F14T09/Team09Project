@@ -1,8 +1,9 @@
 package com.team09.qanda;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class QuestionThread extends QModel<QView> {
+public class QuestionThread extends QModel<QView> implements Serializable {
 	private Post question;
 	private ArrayList<Post> answers;
 	

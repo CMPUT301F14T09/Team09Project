@@ -1,9 +1,10 @@
 package com.team09.qanda;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Post extends QModel<QView> {
+public class Post extends QModel<QView> implements Serializable {
 	private String text;
 	private User author;
 	private int ups;

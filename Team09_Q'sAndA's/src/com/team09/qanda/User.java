@@ -1,8 +1,10 @@
 package com.team09.qanda;
 
+import java.io.Serializable;
+
 import android.provider.Settings;
 
-public class User extends QModel<QView> {
+public class User extends QModel<QView> implements Serializable {
 	private String name;
 	private String deviceID;
 	
