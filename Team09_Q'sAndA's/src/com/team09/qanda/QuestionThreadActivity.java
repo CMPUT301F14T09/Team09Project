@@ -23,6 +23,9 @@ public class QuestionThreadActivity extends Activity {
 		TextView author = (TextView) findViewById(R.id.threadQuestionAuthor);
 		author.setText(thread.getQuestion().getAuthor().getName());
 		
+		TextView upvotes = (TextView) findViewById(R.id.questionUpvotes);
+		upvotes.setText(thread.getQuestion().getUps() + " Point(s)");
+		
 	}
 
 	@Override

@@ -15,7 +15,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
@@ -27,6 +26,27 @@
     	android:textColor="@color/grey"
     	android:layout_below="@id/threadQuestion"
     	android:layout_alignParentRight="true">
+    </TextView>
+    
+    <TextView
+        android:id="@+id/repliesButton"
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:paddingLeft="5dp"
+    	android:textSize="12sp"
+    	android:text="@string/see_replies"
+    	android:layout_below="@id/threadQuestionAuthor"
+    	android:layout_alignParentLeft="true">
+    </TextView>
+    
+    <TextView
+        android:id="@+id/questionUpvotes"
+	    android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:paddingLeft="5dp"
+    	android:layout_below="@id/threadQuestionAuthor"
+    	android:layout_alignParentRight="true"
+    	android:textSize="12sp">
     </TextView>
 
 </RelativeLayout>
