@@ -21,6 +21,16 @@ import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * 
+ * This class is the activity for the main screen
+ * of the app. It displays a list of all the questions
+ * and allows the user to navigate to other screens.
+ *
+ * @author 
+ * @version 
+ */
+
 public class MainActivity extends Activity{ //Main question view
 	
 	private ArrayAdapter<CharSequence> spinner;
