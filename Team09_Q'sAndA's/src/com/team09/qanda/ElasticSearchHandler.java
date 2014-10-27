@@ -56,7 +56,13 @@ public class ElasticSearchHandler {
 	//this is default version
 	//could change the design of this method to reduce repetition
 	public ArrayList<QuestionThread> getThreads(int numQuestions) {
-		int sortStyle = 0;
+		return getThreads(numQuestions, DEFAULT);
+	}
+	
+	//sortStyle is id of the element found at the
+	//the index of the spinner element found in the string resource
+	//overloaded more specific version, for sorting
+	public ArrayList<QuestionThread> getThreads(int sortStyle, int numQuestions) {
 		ThreadList thread = null;
 		try{
 			//TODO:http string currently invalid need to deal with ids
@@ -71,11 +77,8 @@ public class ElasticSearchHandler {
 
 			String json = getEntityContent(response);
 
-			// We have to tell GSON what type we expect
 			Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<ThreadList>>(){}.getType();
-			// Now we expect to get a Recipe response
 			ElasticSearchResponse<ThreadList> esResponse = gson.fromJson(json, elasticSearchResponseType);
-			// We get the recipe from it!
 			thread = esResponse.getSource();
 			
 			getRequest.releaseConnection();
@@ -90,27 +93,18 @@ public class ElasticSearchHandler {
 		}
 		return thread.getThreads();
 	}
-	
-	//sortStyle is id of the element found at the
-	//the index of the spinner element found in the string resource
-	//overloaded more specific version, for sorting
-	public ArrayList<QuestionThread> getThreads(int sortStyle,int numQuestions) {
-		return new ArrayList<QuestionThread>();
-	}
 
-	//returns boolean of whether the threads were successfully saved or not
-	//compare with threads currently on server and only add what is new
-	//DONT OVERWRITE SERVER
-	public boolean saveThreads(ThreadList thread) throws IllegalStateException, IOException {
-		HttpPost httpPost = new HttpPost(URL);
+	private boolean saveQuestions(QuestionThread q) {
+		HttpPost httpPost = new HttpPost(URL + q.hashCode());
 		StringEntity stringentity = null;
 		
 		//TODO:need to change this section to deal with QuestionThreads and not ThreadList
 		try {
-			stringentity = new StringEntity(gson.toJson(thread));
+			stringentity = new StringEntity(gson.toJson(q));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		httpPost.setHeader("Accept","application/json");
 
@@ -121,31 +115,55 @@ public class ElasticSearchHandler {
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 		HttpEntity entity = response.getEntity();
-		BufferedReader br = new BufferedReader(new InputStreamReader(entity.getContent()));
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new InputStreamReader(entity.getContent()));
+		} catch (IllegalStateException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+			return false;
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+			return false;
+		}
 		String output;
 		System.err.println("Output from Server -> ");
-		while ((output = br.readLine()) != null) {
-			System.err.println(output);
-		}
-
 		try {
-			
+			while ((output = br.readLine()) != null) {
+				System.err.println(output);
+			}
 			EntityUtils.consume(entity);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		httpPost.releaseConnection();
 		//TODO: need to fix refresh, because design change
 		//thread.refresh();
+		return true;
+	}
+	
+	//returns boolean of whether the threads were successfully saved or not
+	//compare with threads currently on server and only add what is new
+	//DONT OVERWRITE SERVER
+	public boolean saveThreads(ThreadList thread) throws IllegalStateException, IOException {
+		for (QuestionThread q: thread.getThreads()){
+			if(!saveQuestions(q)){
+				return false;
+			}
+		}
 		return true;
 	}
 
