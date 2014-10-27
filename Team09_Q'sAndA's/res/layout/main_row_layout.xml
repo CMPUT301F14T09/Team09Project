@@ -3,14 +3,23 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
     
+    <CheckBox
+        android:id="@+id/saveQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:button="@android:drawable/btn_star"/>
+    
     <TextView
         android:id="@+id/questionMain"
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:paddingLeft="5dp"
     	android:textSize="30sp"
+    	android:layout_toLeftOf="@id/saveQuestion"
     	android:layout_alignParentLeft="true">
     </TextView>
+    
     
     <TextView
         android:id="@+id/authorMain"
