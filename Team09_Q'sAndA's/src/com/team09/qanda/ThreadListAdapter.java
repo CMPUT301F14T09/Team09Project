@@ -100,12 +100,14 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 			convertView = inflater.inflate(R.layout.main_row_layout, parent, false);
 		}
 		TextView question = (TextView) convertView.findViewById(R.id.questionMain);
+		TextView author = (TextView) convertView.findViewById(R.id.authorMain);
 		TextView points = (TextView) convertView.findViewById(R.id.numOfPoints);
 		TextView answers = (TextView) convertView.findViewById(R.id.numOfAnswers);
 		
 		QuestionThread thread = threads.get(position);
 		
 		question.setText(thread.getQuestion().getText());
+		author.setText(" - " + thread.getQuestion().getAuthor().getName());
 		points.setText(thread.getQuestion().getUps() + " Point(s)");
 		answers.setText(thread.getAnswers().size() + " Answer(s)");
 		

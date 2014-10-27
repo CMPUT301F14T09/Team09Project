@@ -83,7 +83,7 @@ public class MainActivity extends Activity{ //Main question view
 	
 	/** TEMPORARY - to create a list of threads **/
 	private void populateList() {
-		Post qpost1 = new Post(new User("John"), "A very very very very ver very very very very very very very very vyerv verv veryv very long Question 1?");
+		Post qpost1 = new Post(new User("John"), "A very very very very very very very very very very very long Question 1?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
@@ -110,6 +110,7 @@ public class MainActivity extends Activity{ //Main question view
 		
 	}
 	
+	//for testing purposes
 	public ThreadListAdapter getAdapter(){
 		return adapter;
 	}
@@ -118,7 +119,6 @@ public class MainActivity extends Activity{ //Main question view
 		this.adapter = adapter;
 	}
 	
-	//for testing purposes
 	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
 		return spinner;
 	}

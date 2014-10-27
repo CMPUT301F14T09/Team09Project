@@ -13,12 +13,23 @@
     </TextView>
     
     <TextView
+        android:id="@+id/authorMain"
+	    android:layout_width="wrap_content"
+    	android:layout_height="30sp"
+    	android:paddingLeft="5dp"
+    	android:textSize="15sp"
+    	android:textColor="@color/grey"
+    	android:layout_below="@id/questionMain"
+    	android:layout_alignParentRight="true">
+    </TextView>
+    
+    <TextView
         android:id="@+id/numOfPoints"
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:paddingLeft="5dp"
-    	android:textSize="10sp"
-    	android:layout_below="@id/questionMain"
+    	android:textSize="12sp"
+    	android:layout_below="@id/authorMain"
     	android:layout_alignParentLeft="true">
     </TextView>
     
@@ -27,9 +38,9 @@
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:paddingLeft="5dp"
-    	android:layout_below="@id/questionMain"
+    	android:layout_below="@id/authorMain"
     	android:layout_alignParentRight="true"
-    	android:textSize="10sp">
+    	android:textSize="12sp">
     </TextView>
     
 </RelativeLayout>
