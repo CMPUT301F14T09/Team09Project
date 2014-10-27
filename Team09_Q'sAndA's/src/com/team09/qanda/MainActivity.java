@@ -110,11 +110,11 @@ public class MainActivity extends Activity{ //Main question view
 		
 	}
 	
-	public SortedArrayAdapter getAdapter(){
+	public ThreadListAdapter getAdapter(){
 		return adapter;
 	}
 
-	public void setAdapter(SortedArrayAdapter adapter){
+	public void setAdapter(ThreadListAdapter adapter){
 		this.adapter = adapter;
 	}
 	

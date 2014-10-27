@@ -11,6 +11,8 @@ import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ArrayAdapter;
 
