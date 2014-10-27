@@ -51,19 +51,8 @@ public class ElasticSearchHandler {
 		return json;
 	}
 	
-	//sortStyle is id of the element found at the
-	//the index of the spinner element found in the string resource
-	//this is default version
-	//could change the design of this method to reduce repetition
-	public ArrayList<QuestionThread> getThreads(int numQuestions) {
-		return getThreads(numQuestions, DEFAULT);
-	}
-	
-	//sortStyle is id of the element found at the
-	//the index of the spinner element found in the string resource
-	//overloaded more specific version, for sorting
-	public ArrayList<QuestionThread> getThreads(int sortStyle, int numQuestions) {
-		ThreadList thread = null;
+	private QuestionThread getQuestions(){
+		QuestionThread q = null;
 		try{
 			//TODO:http string currently invalid need to deal with ids
 			HttpGet getRequest = new HttpGet(URL+"999?pretty=1");
@@ -77,9 +66,9 @@ public class ElasticSearchHandler {
 
 			String json = getEntityContent(response);
 
-			Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<ThreadList>>(){}.getType();
-			ElasticSearchResponse<ThreadList> esResponse = gson.fromJson(json, elasticSearchResponseType);
-			thread = esResponse.getSource();
+			Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<QuestionThread>>(){}.getType();
+			ElasticSearchResponse<QuestionThread> esResponse = gson.fromJson(json, elasticSearchResponseType);
+			q = esResponse.getSource();
 			
 			getRequest.releaseConnection();
 
@@ -91,6 +80,32 @@ public class ElasticSearchHandler {
 
 			e.printStackTrace();
 		}
+		
+		return q;
+	}
+	
+	//this version defaults to sort by upvotes
+	//could change the design of this method to reduce repetition
+	//more overloading could be done for when no arguments are passed
+	//or just sortstyle is passed and not numQuestions **will be a data type problem 
+	//but could be resolved by changing sortStyle to char or something, if necessary**
+	public ArrayList<QuestionThread> getThreads(int numQuestions) {
+		return getThreads(numQuestions, DEFAULT);
+	}
+	
+	//sortStyle is id of the element found at the
+	//the index of the spinner element found in the string resource
+	//overloaded more specific version, for sorting
+	//this is default version
+	public ArrayList<QuestionThread> getThreads(int sortStyle, int numQuestions) {
+		ThreadList thread = null;
+		ArrayList<QuestionThread> qs = new ArrayList<QuestionThread>();
+		
+		//TODO: need to do sorting somewhere
+		for(int i = 0; i < numQuestions; i++){
+			qs.add(getQuestions());
+		}
+		
 		return thread.getThreads();
 	}
 
