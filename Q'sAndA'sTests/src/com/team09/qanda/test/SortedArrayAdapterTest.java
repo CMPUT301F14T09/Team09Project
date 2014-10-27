@@ -18,6 +18,8 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 	SortedArrayAdapter srt;
 	MainActivity testAct;
 	ArrayAdapter<CharSequence> spinner;
+	ThreadList questions;
+	
 	public SortedArrayAdapterTest() {
 		super(MainActivity.class);
 		
@@ -26,12 +28,12 @@ public class SortedArrayAdapterTest extends ActivityInstrumentationTestCase2<Mai
 	public void setUp() throws Exception{
 		super.setUp();
 		testAct=getActivity();
-		srt=new SortedArrayAdapter(testAct,android.R.layout.simple_list_item_1);
+		srt=new SortedArrayAdapter(testAct,android.R.layout.simple_list_item_1,questions);
 		spinner=testAct.getSpinnerAdapter();
 	}
 	//Use Case 9
 	public void testSortbyHasPictures(){
-		ThreadList questions=new ThreadList();
+		questions=new ThreadList();
 		srt.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");

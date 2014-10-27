@@ -14,8 +14,8 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 	private ThreadList threads;
 	private Context context;
 	
-	public SortedArrayAdapter(Context context, int textViewResourceId, ThreadList threads) {
-		super(context, textViewResourceId);
+	public SortedArrayAdapter(Context context, int layoutResourceId, ThreadList threads) {
+		super(context, layoutResourceId);
 		this.threads = threads;
 		this.context = context;
 		// TODO Auto-generated constructor stub
@@ -103,7 +103,7 @@ public class SortedArrayAdapter extends ArrayAdapter<QuestionThread> {
 		
 		QuestionThread thread = threads.get(position);
 		
-		question.setText(thread.getQuestion().toString());
+		question.setText(thread.getQuestion().getText());
 		points.setText(thread.getQuestion().getUps() + "Point(s)");
 		answers.setText(thread.getAnswers().size() + "Answer(s)");
 		

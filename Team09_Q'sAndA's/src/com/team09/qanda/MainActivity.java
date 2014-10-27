@@ -71,16 +71,14 @@ public class MainActivity extends Activity{ //Main question view
 		//threads.refresh(0, 10);
 		threads = new ThreadList();
 		populateList();
+		
 		adapter = new SortedArrayAdapter(this, R.layout.main_row_layout, threads);
 		mainThreadsList.setAdapter(adapter);
 	}
-	
-	public void setAdapter(SortedArrayAdapter adapter){
-		this.adapter = adapter;
-	}
+
 	
 	
-	/** TESTING PURPOSES - to create a list of threads **/
+	/** TEMPORARY - to create a list of threads **/
 	private void populateList() {
 		Post qpost1 = new Post(new User("John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
@@ -110,6 +108,13 @@ public class MainActivity extends Activity{ //Main question view
 		
 	}
 	
+	public SortedArrayAdapter getAdapter(){
+		return adapter;
+	}
+
+	public void setAdapter(SortedArrayAdapter adapter){
+		this.adapter = adapter;
+	}
 	
 	//for testing purposes
 	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
