@@ -135,9 +135,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		User user2 = new User();
 		txtUps.add(user1);
 		txtUps.add(user2);
+		txt.setUps(txtUps);
 		Post txt2=new Post(new User(),"Do upvotes work?");
 		ArrayList<User> txt2Ups = txt2.getUps();
 		txt2Ups.add(user1);
+		txt2.setUps(txt2Ups);
 		Post txt3=new Post(new User(),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);

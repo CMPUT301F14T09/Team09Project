@@ -12,7 +12,7 @@ public class PostController {
 	}
 	
 	public void addUp() {
-		ArrayList<User> ups = post.getUps();
+		ArrayList<User> ups = post.getUpsList();
 		User user = null;
 		ups.add(user);
 		post.setUps(ups);

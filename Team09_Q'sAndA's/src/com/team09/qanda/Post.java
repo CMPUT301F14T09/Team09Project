@@ -20,7 +20,11 @@ public class Post extends QModel<QView> implements Serializable {
 		this.timestamp=new Date();
 	}
 	
-	public ArrayList<User> getUps() {
+	public int getUps() {
+		return this.ups.size();
+	}
+	
+	public ArrayList<User> getUpsList() {
 		return this.ups;
 	}
 	
