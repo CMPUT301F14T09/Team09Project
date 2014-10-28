@@ -125,9 +125,16 @@ public class QuestionThreadControllerTest extends TestCase {
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
 		Post answer1=new Post(new User(),"Second Best Answer");
-		answer1.setUps(1);
+		ArrayList<User> answer1Ups = answer1.getUps();
+		User user1 = new User();
+		User user2 = new User();
+		answer1Ups.add(user1);
+		answer1.setUps(answer1Ups);
 		Post answer2=new Post(new User(),"Best Answer");
-		answer2.setUps(2);
+		ArrayList<User> answer2Ups = answer2.getUps();
+		answer2Ups.add(user1);
+		answer2Ups.add(user2);
+		answer2.setUps(answer2Ups);
 		Post answer3=new Post(new User(),"Worst Answer");
 		qctl.addAnswer(answer1);
 		qctl.addAnswer(answer2);
