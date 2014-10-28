@@ -119,7 +119,7 @@ public class MainActivity extends Activity{ //Main question view
 	
 	/** TEMPORARY - to create a list of threads **/
 	private void populateList() {
-		Post qpost1 = new Post(new User("John"), "A very very very very very very very very very very very long Question 1?");
+		Post qpost1 = new Post(new User("John"), "A very very very very very very very very very very very long Question?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
@@ -146,9 +146,9 @@ public class MainActivity extends Activity{ //Main question view
 		ThreadListController cn1=new ThreadListController(threads);
 		cn1.addThread(q1);
 		cn1.addThread(q2);
-		//cn1.addThread(q3);
-		//cn1.addThread(q4);
-		//cn1.addThread(q5);
+		cn1.addThread(q3);
+		cn1.addThread(q4);
+		cn1.addThread(q5);
 		
 		
 	}
