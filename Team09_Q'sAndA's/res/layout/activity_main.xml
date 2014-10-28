@@ -18,6 +18,7 @@
 		android:scrollbars="vertical" >
 
     </ListView>
+    
 
     <Button
         android:id="@+id/askQuestionButton"

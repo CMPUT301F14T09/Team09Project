@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -20,6 +21,16 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+
+/**
+ * 
+ * This class is the activity for the main screen
+ * of the app. It displays a list of all the questions
+ * and allows the user to navigate to other screens.
+ *
+ * @author 
+ * @version 
+ */
 
 public class MainActivity extends Activity{ //Main question view
 	
@@ -44,6 +55,10 @@ public class MainActivity extends Activity{ //Main question view
 		};
 		
 		mainThreadsList = (ListView) findViewById(R.id.MainListView);
+		
+		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
+                false);
+		mainThreadsList.addFooterView(footer);
 		
 	}
 
@@ -83,6 +98,7 @@ public class MainActivity extends Activity{ //Main question view
 		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
 		mainThreadsList.setAdapter(adapter);
 		
+		
 		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -94,6 +110,15 @@ public class MainActivity extends Activity{ //Main question view
 		});
 	}
 
+	/**
+    *
+    * This method starts the question thread viewing activity.
+    * It uses the intent to pass the selected thread.
+    *
+    * @param 
+    * @see 
+    */
+	
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);
@@ -101,9 +126,24 @@ public class MainActivity extends Activity{ //Main question view
 	}
 	
 	
+	/**
+    *
+    * This method loads more threads using the elastic search handler
+    * through a thread list controller and notifies the adapter
+    *
+    * @param 
+    * @see 
+    */
+	
+	public void loadMore() {
+		ThreadListController tlc = new ThreadListController(this.threads);
+		
+	}
+	
+	
 	/** TEMPORARY - to create a list of threads **/
 	private void populateList() {
-		Post qpost1 = new Post(new User("John"), "A very very very very very very very very very very very long Question 1?");
+		Post qpost1 = new Post(new User("John"), "A very very very very very very very very very very very long Question?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
@@ -123,14 +163,21 @@ public class MainActivity extends Activity{ //Main question view
 		qtc2.addAnswer(new Post(new User(), "Answer 2."));
 		qtc2.addAnswer(new Post(new User(), "Answer 3."));
 		
+		QuestionThread q3 = new QuestionThread(qpost1);
+		QuestionThread q4 = new QuestionThread(qpost1);
+		QuestionThread q5 = new QuestionThread(qpost1);
+		
 		ThreadListController cn1=new ThreadListController(threads);
 		cn1.addThread(q1);
 		cn1.addThread(q2);
-		
-		
+		cn1.addThread(q3);
+		cn1.addThread(q4);
+		cn1.addThread(q5);		
 	}
 	
 
+
+	
 	
 	
 	//for testing purposes
