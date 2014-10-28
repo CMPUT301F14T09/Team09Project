@@ -29,13 +29,13 @@ public class ElasticSearchHandler {
 	private Gson gson = new Gson();
 	private String URL;
 	private static final int DEFAULT = 0; //sort by upvotes query used by default
-	//private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/_search";
-	private static final String SEARCH_URL = "http://localhost:9200/test/_search";
+	private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t09/_search";
+	//private static final String SEARCH_URL = "http://localhost:9200/test/_search";
 	
 	public ElasticSearchHandler(){
-		//URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t09/";
+		URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t09/";
 		//TODO: URL is my current local elasticsearch server for easier testing/debugging
-		URL = "http://localhost:9200/test/";
+		//URL = "http://localhost:9200/test/";
 	}
 	
 	/**
