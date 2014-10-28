@@ -130,14 +130,14 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
 		Post txt=new Post(new User(),"Do upvotes work?");
-		ArrayList<User> txtUps = txt.getUps();
+		ArrayList<User> txtUps = txt.getUpsList();
 		User user1 = new User();
 		User user2 = new User();
 		txtUps.add(user1);
 		txtUps.add(user2);
 		txt.setUps(txtUps);
 		Post txt2=new Post(new User(),"Do upvotes work?");
-		ArrayList<User> txt2Ups = txt2.getUps();
+		ArrayList<User> txt2Ups = txt2.getUpsList();
 		txt2Ups.add(user1);
 		txt2.setUps(txt2Ups);
 		Post txt3=new Post(new User(),"Do upvotes work?");
