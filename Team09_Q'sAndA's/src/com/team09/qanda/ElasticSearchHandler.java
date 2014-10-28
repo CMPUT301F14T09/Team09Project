@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,6 +19,8 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,11 +29,13 @@ public class ElasticSearchHandler {
 	private Gson gson = new Gson();
 	private String URL;
 	private static final int DEFAULT = 0; //sort by upvotes query used by default
+	//private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/testing/movie/_search";
+	private static final String SEARCH_URL = "http://localhost:9200/test/_search";
 	
 	public ElasticSearchHandler(){
 		//URL = "http://cmput301.softwareprocess.es:8080/cmput301f14t09/";
 		//TODO: URL is my current local elasticsearch server for easier testing/debugging
-		String URL = "http://localhost:9200/test/";
+		URL = "http://localhost:9200/test/";
 	}
 	
 	/**
@@ -203,9 +208,88 @@ public class ElasticSearchHandler {
 		return true;
 	}
 	
-	public ThreadList search(String searchString) {
-		// TODO Auto-generated method stub
-		return null;
+	//untested
+	public ArrayList<QuestionThread> search(String searchString, String field) {
+		HttpPost searchRequest = new HttpPost(SEARCH_URL);
+		ArrayList<QuestionThread> result = new ArrayList<QuestionThread>();
+
+		String[] fields = null;
+		if (field != null) {
+			fields = new String[1];
+			fields[0] = field;
+		}
+		
+		StringBuffer command = new StringBuffer(
+				"{\"query\" : {\"query_string\" : {\"query\" : \"" + searchString
+						+ "\"");
+
+		if (fields != null) {
+			command.append(", \"fields\":  [");
+
+			for (int i = 0; i < fields.length; i++) {
+				command.append("\"" + fields[i] + "\", ");
+			}
+			command.delete(command.length() - 2, command.length());
+
+			command.append("]");
+		}
+
+		command.append("}}}");
+		
+		String query = command.toString();
+		Log.i("search", "Json command: " + query);
+
+		StringEntity stringEntity = null;
+		try
+		{
+			stringEntity = new StringEntity(query);
+		} catch (UnsupportedEncodingException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		searchRequest.setHeader("Accept", "application/json");
+		searchRequest.setEntity(stringEntity);
+
+		// TODO: Implement search movies using ElasticSearch
+		if(searchString.equals("") || searchString == null){
+			searchString = "*";
+		}
+		HttpClient httpClient = new DefaultHttpClient();
+		try
+		{
+			HttpResponse response = httpClient.execute(searchRequest);
+			String status = response.getStatusLine().toString();
+			Log.i("search", status);
+
+			Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<QuestionThread>>(){}.getType();
+			ElasticSearchSearchResponse<QuestionThread> esResponse = gson.fromJson(getEntityContent(response), elasticSearchSearchResponseType);
+			System.err.println(esResponse);
+			if (esResponse.getHits() != null) {
+				for (ElasticSearchResponse<QuestionThread> r : esResponse.getHits()) {
+					QuestionThread q = r.getSource();
+					System.err.println(q);
+					result.add(q);
+				}
+			}
+
+		} catch (UnsupportedEncodingException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClientProtocolException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return result;
 	}
 
 }
