@@ -110,10 +110,34 @@ public class MainActivity extends Activity{ //Main question view
 		});
 	}
 
+	/**
+    *
+    * This method starts the question thread viewing activity.
+    * It uses the intent to pass the selected thread.
+    *
+    * @param 
+    * @see 
+    */
+	
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);
 		startActivity(intent);
+	}
+	
+	
+	/**
+    *
+    * This method loads more threads using the elastic search handler
+    * through a thread list controller and notifies the adapter
+    *
+    * @param 
+    * @see 
+    */
+	
+	public void loadMore() {
+		ThreadListController tlc = new ThreadListController(this.threads);
+		
 	}
 	
 	
@@ -148,12 +172,12 @@ public class MainActivity extends Activity{ //Main question view
 		cn1.addThread(q2);
 		cn1.addThread(q3);
 		cn1.addThread(q4);
-		cn1.addThread(q5);
-		
-		
+		cn1.addThread(q5);		
 	}
 	
 
+
+	
 	
 	
 	//for testing purposes

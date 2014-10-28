@@ -11,6 +11,7 @@
 	    android:layout_marginBottom="20dp"
 	    android:text="@string/loadMore"
 	    android:textSize="12sp"
-	    android:width="170dp" />
+	    android:width="170dp"
+	    android:onClick="loadMore" />
  
 </LinearLayout>
