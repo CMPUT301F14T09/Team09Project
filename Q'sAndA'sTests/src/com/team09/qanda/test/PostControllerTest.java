@@ -119,8 +119,8 @@ public class PostControllerTest extends TestCase {
 		Post txt=new Post(new User(),"Do upvotes work?");
 		PostController cn1=new PostController(txt);
 		cn1.addUp();
-		assertTrue(txt.getUps()==1);
+		assertTrue(txt.getUps().size()==1);
 		cn1.addUp();
-		assertTrue(txt.getUps()==2);
+		assertTrue(txt.getUps().size()==2);
 	}
 }
