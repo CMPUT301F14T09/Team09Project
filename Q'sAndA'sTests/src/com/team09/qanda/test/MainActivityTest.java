@@ -104,9 +104,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		int selection=spinner.getPosition("Most Upvoted");
 
 		Post txt=new Post(new User(),"Do upvotes work?");
-		txt.setUps(2);
+	//	txt.setUps(2);
 		Post txt2=new Post(new User(),"Do upvotes work?");
-		txt2.setUps(1);
+	//	txt2.setUps(1);
 		Post txt3=new Post(new User(),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);
