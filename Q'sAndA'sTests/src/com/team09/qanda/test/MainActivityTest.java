@@ -1,5 +1,6 @@
 package com.team09.qanda.test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.team09.qanda.MainActivity;
@@ -129,9 +130,14 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
 		Post txt=new Post(new User(),"Do upvotes work?");
-		txt.setUps(2);
+		ArrayList<User> txtUps = txt.getUps();
+		User user1 = new User();
+		User user2 = new User();
+		txtUps.add(user1);
+		txtUps.add(user2);
 		Post txt2=new Post(new User(),"Do upvotes work?");
-		txt2.setUps(1);
+		ArrayList<User> txt2Ups = txt2.getUps();
+		txt2Ups.add(user1);
 		Post txt3=new Post(new User(),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);
