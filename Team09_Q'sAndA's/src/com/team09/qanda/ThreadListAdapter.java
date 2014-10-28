@@ -64,10 +64,10 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				if(lhs.getQuestion().getUps()>rhs.getQuestion().getUps()){
+				if(lhs.getQuestion().getUps().size()>rhs.getQuestion().getUps().size()){
 					return -1;
 				}
-				else if(lhs.getQuestion().getUps()<rhs.getQuestion().getUps()){
+				else if(lhs.getQuestion().getUps().size()<rhs.getQuestion().getUps().size()){
 					return 1;
 				}
 				return 0;
@@ -80,7 +80,7 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				return Integer.valueOf(lhs.getQuestion().getUps()).compareTo(rhs.getQuestion().getUps());
+				return Integer.valueOf(lhs.getQuestion().getUps().size()).compareTo(rhs.getQuestion().getUps().size());
 			}
 			
 		});
@@ -91,10 +91,10 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		sort(new Comparator<QuestionThread>(){
 			@Override
 			public int compare(QuestionThread lhs, QuestionThread rhs) {
-				if(lhs.getQuestion().getUps()>rhs.getQuestion().getUps()){
+				if(lhs.getQuestion().getUps().size()>rhs.getQuestion().getUps().size()){
 					return -1;
 				}
-				else if(lhs.getQuestion().getUps()<rhs.getQuestion().getUps()){
+				else if(lhs.getQuestion().getUps().size()<rhs.getQuestion().getUps().size()){
 					return 1;
 				}
 				return 0;

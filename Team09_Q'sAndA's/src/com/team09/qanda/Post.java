@@ -7,7 +7,7 @@ import java.util.Date;
 public class Post extends QModel<QView> implements Serializable {
 	private String text;
 	private User author;
-	private int ups;
+	private ArrayList<User> ups;
 	private boolean hasPictures;
 	private ArrayList<Reply> replies;
 	private Date timestamp;
@@ -15,16 +15,16 @@ public class Post extends QModel<QView> implements Serializable {
 	public Post(User author, String text) {
 		this.author=author;
 		this.text=text;
-		this.ups=0;
+		this.ups=new ArrayList<User>();
 		this.replies=new ArrayList<Reply>();
 		this.timestamp=new Date();
 	}
 	
-	public int getUps() {
+	public ArrayList<User> getUps() {
 		return this.ups;
 	}
 	
-	public void setUps(int ups) {
+	public void setUps(ArrayList<User> ups) {
 		this.ups=ups;
 		notifyViews();
 	}
