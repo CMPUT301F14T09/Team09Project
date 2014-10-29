@@ -1,16 +1,26 @@
 package com.team09.qanda;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 
-
+import com.aayao.todolist.data.Item;
+import com.google.gson.reflect.TypeToken;
 
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +50,9 @@ public class MainActivity extends Activity{ //Main question view
 	private ThreadList threads;
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
+	private User user;
 	static final int ADD_QUESTION_REQUEST = 1;
+	static final String FILENAME = ""; //TODO: filename of where username is stored
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +106,20 @@ public class MainActivity extends Activity{ //Main question view
 		threads = new ThreadList();
 		populateList();
 		
+		try {
+			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
+			String line;
+
+			//TODO:need to determine how username will be stored in file
+			while ((line = input.readLine()) != null) {
+				user = new User();
+				user.setName(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			setUsername();
+		}
+		
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
@@ -111,7 +137,45 @@ public class MainActivity extends Activity{ //Main question view
 			}
 		});
 	}
-
+	
+	/**
+    *
+    * This method creates a prompt for setting username
+    */	
+	public void setUsername(){
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		user = new User();
+	    View promptView = layoutInflater.inflate(R.layout.name_prompt, null);
+	
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	
+	    // set name_prompt.xml to be the layout file of the alertdialog builder
+	    alertDialogBuilder.setView(promptView);
+	    final EditText input = (EditText) promptView.findViewById(R.id.userInput); 
+	    final Context c = this;
+	    
+	    // setup a dialog window
+	    alertDialogBuilder
+	        .setCancelable(false)
+	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	                // get user input and set it to result
+	            	user.setName(input.getText().toString());
+	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            }
+	        })
+	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	                dialog.cancel();
+	            }
+	        });
+	
+	    // create an alert dialog
+	    AlertDialog alertD = alertDialogBuilder.create();
+	
+	    alertD.show();
+	}
+	
 	/**
     *
     * This method starts the question thread viewing activity.
