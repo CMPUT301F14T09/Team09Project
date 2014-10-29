@@ -32,7 +32,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	public void setUp() throws Exception{
 		super.setUp();
 		mainAct=getActivity();
-	adapter=new ThreadListAdapter(mainAct,android.R.layout.simple_list_item_1);
+		adapter=new ThreadListAdapter(mainAct,android.R.layout.simple_list_item_1);
+		adapter=mainAct.getAdapter();
 		spinner=mainAct.getSpinnerAdapter();
 	}
 	
