@@ -209,7 +209,7 @@ public class ElasticSearchHandler {
 	}
 	
 	//untested
-	public ArrayList<QuestionThread> search(String searchString) {
+	public ThreadList search(String searchString) {
 		HttpPost searchRequest = new HttpPost(SEARCH_URL);
 		ArrayList<QuestionThread> result = new ArrayList<QuestionThread>();
 
@@ -271,8 +271,10 @@ public class ElasticSearchHandler {
 			e.printStackTrace();
 		}
 		
+		ThreadList t = new ThreadList();
+		t.setThreads(result);
 		
-		return result;
+		return t;
 	}
 
 }
