@@ -5,7 +5,9 @@ import java.util.Arrays;
 
 import com.team09.qanda.MainActivity;
 import com.team09.qanda.Post;
+import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
+import com.team09.qanda.QuestionThreadController;
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.ThreadList;
 import com.team09.qanda.ThreadListController;
@@ -30,9 +32,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	public void setUp() throws Exception{
 		super.setUp();
 		mainAct=getActivity();
+		adapter=new ThreadListAdapter(mainAct,android.R.layout.simple_list_item_1);
 		adapter=mainAct.getAdapter();
 		spinner=mainAct.getSpinnerAdapter();
 	}
+	
 	//Use Case 9
 	public void testSortbyHasPictures(){
 		ThreadList questions=new ThreadList();
