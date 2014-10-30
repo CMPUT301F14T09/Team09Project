@@ -1,18 +1,26 @@
 package com.team09.qanda;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class AddQuestionActivity extends Activity {
 
+	private String textFieldEntry;
+	private EditText textField;
+	static final String ADD_QUESTION_RESULT = "RESULT";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_add_question);
+		
+		textField = (EditText) findViewById(R.id.add_question_field);
 	}
 
 	@Override
@@ -36,4 +44,15 @@ public class AddQuestionActivity extends Activity {
 		//}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	/* TODO : Submit button method */
+	public void submitQuestion(View v) {
+		textFieldEntry = textField.getText().toString();
+		Intent result = new Intent();
+		result.putExtra(ADD_QUESTION_RESULT, textFieldEntry);
+		setResult(RESULT_OK, result);
+		finish();
+	}
+	
+	
 }
