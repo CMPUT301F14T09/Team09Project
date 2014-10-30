@@ -105,7 +105,7 @@ public class ElasticSearchHandler {
 	}
 
 	private boolean saveQuestions(QuestionThread q) {
-		HttpPost httpPost = new HttpPost(URL);
+		HttpPost httpPost = new HttpPost(URL + q.hashCode());
 		StringEntity stringentity = null;
 		
 		//TODO:need to change this section to deal with QuestionThreads and not ThreadList
@@ -209,13 +209,30 @@ public class ElasticSearchHandler {
 	}
 	
 	//untested
-	public ThreadList search(String searchString) {
+	public ArrayList<QuestionThread> search(String searchString, String field) {
 		HttpPost searchRequest = new HttpPost(SEARCH_URL);
 		ArrayList<QuestionThread> result = new ArrayList<QuestionThread>();
 
+		String[] fields = null;
+		if (field != null) {
+			fields = new String[1];
+			fields[0] = field;
+		}
+		
 		StringBuffer command = new StringBuffer(
 				"{\"query\" : {\"query_string\" : {\"query\" : \"" + searchString
 						+ "\"");
+
+		if (fields != null) {
+			command.append(", \"fields\":  [");
+
+			for (int i = 0; i < fields.length; i++) {
+				command.append("\"" + fields[i] + "\", ");
+			}
+			command.delete(command.length() - 2, command.length());
+
+			command.append("]");
+		}
 
 		command.append("}}}");
 		
@@ -271,10 +288,8 @@ public class ElasticSearchHandler {
 			e.printStackTrace();
 		}
 		
-		ThreadList t = new ThreadList();
-		t.setThreads(result);
 		
-		return t;
+		return result;
 	}
 
 }

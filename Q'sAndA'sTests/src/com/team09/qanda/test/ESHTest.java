@@ -42,11 +42,11 @@ public class ESHTest extends TestCase
 		ArrayList<QuestionThread> old = (ArrayList<QuestionThread>)thread.getThreads().clone();
 		ElasticSearchHandler esh = new ElasticSearchHandler();
 		
-//		if (thread.getQuestions().contains(testp)) {
-//			esh.delete(testp);
-//			thread.refresh(0, 10);
-//		}
-//		
+		if (thread.getQuestions().contains(testp)) {
+			esh.delete(testp);
+			thread.refresh(0, 10);
+		}
+		
 		QuestionThread q1 = new QuestionThread(testp);
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);
 		

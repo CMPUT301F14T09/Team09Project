@@ -8,45 +8,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team09.qanda.QuestionThreadActivity" >
 
-    <TextView
-        android:id="@+id/threadQuestion"
+    <ListView
+        android:id="@+id/ThreadPostsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_above="@+id/editAnswerText"
+        android:layout_alignLeft="@+id/editAnswerText"
+        android:scrollbars="vertical" >
+
+    </ListView>
     
-    <TextView
-        android:id="@+id/threadQuestionAuthor"
-	    android:layout_width="wrap_content"
-    	android:layout_height="30sp"
-    	android:paddingLeft="5dp"
-    	android:textSize="15sp"
-    	android:textColor="@color/grey"
-    	android:layout_below="@id/threadQuestion"
-    	android:layout_alignParentRight="true">
-    </TextView>
-    
-    <TextView
-        android:id="@+id/repliesButton"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:paddingLeft="5dp"
-    	android:textSize="12sp"
-    	android:text="@string/see_replies"
-    	android:layout_below="@id/threadQuestionAuthor"
-    	android:layout_alignParentLeft="true">
-    </TextView>
-    
-    <TextView
-        android:id="@+id/questionUpvotes"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:paddingLeft="5dp"
-    	android:layout_below="@id/threadQuestionAuthor"
-    	android:layout_alignParentRight="true"
-    	android:textSize="12sp">
-    </TextView>
+    <EditText
+        android:id="@+id/editAnswerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/answerAttachmentButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/editAnswerText"
+        android:text="A" />
+
+    <Button
+        android:id="@+id/answerSubmissionButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/answerAttachmentButton"
+        android:text="S" />
+
 
 </RelativeLayout>

@@ -21,7 +21,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="19dp"
-        android:onClick="submitQuestion"
         android:text="@string/submit_question_btn" />
 
 </RelativeLayout>

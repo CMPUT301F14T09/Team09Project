@@ -141,21 +141,6 @@ public class QuestionThreadControllerTest extends TestCase {
 		qctl.addAnswer(answer3);
 		assertEquals(qThread.getAnswers().get(0),answer2);
 	}
-	
-	// Test for someone upvoting same question twice
-	public void testUpvoteTwice(){
-		Post questionText=new Post(new User(),"This is a question.");
-		QuestionThread qThread=new QuestionThread(questionText);
-		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		Post answer1=new Post(new User(),"Second Best Answer");
-		ArrayList<User> answer1Ups = answer1.getUpsList();
-		User user1 = new User();
-		answer1Ups.add(user1);
-		answer1Ups.add(user1);
-		answer1.setUps(answer1Ups);
-		qctl.addAnswer(answer1);
-		assertEquals(qThread.getAnswers().get(0).getUps(),1);
-	}
 
 	// Use Case #14: Number of answers
 	public void testNumberOfAnswers(){
