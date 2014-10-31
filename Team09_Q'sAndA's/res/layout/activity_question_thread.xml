@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/editAnswerText"
-        android:layout_alignLeft="@+id/editAnswerText"
+        android:layout_alignStart="@+id/editAnswerText"
         android:scrollbars="vertical" >
 
     </ListView>
@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:hint="@string/edit_answer_text_hint"
         android:ems="10" />
 
     <Button
@@ -31,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/editAnswerText"
-        android:text="A" />
+        android:layout_toEndOf="@id/editAnswerText"
+        android:text="@string/answerAttachmentButton" />
 
     <Button
         android:id="@+id/answerSubmissionButton"
@@ -40,8 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/answerAttachmentButton"
+        android:layout_toEndOf="@id/answerAttachmentButton"
         android:onClick="submitAnswer"
-        android:text="S" />
+        android:text="@string/answerSubmissionButton" />
 
 </RelativeLayout>
