@@ -117,6 +117,7 @@ public class QuestionThreadActivity extends Activity {
 	}
 	*/
 
+	// Method called by the onClick of answerSubmissionButton
 	public void submitAnswer(View v) {
 		System.out.println("Answer Count : " + thread.getAnswers().size());
 		String answerText = answerTextField.getText().toString();
