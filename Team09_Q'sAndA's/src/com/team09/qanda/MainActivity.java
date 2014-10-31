@@ -2,13 +2,14 @@ package com.team09.qanda;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.aayao.todolist.data.Item;
 import com.google.gson.reflect.TypeToken;
+
 
 
 import android.app.ActionBar;
@@ -73,6 +74,7 @@ public class MainActivity extends Activity{ //Main question view
 		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
                 false);
 		mainThreadsList.addFooterView(footer);
+		instantiate();
 		
 	}
 
@@ -97,14 +99,14 @@ public class MainActivity extends Activity{ //Main question view
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
-	@Override
-	protected void onStart() {
+	protected void instantiate() {
 		// TODO Auto-generated method stub
 		super.onStart();
 		//threads.refresh(0, 10);
 		threads = new ThreadList();
+		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
 		populateList();
+		
 		
 		try {
 			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
@@ -118,7 +120,11 @@ public class MainActivity extends Activity{ //Main question view
 
 		} catch (FileNotFoundException e) {
 			setUsername();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 		
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
@@ -137,6 +143,51 @@ public class MainActivity extends Activity{ //Main question view
 			}
 		});
 	}
+	
+	// Made a backup of this just in case
+	/*
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		//threads.refresh(0, 10);
+		threads = new ThreadList();
+		populateList();
+		
+		
+		try {
+			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
+			String line;
+
+			//TODO:need to determine how username will be stored in file
+			while ((line = input.readLine()) != null) {
+				user = new User();
+				user.setName(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			setUsername();
+		}
+		
+		
+		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
+		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
+		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
+		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		mainThreadsList.setAdapter(adapter);
+		
+		
+		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
+	}
+	*/
 	
 	/**
     *
@@ -201,14 +252,13 @@ public class MainActivity extends Activity{ //Main question view
     * @see 
     */
 	
-	public void loadMore() {
+	public void loadMore(View view) {
 		ThreadListController tlc = new ThreadListController(this.threads);
 		
 	}
 	
 	/* Add question button method */
 	public void addQuestion(View v) {
-		Toast.makeText(getApplicationContext(), "CLICKED", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(this, AddQuestionActivity.class);
 	    startActivityForResult(intent, ADD_QUESTION_REQUEST);
 	}
@@ -222,11 +272,22 @@ public class MainActivity extends Activity{ //Main question view
 	        if (resultCode == RESULT_OK) {
 	            // The Author asked a question
 	        	String textFieldEntry = data.getExtras().getString(AddQuestionActivity.ADD_QUESTION_RESULT);
-	        	Toast.makeText(getApplicationContext(), textFieldEntry, Toast.LENGTH_SHORT).show();
-	            // Do something with the contact here (bigger example below)
+	        	// Create new post with textFieldEntry
+	        	Post newQuestion =  new Post(user, textFieldEntry);
+	        	// Turn post into a question thread
+	        	QuestionThread newQuestionThread = new QuestionThread(newQuestion);
+	        	// Controller for the Thread List
+	    		ThreadListController threadListCtl =new ThreadListController(threads);
+	    		// Add the new Question Thread
+	    		System.out.println("Size of Thread List : " + threads.getThreads().size());
+	    		threadListCtl.addThread(newQuestionThread);
+	    		System.out.println("New Size of Thread List : " + threads.getThreads().size());
+	    		// notify adapter of change
+	    		adapter.notifyDataSetChanged();
 	        }
 	    }
 	}
+	
 	
 	
 	/** TEMPORARY - to create a list of threads **/
