@@ -100,8 +100,7 @@ public class MainActivity extends Activity{ //Main question view
 	}
 	
 	protected void instantiate() {
-		// TODO Auto-generated method stub
-		super.onStart();
+		//super.onStart();
 		//threads.refresh(0, 10);
 		threads = new ThreadList();
 		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
