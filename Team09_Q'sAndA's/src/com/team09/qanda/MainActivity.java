@@ -2,12 +2,13 @@ package com.team09.qanda;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.aayao.todolist.data.Item;
+//import com.aayao.todolist.data.Item;
 import com.google.gson.reflect.TypeToken;
 
 
@@ -118,6 +119,9 @@ public class MainActivity extends Activity{ //Main question view
 
 		} catch (FileNotFoundException e) {
 			setUsername();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
@@ -201,7 +205,7 @@ public class MainActivity extends Activity{ //Main question view
     * @see 
     */
 	
-	public void loadMore() {
+	public void loadMore(View V) {
 		ThreadListController tlc = new ThreadListController(this.threads);
 		
 	}
