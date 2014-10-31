@@ -350,11 +350,6 @@ public class MainActivity extends Activity{ //Main question view
 	    startActivity(intent);
 	}
 	
-	/** TESTING PURPOSES - to open and test QuestionThreadActivity */
-	public void testQThreadButton(MenuItem item) {
-	    Intent intent = new Intent(this, QuestionThreadActivity.class);
-	    startActivity(intent);
-	}
 	private SearchManager getSearchManager(){
 		return (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	}
