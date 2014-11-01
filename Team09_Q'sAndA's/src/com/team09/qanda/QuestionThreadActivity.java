@@ -1,5 +1,7 @@
 package com.team09.qanda;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +14,7 @@ public class QuestionThreadActivity extends Activity {
 
 	private QuestionThread thread;
 	private ThreadAdapter adapter;
+	private ArrayList<Post> threadPosts;
 	private ListView threadPostsList;
 	private EditText answerTextField;
 	private User author;
@@ -22,7 +25,7 @@ public class QuestionThreadActivity extends Activity {
 		setContentView(R.layout.activity_question_thread);
 
 		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
-
+		
 		threadPostsList = (ListView) findViewById(R.id.ThreadPostsView);
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
@@ -66,10 +69,9 @@ public class QuestionThreadActivity extends Activity {
 	}
 
 	public void instantiate() {	
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
+		threadPosts = thread.getAnswers();
+		threadPosts.add(0, thread.getQuestion());
+		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, threadPosts);
 		threadPostsList.setAdapter(adapter);
 
 		/*
