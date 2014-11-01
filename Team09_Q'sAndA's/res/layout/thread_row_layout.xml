@@ -27,7 +27,7 @@
     	android:paddingLeft="5dp"
     	android:textSize="15sp"
     	android:textColor="@color/grey"
-    	android:layout_below="@id/questionMain"
+    	android:layout_below="@id/post"
     	android:layout_alignParentRight="true">
     </TextView>
     
