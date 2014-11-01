@@ -27,5 +27,9 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="see_replies">See Replies</string>
     <string name="loadMore">Load More</string>
+    <string name="editAnswerText">editAnswerTextField</string>
+    <string name="edit_answer_text_hint">Enter answer here...</string>
+    <string name="answerAttachmentButton">A</string>
+    <string name="answerSubmissionButton">Submit</string>
 
 </resources>

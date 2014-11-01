@@ -2,24 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.team09.qanda.MainActivity" >
 
-    <item 
-        android:id="@+id/test_item" 
-        android:title="Test" 
-        android:onClick="testButton"
-        android:showAsAction="never"/>
-    
-    <item 
-        android:id="@+id/test_qthread_item" 
-        android:title="QThread" 
-        android:onClick="testQThreadButton"
-        android:showAsAction="never"/>
-    
 	<item
         android:id="@+id/action_search"
 		android:title="@string/action_Search"
         android:showAsAction="ifRoom|collapseActionView"
         android:actionViewClass="android.widget.SearchView"
         android:icon="@drawable/ic_action_search" />
-
 
 </menu>

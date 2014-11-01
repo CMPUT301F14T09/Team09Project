@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/editAnswerText"
-        android:layout_alignLeft="@+id/editAnswerText"
+        android:layout_alignStart="@+id/editAnswerText"
         android:scrollbars="vertical" >
 
     </ListView>
@@ -23,25 +23,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:hint="@string/edit_answer_text_hint"
         android:ems="10" />
 
-    <Button
+    <ImageButton
         android:id="@+id/answerAttachmentButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/editAnswerText"
-        android:text="A" />
+        android:layout_toEndOf="@id/editAnswerText"
+        android:src="@drawable/ic_menu_attachment"
+        android:background="?android:attr/selectableItemBackground"
+        android:contentDescription="@string/answerAttachmentButton" />
 
     <Button
         android:id="@+id/answerSubmissionButton"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/answerAttachmentButton"
-        android:text="S" />
-
+        android:layout_gravity="end"
+        android:layout_toEndOf="@id/answerAttachmentButton"
+        android:onClick="submitAnswer"
+        android:text="@string/answerSubmissionButton" />
 
 </RelativeLayout>
