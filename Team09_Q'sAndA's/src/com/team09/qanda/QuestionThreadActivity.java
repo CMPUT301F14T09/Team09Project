@@ -71,6 +71,7 @@ public class QuestionThreadActivity extends Activity {
 	public void instantiate() {	
 		threadPosts = thread.getAnswers();
 		threadPosts.add(0, thread.getQuestion());
+		threadPosts.add(1, thread.getQuestion());
 		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, threadPosts);
 		threadPostsList.setAdapter(adapter);
 

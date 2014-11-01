@@ -25,40 +25,36 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);;
 		if (convertView == null) {
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			
-			//if (position == 1) {
-				//convertView = inflater.inflate(R.layout.answers_heading_row, parent, false);
-			//}
-			//else {
-				convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
-			//}
+			convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
+		}	
+		if (position == 1) {
+			convertView = inflater.inflate(R.layout.answers_heading_row, parent, false);
+		}
+		if (position == 2) {
+			convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
 		}
 		
-		//if (position == 1) {
-			//TextView text = (TextView) convertView.findViewById(R.id.answersHeading);
-			//text.setText("Answers (" + thread.getAnswers().size() + ")");
-		//}
-		//else {
+		if (position == 1) {
+			TextView text = (TextView) convertView.findViewById(R.id.answersHeading);
+			int numAnswers = threadPosts.size() - 2;
+			text.setText(numAnswers + " Answers");
+		}
+		else {
 			TextView text = (TextView) convertView.findViewById(R.id.post);
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
 			
-			//if (position == 0) {
-				//text.setText(threadPosts.getQuestion().getText());
-				//author.setText(" - " + thread.getQuestion().getAuthor().getName());
-				//upvotes.setText(thread.getQuestion().getUps() + " Point(s)");
-			//}
-			//else {
-				Post post = threadPosts.get(position);
-				
-				text.setText(post.getText());
-				author.setText(" - " + post.getAuthor().getName());
-				upvotes.setText(post.getUps() + " Point(s)");
-			//}
-		//}
+			Post post = threadPosts.get(position);
+			
+			text.setText(post.getText());
+			author.setText(" - " + post.getAuthor().getName());
+			upvotes.setText(post.getUps() + " Point(s)");
+		}
 		
+				
+				
 		return convertView;
 	}
 

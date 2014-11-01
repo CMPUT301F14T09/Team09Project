@@ -8,8 +8,8 @@
         android:id="@+id/answersHeading"
 	    android:layout_height="wrap_content"
     	android:layout_width="fill_parent"
+    	android:paddingTop="10dp"
     	android:paddingLeft="5dp"
-    	android:layout_alignParentLeft="true"
     	android:textAppearance="?android:attr/textAppearanceLarge">
     </TextView>
  
