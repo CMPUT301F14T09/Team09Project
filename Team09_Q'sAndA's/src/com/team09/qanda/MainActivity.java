@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 
 //import com.aayao.todolist.data.Item;
@@ -46,7 +48,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class MainActivity extends Activity{ //Main question view
 	
-	private ArrayAdapter<CharSequence> spinner;
+	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads;
 	private ThreadListAdapter adapter;
@@ -59,24 +61,16 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		getActionBar().setDisplayShowTitleEnabled(false);
-		
-		listener=new ActionBar.OnNavigationListener() {
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				return false;
-			}
-		};
-		
+		setUpActionBarSpinner();
 		mainThreadsList = (ListView) findViewById(R.id.MainListView);
-		
 		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
                 false);
 		mainThreadsList.addFooterView(footer);
 		instantiate();
 		
 	}
+
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -337,7 +331,7 @@ public class MainActivity extends Activity{ //Main question view
 		this.adapter = adapter;
 	}
 	
-	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
+	public ArrayAdapter<String> getSpinnerAdapter(){
 		return spinner;
 	}
 	public ActionBar.OnNavigationListener getNavigationListener(){
@@ -350,5 +344,24 @@ public class MainActivity extends Activity{ //Main question view
 	private SearchView getSearchView(Menu menu){
 		return (SearchView) menu.findItem(R.id.action_search).getActionView();
 	}
-	
+	private void setUpActionBarSpinner() {
+		ActionBar bar=getActionBar();
+		bar.setDisplayShowTitleEnabled(false);
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		spinner=new ArrayAdapter<String>(this,R.layout.spinner_item, getSortOptionsList());
+		listener=new ActionBar.OnNavigationListener() {
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				return false;
+			}
+		};
+		bar.setListNavigationCallbacks(spinner,listener);
+	}
+	private List<String> getSortOptionsList(){
+		return Arrays.asList(getString(R.string.sort_HasPicture),
+										getString(R.string.sort_MostRecent),
+										getString(R.string.sort_Oldest),
+										getString(R.string.sort_MostUpvotes),
+										getString(R.string.sort_LeastUpvoted));
+	}
 }

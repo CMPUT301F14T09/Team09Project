@@ -1,7 +1,7 @@
 package com.team09.qanda;
 
 /*
- * This searching is necessary for searching 
+ * This actvity is necessary for searching 
  */
 import android.app.Activity;
 import android.app.SearchManager;

@@ -22,7 +22,7 @@ import android.widget.ArrayAdapter;
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	ThreadListAdapter adapter;
 	MainActivity mainAct;
-	ArrayAdapter<CharSequence> spinner;
+	ArrayAdapter<String> spinner;
 	
 	public MainActivityTest() {
 		super(MainActivity.class);
@@ -32,18 +32,18 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	public void setUp() throws Exception{
 		super.setUp();
 		mainAct=getActivity();
-		adapter=new ThreadListAdapter(mainAct,android.R.layout.simple_list_item_1);
 		adapter=mainAct.getAdapter();
 		spinner=mainAct.getSpinnerAdapter();
 	}
-	
+	@Override
+	public void tearDown(){
+		adapter.clear();
+	}
 	//Use Case 9
 	public void testSortbyHasPictures(){
 		ThreadList questions=new ThreadList();
-		adapter.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");
-
 		QuestionThread NoPicture=new QuestionThread(new Post(new User(),"No picture?"));
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
@@ -63,7 +63,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	//Use Case 10.1
 	public void testsortByMostRecent(){
 		ThreadList questions=new ThreadList();
-		adapter.clear();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Recent");
 		// Make ThreadListController
@@ -77,13 +76,11 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
 		assertEquals(adapter.getPosition(third),2);
-
 	}
 	
 	//Use Case 10.2
 	public void testsortByOldest(){
 		ThreadList questions=new ThreadList();
-		adapter.clear();
 		//get the position of the  "Oldest" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Oldest");
 		QuestionThread first=new QuestionThread(new Post(new User(),"am I first?"));
@@ -104,14 +101,19 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	//Use Case 10.3
 	public void testsortByMostUpVotes(){
 		ThreadList questions=new ThreadList();
-		adapter.clear();
+		PostController controller;
+		
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Upvoted");
-
+		
 		Post txt=new Post(new User(),"Do upvotes work?");
-	//	txt.setUps(2);
-		Post txt2=new Post(new User(),"Do upvotes work?");
-	//	txt2.setUps(1);
+		controller=new PostController(txt);
+	    controller.addUp();
+	    controller.addUp();
+		
+	    Post txt2=new Post(new User(),"Do upvotes work?");
+	    controller=new PostController(txt2);
+	    controller.addUp();
 		Post txt3=new Post(new User(),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);
@@ -130,24 +132,29 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	//Use Case 10.4
 	public void testsortByLeastUpvotes(){
 		ThreadList questions=new ThreadList();
-		adapter.clear();
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
 		Post txt=new Post(new User(),"Do upvotes work?");
+		
 		ArrayList<User> txtUps = txt.getUpsList();
 		User user1 = new User();
 		User user2 = new User();
 		txtUps.add(user1);
 		txtUps.add(user2);
 		txt.setUps(txtUps);
+		
 		Post txt2=new Post(new User(),"Do upvotes work?");
+		
 		ArrayList<User> txt2Ups = txt2.getUpsList();
 		txt2Ups.add(user1);
 		txt2.setUps(txt2Ups);
+		
 		Post txt3=new Post(new User(),"Do upvotes work?");
+		
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);
 		QuestionThread least=new QuestionThread(txt3);
+		
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
 		tlc.addThread(most);
@@ -168,6 +175,10 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		
 		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
 		
+	}
+	@UiThreadTest
+	public void testSpinnerAdapter() {
+		//TODO
 	}
 	
 }
