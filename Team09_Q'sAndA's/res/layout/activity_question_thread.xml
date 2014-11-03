@@ -40,10 +40,11 @@
     <Button
         android:id="@+id/answerSubmissionButton"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="end"
+        android:layout_below="@id/ThreadPostsView"
         android:layout_toEndOf="@id/answerAttachmentButton"
         android:onClick="submitAnswer"
         android:text="@string/answerSubmissionButton" />

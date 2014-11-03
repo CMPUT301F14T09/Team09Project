@@ -1,25 +1,106 @@
 package com.team09.qanda;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+
+import android.content.Context;
+
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+
 public class LocalStorageHandler {
 	//For local data storage using GSON/JSON
-
-	public ThreadList getThreadList(String filename) {
-		// TODO Auto-generated method stub
+	private FileOutputStream os;
+	private Gson gson;
+	
+	public LocalStorageHandler() {
+		this.gson=new Gson();
+	}
+	
+	public ThreadList getThreadList(Context context, String filename) {
+		//Load all the Question threads from a given file (favourites or read later) and return a ThreadList containing them
+		try {
+			ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
+			ThreadList tl=new ThreadList();
+			InputStreamReader in=new InputStreamReader(context.openFileInput(filename));
+			JsonReader reader=new JsonReader(in);
+			reader.beginArray();
+			while (reader.hasNext()) {
+				qts.add((QuestionThread)gson.fromJson(reader, QuestionThread.class));
+			}
+			reader.endArray();
+			reader.close();
+			tl.setThreads(qts);
+			return tl;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return new ThreadList();
 	}
 	
-	public void saveQuestionThread(QuestionThread qt, String filename) {
-		ThreadList tl=this.getThreadList(filename);
-		ThreadListController cont=new ThreadListController(tl);
-		cont.addThread(qt);
+	public User getUser() {
+		return new User();
 	}
 	
-	public void saveText(String text, String filename) {
-		
+	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
+		//Save a single question thread to a file. Can be used for favourite and read later.
+		ThreadList tl=this.getThreadList(context,filename);
+		ThreadListController tlc=new ThreadListController(tl);
+		tlc.addThread(qt);
+		try {
+			OutputStreamWriter osw=new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_APPEND));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(qt, QuestionThread.class, jw);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public String getText(String filename) {
+	public void saveText(Context context, String text, String filename) {
+		try {
+			os=context.openFileOutput(filename, Context.MODE_PRIVATE);
+			os.write(text.getBytes());
+			os.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String getText(Context context, String filename) {
+		try {
+			BufferedReader br=new BufferedReader(new InputStreamReader(
+					context.openFileInput(filename)));
+			String text="";			
+			String line=br.readLine();
+			text+=line;
+			while ((line=br.readLine())!=null) {
+				text+=line;
+			}
+			br.close();
+			return text;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return "";
+	}
+	
+	public boolean deleteFile(Context context, String filename) {
+		String dir=context.getFilesDir().getAbsolutePath();
+		File f=new File(dir,filename);
+		return f.delete();
 	}
 
 }

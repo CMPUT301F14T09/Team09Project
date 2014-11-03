@@ -2,18 +2,45 @@ package com.team09.qanda;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 public class ThreadList extends QModel<QView> {
-	private ElasticSearchHandler esh;
 	private ArrayList<QuestionThread> threads;
+	private transient Gson gson;
+	private String sortType;
+	private int numThreads;
 	
 	public ThreadList() {
-		//TODO: need to fix refresh because of design change
-		//refresh(0, 10);
-		threads = new ArrayList<QuestionThread>();
+		gson=new Gson();
+		numThreads=10;
+		sortType="default";
+		this.threads=new ArrayList<QuestionThread>();
 	}
 	
-	public void refresh(int sortStyle, int numQuestions) {
-		this.threads=esh.getThreads(sortStyle, numQuestions);
+	public ThreadList(String sortType) {
+		gson=new Gson();
+		numThreads=10;
+		this.sortType=sortType;
+		this.threads=new ArrayList<QuestionThread>();
+	}
+	
+	public ThreadList(String sortType, int numThreads) {
+		gson=new Gson();
+		this.numThreads=numThreads;
+		this.sortType=sortType;
+		this.threads=new ArrayList<QuestionThread>();
+	}
+	
+	public String getSortType() {
+		return this.sortType;
+	}
+	
+	public int getNumThreads() {
+		return this.numThreads;
+	}
+	
+	public void setNumThreads(int num) {
+		this.numThreads=num;
 	}
 
 	public ArrayList<QuestionThread> getThreads() {
@@ -35,6 +62,10 @@ public class ThreadList extends QModel<QView> {
 
 	public QuestionThread get(int i) {
 		return threads.get(i);
+	}
+	
+	public String jsonify() {
+		return gson.toJson(this);
 	}
 
 }
