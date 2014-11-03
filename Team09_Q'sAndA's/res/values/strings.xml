@@ -31,5 +31,6 @@
     <string name="edit_answer_text_hint">Enter answer here...</string>
     <string name="answerAttachmentButton">A</string>
     <string name="answerSubmissionButton">Submit</string>
+    <string name="usernamePrompt">Enter Username:</string>
 
 </resources>

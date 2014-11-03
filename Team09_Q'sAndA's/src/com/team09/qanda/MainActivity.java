@@ -1,12 +1,22 @@
 package com.team09.qanda;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -30,19 +41,22 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity{ //Main question view
 	
-	private ArrayAdapter<CharSequence> spinner;
+	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads;
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
 	private Context context=this;
+	private User user;
 	static final int ADD_QUESTION_REQUEST = 1;
+	static final String FILENAME = ""; //TODO: filename of where username is stored
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setUpActionBarSpinner();
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
@@ -112,6 +126,87 @@ public class MainActivity extends Activity{ //Main question view
 												
 			}
 		});
+		instantiate();
+	}
+	protected void instantiate() {
+		//super.onStart();
+		//threads.refresh(0, 10);
+		threads = new ThreadList();
+		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
+		//populateList();
+		
+		try {
+			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
+			String line;
+
+			//TODO:need to determine how username will be stored in file
+			while ((line = input.readLine()) != null) {
+				user = new User();
+				user.setName(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			setUsername();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
+		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
+		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
+		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		mainThreadsList.setAdapter(adapter);
+		
+		
+		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
+	}
+	
+	/**
+    *
+    * This method creates a prompt for setting username
+    */	
+	public void setUsername(){
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		user = new User();
+	    View promptView = layoutInflater.inflate(R.layout.name_prompt, null);
+	
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	
+	    // set name_prompt.xml to be the layout file of the alertdialog builder
+	    alertDialogBuilder.setView(promptView);
+	    final EditText input = (EditText) promptView.findViewById(R.id.usernameInput); 
+	    final Context c = this;
+	    
+	    // setup a dialog window
+	    alertDialogBuilder
+	        .setCancelable(false)
+	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	                // get user input and set it to result
+	            	user.setName(input.getText().toString());
+	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            }
+	        })
+	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	                dialog.cancel();
+	            }
+	        });
+	
+	    // create an alert dialog
+	    AlertDialog alertD = alertDialogBuilder.create();
+	
+	    alertD.show();
 	}
 
 	/**
@@ -214,7 +309,7 @@ public class MainActivity extends Activity{ //Main question view
 		this.adapter = adapter;
 	}
 	
-	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
+	public ArrayAdapter<String> getSpinnerAdapter(){
 		return spinner;
 	}
 	public ActionBar.OnNavigationListener getNavigationListener(){
@@ -237,6 +332,27 @@ public class MainActivity extends Activity{ //Main question view
 	}
 	private SearchView getSearchView(Menu menu){
 		return (SearchView) menu.findItem(R.id.action_search).getActionView();
+	}
+	
+	private void setUpActionBarSpinner() {
+		ActionBar bar=getActionBar();
+		bar.setDisplayShowTitleEnabled(false);
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		spinner=new ArrayAdapter<String>(this,R.layout.spinner_item, getSortOptionsList());
+		listener=new ActionBar.OnNavigationListener() {
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				return false;
+			}
+		};
+		bar.setListNavigationCallbacks(spinner,listener);
+	}
+	private List<String> getSortOptionsList(){
+		return Arrays.asList(getString(R.string.sort_HasPicture),
+										getString(R.string.sort_MostRecent),
+										getString(R.string.sort_Oldest),
+										getString(R.string.sort_MostUpvotes),
+										getString(R.string.sort_LeastUpvoted));
 	}
 	
 }
