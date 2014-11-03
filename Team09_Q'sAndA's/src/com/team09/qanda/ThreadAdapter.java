@@ -31,8 +31,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 		}	
 		if (position == 1) {
 			convertView = inflater.inflate(R.layout.answers_heading_row, parent, false);
-		}
-		if (position == 2) {
+		} else {
 			convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
 		}
 		
