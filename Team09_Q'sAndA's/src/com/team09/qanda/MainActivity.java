@@ -1,5 +1,9 @@
 package com.team09.qanda;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,6 +109,49 @@ public class MainActivity extends Activity{ //Main question view
 		//tlc.refreshThreads();
 		//Log.i("threads loaded", threads.jsonify());
 		//populateList();
+		
+		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
+		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
+		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
+		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		mainThreadsList.setAdapter(adapter);
+		
+		
+		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
+		instantiate();
+	}
+	protected void instantiate() {
+		//super.onStart();
+		//threads.refresh(0, 10);
+		threads = new ThreadList();
+		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
+		//populateList();
+		
+		try {
+			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
+			String line;
+
+			//TODO:need to determine how username will be stored in file
+			while ((line = input.readLine()) != null) {
+				user = new User();
+				user.setName(line);
+			}
+
+		} catch (FileNotFoundException e) {
+			setUsername();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
