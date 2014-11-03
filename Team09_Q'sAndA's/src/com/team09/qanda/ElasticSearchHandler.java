@@ -19,7 +19,7 @@ public class ElasticSearchHandler {
 	private String TYPE;
 	private ArrayList<QuestionThread> threads=new ArrayList<QuestionThread>();
 	private JestClient client;
-	private Gson gson = new Gson();
+	private Gson gson;
 	
 	public ElasticSearchHandler(){
 		//URL = "http://cmput301.softwareprocess.es:8080";
