@@ -47,19 +47,36 @@ public class LocalStorageHandler {
 		return new ThreadList();
 	}
 	
-	public User getUser() {
-		return new User();
-	}
-	
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
 		//Save a single question thread to a file. Can be used for favourite and read later.
-		ThreadList tl=this.getThreadList(context,filename);
-		ThreadListController tlc=new ThreadListController(tl);
-		tlc.addThread(qt);
 		try {
-			OutputStreamWriter osw=new OutputStreamWriter(context.openFileOutput(filename, Context.MODE_APPEND));
+			OutputStreamWriter osw=new OutputStreamWriter(
+					context.openFileOutput(filename, Context.MODE_APPEND));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(qt, QuestionThread.class, jw);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public User getUser(Context context) {
+		InputStreamReader in;
+		try {
+			in = new InputStreamReader(context.openFileInput("user.txt"));
+			JsonReader reader=new JsonReader(in);
+			gson.fromJson(reader, User.class);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return new User("null");
+	}
+	
+	public void saveUser(Context context,User user) {
+		try {
+			OutputStreamWriter osw=new OutputStreamWriter(
+					context.openFileOutput("user.txt", Context.MODE_PRIVATE));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(user, User.class, jw);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
