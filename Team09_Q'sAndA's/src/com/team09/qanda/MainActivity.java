@@ -1,5 +1,8 @@
 package com.team09.qanda;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,7 +37,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity{ //Main question view
 	
-	private ArrayAdapter<CharSequence> spinner;
+	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads;
 	private ThreadListController tlc;
@@ -49,6 +52,7 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		setUpActionBarSpinner();
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
 		
@@ -258,7 +262,7 @@ public class MainActivity extends Activity{ //Main question view
 		this.adapter = adapter;
 	}
 	
-	public ArrayAdapter<CharSequence> getSpinnerAdapter(){
+	public ArrayAdapter<String> getSpinnerAdapter(){
 		return spinner;
 	}
 	public ActionBar.OnNavigationListener getNavigationListener(){
@@ -281,6 +285,27 @@ public class MainActivity extends Activity{ //Main question view
 	}
 	private SearchView getSearchView(Menu menu){
 		return (SearchView) menu.findItem(R.id.action_search).getActionView();
+	}
+	
+	private void setUpActionBarSpinner() {
+		ActionBar bar=getActionBar();
+		bar.setDisplayShowTitleEnabled(false);
+		bar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		spinner=new ArrayAdapter<String>(this,R.layout.spinner_item, getSortOptionsList());
+		listener=new ActionBar.OnNavigationListener() {
+			@Override
+			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+				return false;
+			}
+		};
+		bar.setListNavigationCallbacks(spinner,listener);
+	}
+	private List<String> getSortOptionsList(){
+		return Arrays.asList(getString(R.string.sort_HasPicture),
+										getString(R.string.sort_MostRecent),
+										getString(R.string.sort_Oldest),
+										getString(R.string.sort_MostUpvotes),
+										getString(R.string.sort_LeastUpvoted));
 	}
 	
 }
