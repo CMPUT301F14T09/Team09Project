@@ -71,6 +71,15 @@ public class ElasticSearchHandler {
 			return false;
 		}
 	}
+	
+	public boolean saveThreads(ThreadList thread){
+		for(QuestionThread q: thread.getThreads()){
+			if(!saveThread(q)) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	//method is only here for testing purposes, deleting content from elastic search
 	//server is not in requirements
@@ -78,7 +87,6 @@ public class ElasticSearchHandler {
 	public boolean delete(Post P) {
 		return true;
 	}
-	
 	
 	public ThreadList search(String searchString) {
 		return new ThreadList();
