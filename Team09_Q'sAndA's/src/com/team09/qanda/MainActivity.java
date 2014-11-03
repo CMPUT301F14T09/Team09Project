@@ -2,11 +2,14 @@ package com.team09.qanda;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -37,7 +41,9 @@ public class MainActivity extends Activity{ //Main question view
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
 	private Context context=this;
+	private User user;
 	static final int ADD_QUESTION_REQUEST = 1;
+	static final String FILENAME = ""; //TODO: filename of where username is stored
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,44 @@ public class MainActivity extends Activity{ //Main question view
 												
 			}
 		});
+	}
+	
+	/**
+    *
+    * This method creates a prompt for setting username
+    */	
+	public void setUsername(){
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		user = new User();
+	    View promptView = layoutInflater.inflate(R.layout.name_prompt, null);
+	
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	
+	    // set name_prompt.xml to be the layout file of the alertdialog builder
+	    alertDialogBuilder.setView(promptView);
+	    final EditText input = (EditText) promptView.findViewById(R.id.usernameInput); 
+	    final Context c = this;
+	    
+	    // setup a dialog window
+	    alertDialogBuilder
+	        .setCancelable(false)
+	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	                // get user input and set it to result
+	            	user.setName(input.getText().toString());
+	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            }
+	        })
+	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	                dialog.cancel();
+	            }
+	        });
+	
+	    // create an alert dialog
+	    AlertDialog alertD = alertDialogBuilder.create();
+	
+	    alertD.show();
 	}
 
 	/**
