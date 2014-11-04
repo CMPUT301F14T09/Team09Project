@@ -29,7 +29,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
 		}	
-		/*if (position == 1) {
+		if (position == 1) {
 			convertView = inflater.inflate(R.layout.answers_heading_row, parent, false);
 		} else {
 			convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
@@ -39,8 +39,8 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			TextView text = (TextView) convertView.findViewById(R.id.answersHeading);
 			int numAnswers = threadPosts.size() - 2;
 			text.setText(numAnswers + " Answers");
-		}*/
-		//else {
+		}
+		else {
 			TextView text = (TextView) convertView.findViewById(R.id.post);
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
@@ -50,7 +50,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			text.setText(post.getText());
 			author.setText(" - " + post.getAuthor().getName());
 			upvotes.setText(post.getUps() + " Point(s)");
-		//}
+		}
 		
 				
 				
