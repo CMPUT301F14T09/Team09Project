@@ -48,7 +48,7 @@ public class MainActivity extends Activity{ //Main question view
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
 	private Context context=this;
-	private User user;
+	private UserState curUser = UserState.getInstance();
 	static final int ADD_QUESTION_REQUEST = 1;
 	static final String FILENAME = ""; //TODO: filename of where username is stored
 	
@@ -144,8 +144,9 @@ public class MainActivity extends Activity{ //Main question view
 
 			//TODO:need to determine how username will be stored in file
 			while ((line = input.readLine()) != null) {
-				user = new User();
+				User user = new User();
 				user.setName(line);
+				curUser.setUser(user);
 			}
 
 		} catch (FileNotFoundException e) {
@@ -180,7 +181,7 @@ public class MainActivity extends Activity{ //Main question view
     */	
 	public void setUsername(){
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
-		user = new User();
+		final User user = new User();
 	    View promptView = layoutInflater.inflate(R.layout.name_prompt, null);
 	
 	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -197,11 +198,13 @@ public class MainActivity extends Activity{ //Main question view
 	            public void onClick(DialogInterface dialog, int id) {
 	                // get user input and set it to result
 	            	user.setName(input.getText().toString());
+	            	curUser.setUser(user);
 	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
 	            }
 	        })
 	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int id) {
+	            	curUser.setUser(user);
 	                dialog.cancel();
 	            }
 	        });
