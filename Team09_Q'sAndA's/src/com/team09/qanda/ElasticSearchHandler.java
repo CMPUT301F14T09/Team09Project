@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -24,7 +26,7 @@ public class ElasticSearchHandler {
 	public ElasticSearchHandler(){
 		//URL = "http://cmput301.softwareprocess.es:8080";
 		//URL="http://192.168.1.105:9200";
-		URL="http://172.28.104.110:9200";
+		URL="http://206.75.37.9:9200";
 		INDEX="cmput301f14t09";
 		TYPE="qthread";
 		this.gson=new Gson();
@@ -53,6 +55,8 @@ public class ElasticSearchHandler {
 				.setParameter("size", numThreads).build();
 		try {
 			JestResult result=client.execute(search);
+			//Log.i("error message",result.getErrorMessage());
+			//Log.i("json string",result.getJsonString());
 			List<QuestionThread> ts=result.getSourceAsObjectList(QuestionThread.class);
 			return new ArrayList<QuestionThread>(ts);
 		} catch (Exception e) {

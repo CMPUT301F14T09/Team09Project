@@ -106,6 +106,9 @@ public class MainActivity extends Activity{ //Main question view
 		tlc=new ThreadListController(threads);
 		AsyncGet task=new AsyncGet();
 		task.execute(new ThreadListController[] {tlc});
+		//Post p=threads.get(0).getQuestion();
+		//PostController pc=new PostController(p);
+		//pc.addUp();
 		//tlc.refreshThreads();
 		//Log.i("threads loaded", threads.jsonify());
 		//populateList();
@@ -131,7 +134,7 @@ public class MainActivity extends Activity{ //Main question view
 	protected void instantiate() {
 		//super.onStart();
 		//threads.refresh(0, 10);
-		threads = new ThreadList();
+		//threads = new ThreadList();
 		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
 		//populateList();
 		
@@ -156,8 +159,8 @@ public class MainActivity extends Activity{ //Main question view
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
-		mainThreadsList.setAdapter(adapter);
+		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		//mainThreadsList.setAdapter(adapter);
 		
 		
 		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
