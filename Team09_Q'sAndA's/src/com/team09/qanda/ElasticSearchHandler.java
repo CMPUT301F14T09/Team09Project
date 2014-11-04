@@ -1,5 +1,6 @@
 package com.team09.qanda;
 
+import io.searchbox.action.Action;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Index;
