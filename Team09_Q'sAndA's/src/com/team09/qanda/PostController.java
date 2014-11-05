@@ -13,7 +13,7 @@ public class PostController {
 	
 	public void addUp() {
 		ArrayList<User> ups = post.getUpsList();
-		UserState state = new UserState();
+		ApplicationState state = new ApplicationState();
 		User user = state.getUser();
 		Boolean alreadyUpvoted = false;
 		for (int i = 0; i< post.getUps(); i++) {
