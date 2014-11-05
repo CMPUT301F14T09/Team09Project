@@ -7,33 +7,33 @@ import com.google.gson.Gson;
 public class ThreadList extends QModel<QView> {
 	private ArrayList<QuestionThread> threads;
 	private transient Gson gson;
-	private String sortType;
+	private int sortType;
 	private int numThreads;
 	
 	public ThreadList() {
 		gson=new Gson();
 		numThreads=10;
-		sortType="default";
+		sortType=0; //Should probably be R.string.sort_MostUpvoted
 		this.threads=new ArrayList<QuestionThread>();
 	}
 	
-	public ThreadList(String sortType) {
+	public ThreadList(int sortType) {
 		gson=new Gson();
 		numThreads=10;
 		this.sortType=sortType;
 		this.threads=new ArrayList<QuestionThread>();
 	}
 	
-	public ThreadList(String sortType, int numThreads) {
+	public ThreadList(int sortType, int numThreads) {
 		gson=new Gson();
 		this.numThreads=numThreads;
 		this.sortType=sortType;
 		this.threads=new ArrayList<QuestionThread>();
 	}
-	public void setSortType(String sortType){
+	public void setSortType(int sortType){
 		this.sortType=sortType;
 	}
-	public String getSortType() {
+	public int getSortType() {
 		return this.sortType;
 	}
 	

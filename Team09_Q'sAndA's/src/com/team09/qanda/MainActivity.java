@@ -348,8 +348,24 @@ public class MainActivity extends Activity{ //Main question view
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				tlc.sortThreads(spinner.getItem(itemPosition));
+				tlc.sortThreads(getRvalue(spinner.getItem(itemPosition)));
 				return true;
+			}
+
+			private int getRvalue(String item) {
+				if(item.equals(getString(R.string.sort_HasPicture))){
+					return R.string.sort_HasPicture;
+				}
+				if(item.equals(getString(R.string.sort_MostUpvotes))){
+					return R.string.sort_MostUpvotes;
+				}
+				if(item.equals(getString(R.string.sort_LeastUpvoted))){
+					return R.string.sort_MostRecent;
+				}
+				if(item.equals(getString(R.string.sort_Oldest))){
+					return R.string.sort_Oldest;
+				}
+				return 0;
 			}
 		};
 		bar.setListNavigationCallbacks(spinner,listener);

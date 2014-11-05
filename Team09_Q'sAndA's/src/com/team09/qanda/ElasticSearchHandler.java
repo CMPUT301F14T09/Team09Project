@@ -20,6 +20,7 @@ public class ElasticSearchHandler {
 	private String URL;
 	private String INDEX;
 	private String TYPE;
+	private static final int DEFAULT=0;
 	private ArrayList<QuestionThread> threads=new ArrayList<QuestionThread>();
 	private JestClient client;
 	private Gson gson;
@@ -43,14 +44,14 @@ public class ElasticSearchHandler {
 	//or just sortstyle is passed and not numQuestions **will be a data type problem 
 	//but could be resolved by changing sortStyle to char or something, if necessary**
 	public ArrayList<QuestionThread> getThreads() {
-		return getThreads("default",10);
+		return getThreads(DEFAULT,10);
 	}
 	
 	//sortStyle is id of the element found at the
 	//the index of the spinner element found in the string resource
 	//overloaded more specific version, for sorting
 	//this is default version
-	public ArrayList<QuestionThread> getThreads(String sortType, int numThreads) {
+	public ArrayList<QuestionThread> getThreads(int sortType, int numThreads) {
 		String sortQuery=getSortQuery(sortType);
 		String query="{"+sortQuery+"\"query\":{\"match_all\":{}}}";
 		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE)
@@ -103,31 +104,28 @@ public class ElasticSearchHandler {
 	public void cleanup() {
 		this.client.shutdownClient();
 	}
-	private String getSortQuery(String sortType) {
+	private String getSortQuery(int sortType) {
 		//default means don't sort (should be most upvoted later on)
 		String sort="";
 		String direction="\"desc\"";
-		if(sortType.equals("default")){
+		if(sortType==DEFAULT){
 			return sort;
 		}
-		else if(isSortString(sortType,R.string.sort_HasPicture)){
+		else if(sortType==R.string.sort_HasPicture){
 			sort="HasPictures";
 		}
-		else if(isSortString(sortType,R.string.sort_MostUpvotes) || isSortString(sortType,R.string.sort_LeastUpvoted)){
+		else if(sortType==R.string.sort_MostUpvotes || sortType==R.string.sort_LeastUpvoted){
 			sort="upVotes";
-			if(isSortString(sortType,R.string.sort_LeastUpvoted)){
+			if(sortType==R.string.sort_LeastUpvoted){
 				direction="\"asc\"";
 			}
 		}
-		else if(isSortString(sortType,R.string.sort_MostRecent) || isSortString(sortType,R.string.sort_Oldest)){
+		else if(sortType==R.string.sort_MostRecent || sortType==R.string.sort_Oldest){
 			sort="relativeDate";
-			if(isSortString(sortType,R.string.sort_Oldest)){
+			if(sortType==R.string.sort_Oldest){
 				direction="\"asc\"";
 			}
 		}
 		return "\"sort\":[{\""+sort+"\": {\"order\": "+direction+"}}],";
-	}
-	private boolean isSortString(String query,int id){
-		return query.equals(Resources.getSystem().getString(id));
 	}
 }
