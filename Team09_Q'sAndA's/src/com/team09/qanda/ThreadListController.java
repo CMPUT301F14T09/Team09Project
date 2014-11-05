@@ -28,6 +28,10 @@ public class ThreadListController {
 		tl.setNumThreads(more);
 		tl.setThreads(esh.getThreads(tl.getSortType(), tl.getNumThreads()));
 	}
+	public void sortThreads(String sortType){
+		tl.setSortType(sortType);
+		refreshThreads();
+	}
 	
 	public void saveThread(QuestionThread thread) {
 		esh.saveThread(thread);

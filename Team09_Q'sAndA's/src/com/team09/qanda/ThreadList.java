@@ -30,7 +30,9 @@ public class ThreadList extends QModel<QView> {
 		this.sortType=sortType;
 		this.threads=new ArrayList<QuestionThread>();
 	}
-	
+	public void setSortType(String sortType){
+		this.sortType=sortType;
+	}
 	public String getSortType() {
 		return this.sortType;
 	}
