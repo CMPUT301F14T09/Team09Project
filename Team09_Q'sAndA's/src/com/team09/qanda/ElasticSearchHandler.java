@@ -63,11 +63,13 @@ public class ElasticSearchHandler {
 			//Potential method for adding IDs to QuestionThreads
 			/*threads=new ArrayList<QuestionThread>();
 			List<ESResult> results=result.getSourceAsObjectList(ESResult.class);
+			Log.i("results",results.get(0).getId());
 			for (int i=0;i<results.size();i++) {
 				QuestionThread qt=results.get(i).getThread();
 				qt.setId(results.get(i).getId());
 				threads.add(qt);
-			}*/
+			}
+			return threads;*/
 			
 			List<QuestionThread> ts=result.getSourceAsObjectList(QuestionThread.class);
 			return new ArrayList<QuestionThread>(ts);
