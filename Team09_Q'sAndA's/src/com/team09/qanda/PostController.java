@@ -17,7 +17,7 @@ public class PostController {
 		User user = state.getUser();
 		Boolean alreadyUpvoted = false;
 		for (int i = 0; i< post.getUps(); i++) {
-			if (ups.get(i).getName() == user.getName() && ups.get(i).getID() == user.getID()) {
+			if (ups.get(i).getID() == user.getID()) {
 				alreadyUpvoted = true;
 				break;
 			}
