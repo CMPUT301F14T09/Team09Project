@@ -27,6 +27,7 @@ public class Post extends QModel<QView> implements Serializable {
 	}
 	
 	public int getUps() {
+		upVotes = ups.size();
 		return upVotes;
 	}
 	
