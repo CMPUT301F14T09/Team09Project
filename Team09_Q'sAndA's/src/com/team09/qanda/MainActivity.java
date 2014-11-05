@@ -208,9 +208,15 @@ public class MainActivity extends Activity{ //Main question view
 	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int id) {
 	                // get user input and set it to result
-	            	user.setName(input.getText().toString());
-	            	curState.setUser(user);
-	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            	String name = input.getText().toString();
+	            	if (name.trim().isEmpty()){
+	            		curState.setUser(user);
+	            		Toast.makeText(c, "Invalid entry! using default username...", Toast.LENGTH_SHORT).show();
+	            	} else {
+		            	user.setName(name);
+		            	curState.setUser(user);
+		            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            	}
 	            }
 	        })
 	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
