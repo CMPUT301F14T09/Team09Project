@@ -29,7 +29,11 @@ public class ElasticSearchHandler {
 	public ElasticSearchHandler(){
 		//URL = "http://cmput301.softwareprocess.es:8080";
 		//URL="http://192.168.1.105:9200";
-		URL="http://206.75.37.9:9200";
+		this("http://206.75.37.9:9200");
+	}
+	
+	public ElasticSearchHandler(String addr){
+		URL = addr;
 		INDEX="cmput301f14t09";
 		TYPE="qthread";
 		this.gson=new Gson();

@@ -2,6 +2,7 @@ package com.team09.qanda;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,9 +50,9 @@ public class MainActivity extends Activity{ //Main question view
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
 	private Context context=this;
-	private UserState curUser = UserState.getInstance();
+	private ApplicationState curState = ApplicationState.getInstance();
 	static final int ADD_QUESTION_REQUEST = 1;
-	static final String FILENAME = ""; //TODO: filename of where username is stored
+	static final String FILENAME = "user.txt"; //TODO: filename of where username is stored
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -138,24 +140,33 @@ public class MainActivity extends Activity{ //Main question view
 		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
 		//populateList();
 		
-		try {
-			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
-			String line;
-
-			//TODO:need to determine how username will be stored in file
-			while ((line = input.readLine()) != null) {
-				User user = new User();
-				user.setName(line);
-				curUser.setUser(user);
+		if(curState.getUser() == null){
+			try {
+				BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
+				String line;
+	
+				//TODO:need to determine how username will be stored in file
+				while ((line = input.readLine()) != null) {
+					User user = new User();
+					user.setName(line);
+					curState.setUser(user);
+				}
+	
+			} catch (FileNotFoundException e) {
+				setUsername();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-
-		} catch (FileNotFoundException e) {
-			setUsername();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileOutputStream fos;
+			try {
+				fos = this.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+				fos.write(curState.getUser().getName().getBytes());
+				fos.close();
+				Log.i("Persistence", "Saved: " + curState.getUser().getName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}						
 		}
-		
 		
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
@@ -198,13 +209,13 @@ public class MainActivity extends Activity{ //Main question view
 	            public void onClick(DialogInterface dialog, int id) {
 	                // get user input and set it to result
 	            	user.setName(input.getText().toString());
-	            	curUser.setUser(user);
+	            	curState.setUser(user);
 	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
 	            }
 	        })
 	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int id) {
-	            	curUser.setUser(user);
+	            	curState.setUser(user);
 	                dialog.cancel();
 	            }
 	        });

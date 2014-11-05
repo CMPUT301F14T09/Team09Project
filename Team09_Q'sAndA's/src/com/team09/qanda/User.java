@@ -26,4 +26,8 @@ public class User extends QModel<QView> implements Serializable {
 	public String getName() {
 		return this.name;
 	}
+	
+	public String getID() {
+		return this.deviceID;
+	}
 }
