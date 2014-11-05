@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -51,9 +50,8 @@ public class ElasticSearchHandler {
 	//overloaded more specific version, for sorting
 	//this is default version
 	public ArrayList<QuestionThread> getThreads(String sortType, int numThreads) {
-		String sortQuery=getSortQuery(sortType);
-		String query="{"+sortQuery+"\"query\":{\"match_all\":{}}}";
-		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE)
+		String query="{\"query\":{\"match_all\":{}}}";
+		Search search=(Search) new Search.Builder(query).addIndex("cmput301f14t09").addType("qthread")
 				.setParameter("size", numThreads).build();
 		try {
 			JestResult result=client.execute(search);
@@ -66,8 +64,6 @@ public class ElasticSearchHandler {
 		}
 		return new ArrayList<QuestionThread>(threads);
 	}
-
-	
 
 	public boolean saveThread(QuestionThread thread) {
 		Index index=new Index.Builder(thread).index(INDEX).type(TYPE).build();
@@ -103,31 +99,5 @@ public class ElasticSearchHandler {
 	public void cleanup() {
 		this.client.shutdownClient();
 	}
-	private String getSortQuery(String sortType) {
-		//default means don't sort (should be most upvoted later on)
-		String sort="";
-		String direction="\"desc\"";
-		if(sortType.equals("default")){
-			return sort;
-		}
-		else if(isSortString(sortType,R.string.sort_HasPicture)){
-			sort="HasPictures";
-		}
-		else if(isSortString(sortType,R.string.sort_MostUpvotes) || isSortString(sortType,R.string.sort_LeastUpvoted)){
-			sort="upVotes";
-			if(isSortString(sortType,R.string.sort_LeastUpvoted)){
-				direction="\"asc\"";
-			}
-		}
-		else if(isSortString(sortType,R.string.sort_MostRecent) || isSortString(sortType,R.string.sort_Oldest)){
-			sort="relativeDate";
-			if(isSortString(sortType,R.string.sort_Oldest)){
-				direction="\"asc\"";
-			}
-		}
-		return "\"sort\":[{\""+sort+"\": {\"order\": "+direction+"}}],";
-	}
-	private boolean isSortString(String query,int id){
-		return query.equals(Resources.getSystem().getString(id));
-	}
+
 }
