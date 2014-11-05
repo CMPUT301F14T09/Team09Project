@@ -33,10 +33,6 @@ public class ThreadListController {
 		refreshThreads();
 	}
 	
-	public void saveThread(QuestionThread thread) {
-		esh.saveThread(thread);
-	}
-	
 	public void clear() {
 		tl.setThreads(new ArrayList<QuestionThread>());
 	}

@@ -4,12 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class QuestionThread extends QModel<QView> implements Serializable {
+	private String id;
 	private Post question;
 	private ArrayList<Post> answers;
 	
 	public QuestionThread(Post question) {
 		this.question=question;
 		answers=new ArrayList<Post>();
+	}
+	
+	public String getId() {
+		return this.id;
+	}
+	
+	public void setId(String id) {
+		this.id=id;
 	}
 	
 	public Post getQuestion() {
