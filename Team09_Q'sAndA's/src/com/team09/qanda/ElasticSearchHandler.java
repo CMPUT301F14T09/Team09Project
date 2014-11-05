@@ -112,7 +112,7 @@ public class ElasticSearchHandler {
 			return sort;
 		}
 		else if(sortType==R.string.sort_HasPicture){
-			sort="HasPictures";
+			sort="hasPictures";
 		}
 		else if(sortType==R.string.sort_MostUpvotes || sortType==R.string.sort_LeastUpvoted){
 			sort="upVotes";

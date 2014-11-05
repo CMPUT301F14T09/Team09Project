@@ -353,19 +353,20 @@ public class MainActivity extends Activity{ //Main question view
 			}
 
 			private int getRvalue(String item) {
+				int Rstring=0;
 				if(item.equals(getString(R.string.sort_HasPicture))){
-					return R.string.sort_HasPicture;
+					Rstring=R.string.sort_HasPicture;
 				}
-				if(item.equals(getString(R.string.sort_MostUpvotes))){
-					return R.string.sort_MostUpvotes;
+				else if(item.equals(getString(R.string.sort_MostUpvotes))){
+					Rstring=R.string.sort_MostUpvotes;
 				}
-				if(item.equals(getString(R.string.sort_LeastUpvoted))){
-					return R.string.sort_MostRecent;
+				else if(item.equals(getString(R.string.sort_LeastUpvoted))){
+					Rstring=R.string.sort_MostRecent;
 				}
-				if(item.equals(getString(R.string.sort_Oldest))){
-					return R.string.sort_Oldest;
+				else if(item.equals(getString(R.string.sort_Oldest))){
+					Rstring=R.string.sort_Oldest;
 				}
-				return 0;
+				return Rstring;
 			}
 		};
 		bar.setListNavigationCallbacks(spinner,listener);
