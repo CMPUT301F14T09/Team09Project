@@ -348,7 +348,8 @@ public class MainActivity extends Activity{ //Main question view
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				return false;
+				tlc.sortThreads(spinner.getItem(itemPosition));
+				return true;
 			}
 		};
 		bar.setListNavigationCallbacks(spinner,listener);
