@@ -258,24 +258,8 @@ public class MainActivity extends Activity{ //Main question view
 	
 	/* Add question button method */
 	public void addQuestion(View v) {
-		Toast.makeText(getApplicationContext(), "CLICKED", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(this, AddQuestionActivity.class);
-	    startActivityForResult(intent, ADD_QUESTION_REQUEST);
-	}
-	
-	/* TODO : onActivityResult */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    // Check which request we're responding to
-	    if (requestCode == MainActivity.ADD_QUESTION_REQUEST) {
-	        // Make sure the request was successful
-	        if (resultCode == RESULT_OK) {
-	            // The Author asked a question
-	        	String textFieldEntry = data.getExtras().getString(AddQuestionActivity.ADD_QUESTION_RESULT);
-	        	Toast.makeText(getApplicationContext(), textFieldEntry, Toast.LENGTH_SHORT).show();
-	            // Do something with the contact here (bigger example below)
-	        }
-	    }
+	    startActivity(intent);
 	}
 	
 	private class AsyncGet extends AsyncTask<ThreadListController, Void, Void> {
