@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -20,6 +21,7 @@ public class ElasticSearchHandler {
 	private String URL;
 	private String INDEX;
 	private String TYPE;
+	private static final int DEFAULT=0;
 	private ArrayList<QuestionThread> threads=new ArrayList<QuestionThread>();
 	private JestClient client;
 	private Gson gson;
@@ -43,16 +45,17 @@ public class ElasticSearchHandler {
 	//or just sortstyle is passed and not numQuestions **will be a data type problem 
 	//but could be resolved by changing sortStyle to char or something, if necessary**
 	public ArrayList<QuestionThread> getThreads() {
-		return getThreads("default",10);
+		return getThreads(DEFAULT,10);
 	}
 	
 	//sortStyle is id of the element found at the
 	//the index of the spinner element found in the string resource
 	//overloaded more specific version, for sorting
 	//this is default version
-	public ArrayList<QuestionThread> getThreads(String sortType, int numThreads) {
-		String query="{\"query\":{\"match_all\":{}}}";
-		Search search=(Search) new Search.Builder(query).addIndex("cmput301f14t09").addType("qthread")
+	public ArrayList<QuestionThread> getThreads(int sortType, int numThreads) {
+		String sortQuery=getSortQuery(sortType);
+		String query="{"+sortQuery+"\"query\":{\"match_all\":{}}}";
+		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE)
 				.setParameter("size", numThreads).build();
 		try {
 			JestResult result=client.execute(search);
@@ -65,6 +68,8 @@ public class ElasticSearchHandler {
 		}
 		return new ArrayList<QuestionThread>(threads);
 	}
+
+	
 
 	public boolean saveThread(QuestionThread thread) {
 		Index index=new Index.Builder(thread).index(INDEX).type(TYPE).build();
@@ -100,5 +105,28 @@ public class ElasticSearchHandler {
 	public void cleanup() {
 		this.client.shutdownClient();
 	}
-
+	private String getSortQuery(int sortType) {
+		//default means don't sort (should be most upvoted later on)
+		String sort="";
+		String direction="\"desc\"";
+		if(sortType==DEFAULT){
+			return sort;
+		}
+		else if(sortType==R.string.sort_HasPicture){
+			sort="hasPictures";
+		}
+		else if(sortType==R.string.sort_MostUpvotes || sortType==R.string.sort_LeastUpvoted){
+			sort="upVotes";
+			if(sortType==R.string.sort_LeastUpvoted){
+				direction="\"asc\"";
+			}
+		}
+		else if(sortType==R.string.sort_MostRecent || sortType==R.string.sort_Oldest){
+			sort="relativeDate";
+			if(sortType==R.string.sort_Oldest){
+				direction="\"asc\"";
+			}
+		}
+		return "\"sort\":[{\""+sort+"\": {\"order\": "+direction+"}}],";
+	}
 }
