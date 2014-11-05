@@ -42,6 +42,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity{ //Main question view
 	
 	private ArrayAdapter<String> spinner;
+	int sortType;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads;
 	private ThreadListController tlc;
@@ -59,16 +60,7 @@ public class MainActivity extends Activity{ //Main question view
 		setUpActionBarSpinner();
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
-		
-		listener=new ActionBar.OnNavigationListener() {
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				return false;
-			}
-		};
-		
 		mainThreadsList = (ListView) findViewById(R.id.MainListView);
-		
 		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
                 false);
 		mainThreadsList.addFooterView(footer);
@@ -304,7 +296,23 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		
 	}
-	
+	private class AsyncSort extends AsyncTask<ThreadListController, Void, Void>{
+		
+		@Override
+		protected Void doInBackground(ThreadListController... params) {
+			for (ThreadListController tlc:params) {
+				tlc.sortThreads(sortType);
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+			mainThreadsList.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
+		}
+		
+	}
 	
 	//for testing purposes
 	public ThreadListAdapter getAdapter(){
@@ -348,7 +356,9 @@ public class MainActivity extends Activity{ //Main question view
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				tlc.sortThreads(getRvalue(spinner.getItem(itemPosition)));
+				sortType=getRvalue(spinner.getItem(itemPosition));
+				AsyncSort sort=new AsyncSort();
+				sort.execute(new ThreadListController[] {tlc});
 				return true;
 			}
 
@@ -378,5 +388,4 @@ public class MainActivity extends Activity{ //Main question view
 										getString(R.string.sort_MostUpvotes),
 										getString(R.string.sort_LeastUpvoted));
 	}
-	
 }

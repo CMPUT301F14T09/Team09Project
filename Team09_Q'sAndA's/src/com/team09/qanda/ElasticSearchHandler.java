@@ -1,6 +1,5 @@
 package com.team09.qanda;
 
-import io.searchbox.action.Action;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Index;
@@ -59,22 +58,14 @@ public class ElasticSearchHandler {
 				.setParameter("size", numThreads).build();
 		try {
 			JestResult result=client.execute(search);
-			
-			//Potential method for adding IDs to QuestionThreads
-			/*threads=new ArrayList<QuestionThread>();
-			List<ESResult> results=result.getSourceAsObjectList(ESResult.class);
-			for (int i=0;i<results.size();i++) {
-				QuestionThread qt=results.get(i).getThread();
-				qt.setId(results.get(i).getId());
-				threads.add(qt);
-			}*/
-			
+			//Log.i("error message",result.getErrorMessage());
+			//Log.i("json string",result.getJsonString());
 			List<QuestionThread> ts=result.getSourceAsObjectList(QuestionThread.class);
 			return new ArrayList<QuestionThread>(ts);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return threads;
+		return new ArrayList<QuestionThread>(threads);
 	}
 
 	
