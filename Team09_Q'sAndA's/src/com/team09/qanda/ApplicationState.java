@@ -1,7 +1,7 @@
 package com.team09.qanda;
 
 public class ApplicationState {
-	private static ApplicationState userState = null;
+	private static ApplicationState appState = null;
 	private static User user;
 	
 	protected ApplicationState(){
@@ -9,10 +9,10 @@ public class ApplicationState {
 	}
 	
    public static ApplicationState getInstance() {
-	      if(userState == null) {
-	    	  userState = new ApplicationState();
+	      if(appState == null) {
+	    	  appState = new ApplicationState();
 	      }
-	      return userState;
+	      return appState;
    }
    
    public User getUser(){
