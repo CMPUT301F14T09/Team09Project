@@ -118,8 +118,8 @@ public class MainActivity extends Activity{ //Main question view
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
-		mainThreadsList.setAdapter(adapter);
+		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		//mainThreadsList.setAdapter(adapter);
 		
 		
 		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
@@ -175,7 +175,7 @@ public class MainActivity extends Activity{ //Main question view
 		//mainThreadsList.setAdapter(adapter);
 		
 		
-		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+		/*mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 
@@ -183,7 +183,7 @@ public class MainActivity extends Activity{ //Main question view
 				displayThread(selectedThread);
 												
 			}
-		});
+		});*/
 	}
 	
 	/**
