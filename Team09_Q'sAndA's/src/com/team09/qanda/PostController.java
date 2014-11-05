@@ -13,9 +13,15 @@ public class PostController {
 	
 	public void addUp() {
 		ArrayList<User> ups = post.getUpsList();
-		User user = new User();
-		ups.add(user);
-		post.setUps(ups);
+		UserState state = new UserState();
+		User user = state.getUser();
+		for (int i = 1; i<= post.getUps(); i++) {
+			if (ups.get(i).getName() == user.getName() && ups.get(i).getID() == user.getID()) {
+				ups.add(user);
+				post.setUps(ups);
+				break;
+			}
+		}
 	}
 	
 	public void addReply(Reply reply) {
