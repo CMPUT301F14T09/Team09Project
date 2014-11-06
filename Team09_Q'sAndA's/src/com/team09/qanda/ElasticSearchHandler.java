@@ -27,7 +27,7 @@ public class ElasticSearchHandler {
 	private Gson gson;
 	
 	public ElasticSearchHandler(){
-		//URL = "http://cmput301.softwareprocess.es:8080";
+	//	URL = "http://cmput301.softwareprocess.es:8080";
 		//URL="http://192.168.1.105:9200";
 		this("http://206.75.37.9:9200");
 	}

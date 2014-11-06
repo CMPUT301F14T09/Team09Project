@@ -19,26 +19,29 @@
     	android:layout_alignParentLeft="true">
     </TextView>
     
-    
     <TextView
         android:id="@+id/postAuthor"
-	    android:layout_width="wrap_content"
-    	android:layout_height="30sp"
-    	android:paddingLeft="5dp"
-    	android:textSize="15sp"
-    	android:textColor="@color/grey"
-    	android:layout_below="@id/post"
-    	android:layout_alignParentRight="true">
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/post"
+        android:paddingLeft="5dp"
+        android:text="- fsdsfd"
+        android:textColor="@color/grey"
+        android:textSize="15sp" >
+
     </TextView>
     
     <TextView
         android:id="@+id/postUpvotes"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:paddingLeft="5dp"
-    	android:textSize="12sp"
-    	android:layout_below="@id/postAuthor"
-    	android:layout_alignParentRight="true">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/postAuthor"
+        android:paddingLeft="5dp"
+        android:text="x Point(s)"
+        android:textSize="12sp" >
+
     </TextView>
     
     <TextView
@@ -50,5 +53,13 @@
     	android:layout_alignParentRight="true"
     	android:textSize="12sp">
     </TextView>
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/postUpvotes"
+        android:layout_toLeftOf="@+id/postUpvotes"
+        android:button="@drawable/upvote_checkbox" />
     
 </RelativeLayout>
