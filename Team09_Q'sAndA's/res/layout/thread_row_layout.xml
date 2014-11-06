@@ -60,6 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/postUpvotes"
         android:layout_toLeftOf="@+id/postUpvotes"
-        android:button="@drawable/upvote_checkbox" />
+        android:button="@drawable/upvote_checkbox" 
+	    android:onClick="upvoteQuestion" />
+
     
 </RelativeLayout>

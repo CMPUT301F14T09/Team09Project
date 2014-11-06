@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class QuestionThreadActivity extends Activity {
 
@@ -131,6 +132,17 @@ public class QuestionThreadActivity extends Activity {
 		AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
 		answerTextField.setText("");
+	}
+	
+	public void upvoteQuestion(View v) {
+		Post post = thread.getQuestion();
+		int upvoteCount = post.getUps();
+		PostController pc = new PostController(post);
+		pc.addUp();
+		if (upvoteCount != post.getUps()) {
+			Toast.makeText(this, "upvote added", Toast.LENGTH_SHORT).show();
+		}
+		v.setEnabled(false);
 	}
 	
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
