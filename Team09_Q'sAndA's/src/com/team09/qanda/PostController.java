@@ -15,17 +15,22 @@ public class PostController {
 		ArrayList<User> ups = post.getUpsList();
 		ApplicationState state = new ApplicationState();
 		User user = state.getUser();
-		Boolean alreadyUpvoted = false;
-		for (int i = 0; i< post.getUps(); i++) {
-			if (ups.get(i).getID() == user.getID()) {
-				alreadyUpvoted = true;
-				break;
-			}
-		}
-		if (alreadyUpvoted == false) {
+		if (alreadyUpvoted() == false) {
 			ups.add(user);
 			post.setUps(ups);
 		}
+	}
+	
+	public boolean alreadyUpvoted() {
+		ArrayList<User> ups = post.getUpsList();
+		ApplicationState state = new ApplicationState();
+		User user = state.getUser();
+		for (int i = 0; i< post.getUps(); i++) {
+			if (ups.get(i).getID() == user.getID()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void addReply(Reply reply) {
