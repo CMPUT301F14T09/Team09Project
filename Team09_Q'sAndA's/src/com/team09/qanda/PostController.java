@@ -29,7 +29,7 @@ public class PostController {
 			if (ups.get(i).getID() == user.getID()) {
 				return true;
 			}
-		}
+		} 
 		return false;
 	}
 	

@@ -34,6 +34,7 @@ public class QuestionThreadActivity extends Activity {
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
 		
+		
 		// Instantiate thread
 		instantiate();
 		/*
@@ -75,13 +76,6 @@ public class QuestionThreadActivity extends Activity {
 		threadPosts.add(1, thread.getQuestion());
 		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, threadPosts);
 		threadPostsList.setAdapter(adapter);
-		
-		Post post = thread.getQuestion();
-		questionPostController = new PostController(post);
-		if (questionPostController.alreadyUpvoted()) {
-			CheckBox cb = (CheckBox) findViewById(R.id.upvoteCheckbox);
-			cb.setEnabled(false);
-		}
 
 		/*
 			mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
@@ -144,11 +138,15 @@ public class QuestionThreadActivity extends Activity {
 	}
 	
 	public void upvoteQuestion(View v) {
-		questionPostController.addUp();
-	    QuestionThreadController qtc = new QuestionThreadController(thread);
-		AsyncSave task=new AsyncSave();
-		task.execute(new QuestionThreadController[] {qtc});
-		Toast.makeText(this, "upvote added", Toast.LENGTH_SHORT).show();
+		Post post = thread.getQuestion();
+		questionPostController = new PostController(post);
+		if (!questionPostController.alreadyUpvoted()) {
+			questionPostController.addUp();
+		    QuestionThreadController qtc = new QuestionThreadController(thread);
+			AsyncSave task=new AsyncSave();
+			task.execute(new QuestionThreadController[] {qtc});
+			Toast.makeText(this, "upvote added", Toast.LENGTH_SHORT).show();
+		}
 		v.setEnabled(false);
 	}
 	
