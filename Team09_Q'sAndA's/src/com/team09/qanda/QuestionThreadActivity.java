@@ -140,6 +140,9 @@ public class QuestionThreadActivity extends Activity {
 		PostController pc = new PostController(post);
 		pc.addUp();
 		if (upvoteCount != post.getUps()) {
+	    	QuestionThreadController qtc = new QuestionThreadController(thread);
+			AsyncSave task=new AsyncSave();
+			task.execute(new QuestionThreadController[] {qtc});
 			Toast.makeText(this, "upvote added", Toast.LENGTH_SHORT).show();
 		}
 		v.setEnabled(false);
@@ -157,11 +160,11 @@ public class QuestionThreadActivity extends Activity {
 		@Override
 		protected void onPostExecute(Void result) {
 			threadPosts = thread.getAnswers();
-			threadPosts.add(0, thread.getQuestion());
-			threadPosts.add(1, thread.getQuestion());
+		//	threadPosts.add(0, thread.getQuestion());
+		//	threadPosts.add(1, thread.getQuestion());
 			adapter = new ThreadAdapter(QuestionThreadActivity.this, R.layout.thread_row_layout, threadPosts);
 			threadPostsList.setAdapter(adapter);
-			adapter.notifyDataSetChanged();
+			adapter.notifyDataSetChanged(); 
 		}
 	}
 }
