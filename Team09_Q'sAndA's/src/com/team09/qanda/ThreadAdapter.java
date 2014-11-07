@@ -62,7 +62,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			}
 				
 			text.setText(post.getText());
-			author.setText(" - " + post.getAuthor().getName());
+			//author.setText(" - " + post.getAuthor().getName());
 			upvotes.setText(post.getUps() + " Point(s)");
 		}
 		
