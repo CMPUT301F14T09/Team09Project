@@ -27,6 +27,10 @@ public class QuestionThreadController {
 	public void saveThread() {
 		esh.saveThread(this.thread);
 	}
+	
+	public void saveThread(String id) {
+		esh.saveThread(this.thread, id);
+	}
 
 	public void sort() {
 		// TODO Auto-generated method stub

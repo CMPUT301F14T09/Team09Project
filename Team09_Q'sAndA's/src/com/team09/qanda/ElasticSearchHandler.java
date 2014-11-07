@@ -1,6 +1,5 @@
 package com.team09.qanda;
 
-import io.searchbox.action.Action;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Index;
@@ -10,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import android.content.res.Resources;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 
@@ -42,7 +41,7 @@ public class ElasticSearchHandler {
 		URL = addr;
 		INDEX="cmput301f14t09";
 		TYPE="qthread";
-		this.gson=new Gson();
+		this.gson=new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 		JestClientFactory f=new JestClientFactory();
 		f.setDroidClientConfig(new DroidClientConfig.Builder(URL).discoveryEnabled(true)
 				.discoveryFrequency(120, TimeUnit.SECONDS).multiThreaded(true).build());
@@ -80,9 +79,15 @@ public class ElasticSearchHandler {
 				threads.add(qt);
 			}
 			return threads;*/
-			
-			List<QuestionThread> ts=result.getSourceAsObjectList(QuestionThread.class);
-			return new ArrayList<QuestionThread>(ts);
+			ESResults r=gson.fromJson(result.getJsonString(), ESResults.class);
+			ArrayList<ESResult> esResults=r.getHits().getHits();
+			threads=new ArrayList<QuestionThread>();
+			for (int i=0;i<esResults.size();i++) {
+				QuestionThread qt=esResults.get(i).get_source();
+				qt.setId(esResults.get(i).get_id());
+				threads.add(qt);
+			}
+			return threads;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,6 +98,17 @@ public class ElasticSearchHandler {
 
 	public boolean saveThread(QuestionThread thread) {
 		Index index=new Index.Builder(thread).index(INDEX).type(TYPE).build();
+		try {
+			client.execute(index);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean saveThread(QuestionThread thread, String id) {
+		Index index=new Index.Builder(thread).index(INDEX).type(TYPE).id(id).build();
 		try {
 			client.execute(index);
 			return true;
