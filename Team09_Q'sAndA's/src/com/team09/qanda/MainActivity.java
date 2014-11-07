@@ -349,7 +349,9 @@ public class MainActivity extends Activity{ //Main question view
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				tlc.sortThreads(getRvalue(spinner.getItem(itemPosition)));
+				tlc.changeSortType(getRvalue(spinner.getItem(itemPosition)));
+				AsyncGet task=new AsyncGet();
+				task.execute(new ThreadListController[] {tlc});
 				return true;
 			}
 
