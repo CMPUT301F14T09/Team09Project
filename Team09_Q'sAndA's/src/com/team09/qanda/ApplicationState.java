@@ -1,5 +1,11 @@
 package com.team09.qanda;
 
+/**
+ * 
+ * Stores any user preferences.
+ * 
+ */
+
 public class ApplicationState {
 	private static ApplicationState appState = null;
 	private static User user;

@@ -5,6 +5,8 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 
+import android.content.Context;
+
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.Post;
 import com.team09.qanda.PostController;
@@ -15,6 +17,7 @@ import com.team09.qanda.ThreadList;
 import com.team09.qanda.User;
 
 public class QuestionThreadControllerTest extends TestCase {
+	private Context context;
 	
 	// Use Case #2 : View a question and its answers
 	public void testViewThread() {
@@ -176,8 +179,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		LocalStorageHandler handler=new LocalStorageHandler();
 		Post question=new Post(new User(),"Can I read these things later?");
 		QuestionThread qt=new QuestionThread(question);
-		handler.saveQuestionThread(qt, "Later.txt");
-		ThreadList laters=handler.getThreadList("Later.txt");
+		handler.saveQuestionThread(context, qt, "Later.txt");
+		ThreadList laters=handler.getThreadList(context, "Later.txt");
 		ArrayList<String> qs=new ArrayList<String>();
 		for (Post q:laters.getQuestions()) {
 			qs.add(q.getText());
@@ -190,8 +193,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		LocalStorageHandler handler=new LocalStorageHandler();
 		Post question=new Post(new User(),"This is my favourite");
 		QuestionThread qt=new QuestionThread(question);
-		handler.saveQuestionThread(qt, "Favourite.txt");
-		ThreadList favs=handler.getThreadList("Favourite.txt");
+		handler.saveQuestionThread(context, qt, "Favourite.txt");
+		ThreadList favs=handler.getThreadList(context, "Favourite.txt");
 		ArrayList<String> qs=new ArrayList<String>();
 		for (Post q:favs.getQuestions()) {
 			qs.add(q.getText());

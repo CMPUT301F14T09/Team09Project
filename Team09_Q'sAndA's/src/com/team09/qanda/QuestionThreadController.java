@@ -2,6 +2,11 @@ package com.team09.qanda;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * Controller used to update information in questionThread, including adding answers and saving the thread to ElasticSearch.
+ *
+ */
 
 public class QuestionThreadController {
 	//Handles individual question threads and its answers

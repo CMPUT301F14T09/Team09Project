@@ -28,9 +28,8 @@ public class ThreadListController {
 		tl.setNumThreads(more);
 		tl.setThreads(esh.getThreads(tl.getSortType(), tl.getNumThreads()));
 	}
-	public void sortThreads(int sortType){
+	public void changeSortType(int sortType){
 		tl.setSortType(sortType);
-		refreshThreads();
 	}
 	
 	public void clear() {

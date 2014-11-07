@@ -75,6 +75,17 @@ public class MainActivity extends Activity{ //Main question view
                 false);
 		mainThreadsList.addFooterView(footer);
 		
+		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
+		
+		
 	}
 
 	@Override
@@ -103,7 +114,6 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		//threads.refresh(0, 10);
 		threads = new ThreadList();
 		tlc=new ThreadListController(threads);
 		AsyncGet task=new AsyncGet();
@@ -120,23 +130,13 @@ public class MainActivity extends Activity{ //Main question view
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
 		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
 		//mainThreadsList.setAdapter(adapter);
+		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+		mainThreadsList.setAdapter(adapter);
 		
-		
-		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-				displayThread(selectedThread);
-												
-			}
-		});
 		instantiate();
 	}
 	protected void instantiate() {
 		//super.onStart();
-		//threads.refresh(0, 10);
-		//threads = new ThreadList();
 		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
 		//populateList();
 		
@@ -168,13 +168,11 @@ public class MainActivity extends Activity{ //Main question view
 			}						
 		}
 		
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
-		//mainThreadsList.setAdapter(adapter);
 		
+		//TODO:Nullpointer exception here :/
+		//System.out.println(curState.getUser().getName());
 		
+<<<<<<< HEAD
 		/*mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -184,6 +182,8 @@ public class MainActivity extends Activity{ //Main question view
 												
 			}
 		});*/
+=======
+>>>>>>> 7bb46cd1a3470387fe3443ed76658c0596fb625d
 	}
 	
 	/**
@@ -349,7 +349,9 @@ public class MainActivity extends Activity{ //Main question view
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				tlc.sortThreads(getRvalue(spinner.getItem(itemPosition)));
+				tlc.changeSortType(getRvalue(spinner.getItem(itemPosition)));
+				AsyncGet task=new AsyncGet();
+				task.execute(new ThreadListController[] {tlc});
 				return true;
 			}
 

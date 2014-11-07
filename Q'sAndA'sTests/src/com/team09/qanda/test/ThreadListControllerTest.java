@@ -10,10 +10,13 @@ import com.team09.qanda.ThreadList;
 import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class ThreadListControllerTest extends
 		ActivityInstrumentationTestCase2<MainActivity> {
+	
+	private Context context;
 
 	public ThreadListControllerTest() {
 		super(MainActivity.class);
@@ -110,6 +113,6 @@ public class ThreadListControllerTest extends
 		
 		LocalStorageHandler lsh = new LocalStorageHandler();
 	
-		assertSame(lsh.getThreadList("MyQuestions.txt").get(0), q1);
+		assertSame(lsh.getThreadList(context, "MyQuestions.txt").get(0), q1);
 	}
 }

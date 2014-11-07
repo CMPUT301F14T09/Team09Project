@@ -19,7 +19,6 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		super(context, layoutResourceId, threads);
 		this.threads = threads;
 		this.context = context;
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

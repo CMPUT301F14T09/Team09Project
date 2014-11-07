@@ -1,7 +1,5 @@
 package com.team09.qanda;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,15 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+/**
+ * 
+ * This activity displays a questionThread. This includes displaying the question and any answers
+ * and allows the user to upvote questions and answers or post an answer or a reply.
+ *
+ */
 
 public class QuestionThreadActivity extends Activity {
 
 	private QuestionThread thread;
 	private ThreadAdapter adapter;
-	private ArrayList<Post> threadPosts;
 	private ListView threadPostsList;
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
+	private PostController questionPostController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +37,9 @@ public class QuestionThreadActivity extends Activity {
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
 		
+		
 		// Instantiate thread
 		instantiate();
-		/*
-		TextView question = (TextView) findViewById(R.id.threadQuestion);
-		question.setText(thread.getQuestion().getText());
-
-		TextView author = (TextView) findViewById(R.id.threadQuestionAuthor);
-		author.setText(thread.getQuestion().getAuthor().getName());
-
-		TextView upvotes = (TextView) findViewById(R.id.questionUpvotes);
-		upvotes.setText(thread.getQuestion().getUps() + " Point(s)");
-
-		TextView 
-		 */
 	}
 
 	@Override
@@ -66,24 +61,10 @@ public class QuestionThreadActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void instantiate() {	
-		threadPosts = thread.getAnswers();
-		threadPosts.add(0, thread.getQuestion());
-		threadPosts.add(1, thread.getQuestion());
-		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, threadPosts);
+	public void instantiate() {
+		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
 		threadPostsList.setAdapter(adapter);
 
-		/*
-			mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-
-					QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-					displayThread(selectedThread);
-
-				}
-			});
-		 */
 	}
 	
 	/** This was moved and changed to instantiate(). I'm saving it for backup just in case anyone needs it.
@@ -98,22 +79,6 @@ public class QuestionThreadActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
 
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
-		threadPostsList.setAdapter(adapter);
-
-		
-		//mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-		//	public void onItemClick(AdapterView<?> parent, View view,
-		//			int position, long id) {
-
-		//		QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-		//		displayThread(selectedThread);
-
-		//	}
-		//});
 		 
 	}
 	*/
@@ -133,6 +98,20 @@ public class QuestionThreadActivity extends Activity {
 		answerTextField.setText("");
 	}
 	
+	// Called when user taps the upvote button. Gives the question post an upvote and updates the thread.
+	public void upvoteQuestion(View v) {
+		Post post = thread.getQuestion();
+		questionPostController = new PostController(post);
+		if (!questionPostController.alreadyUpvoted()) {
+			questionPostController.addUp();
+		    QuestionThreadController qtc = new QuestionThreadController(thread);
+			AsyncSave task=new AsyncSave();
+			task.execute(new QuestionThreadController[] {qtc});
+			Toast.makeText(this, "upvote added by " , Toast.LENGTH_SHORT).show();
+		}
+		v.setEnabled(false);
+	}
+	
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
 		@Override
@@ -144,12 +123,11 @@ public class QuestionThreadActivity extends Activity {
 		}
 		@Override
 		protected void onPostExecute(Void result) {
-			threadPosts = thread.getAnswers();
-			threadPosts.add(0, thread.getQuestion());
-			threadPosts.add(1, thread.getQuestion());
-			adapter = new ThreadAdapter(QuestionThreadActivity.this, R.layout.thread_row_layout, threadPosts);
-			threadPostsList.setAdapter(adapter);
-			adapter.notifyDataSetChanged();
+			adapter.notifyDataSetChanged(); 
 		}
+	}
+	
+	public ThreadAdapter getAdapter() {
+		return adapter;
 	}
 }

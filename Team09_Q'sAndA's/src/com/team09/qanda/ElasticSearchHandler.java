@@ -17,6 +17,12 @@ import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 
+/**
+ * 
+ * This class is used to connect with ElasticSearch and receive questionsThreads and upload new questionsThreads.
+ *
+ */
+
 public class ElasticSearchHandler {
 	private String URL;
 	private String INDEX;
@@ -27,7 +33,7 @@ public class ElasticSearchHandler {
 	private Gson gson;
 	
 	public ElasticSearchHandler(){
-		//URL = "http://cmput301.softwareprocess.es:8080";
+	//	URL = "http://cmput301.softwareprocess.es:8080";
 		//URL="http://192.168.1.105:9200";
 		this("http://206.75.37.9:9200");
 	}

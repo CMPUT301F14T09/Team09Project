@@ -11,6 +11,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+/**
+ * 
+ * SearchActivity is used to search for questions and answers.
+ *
+ */
+
 public class SearchActivity extends Activity {
 
 	@Override
