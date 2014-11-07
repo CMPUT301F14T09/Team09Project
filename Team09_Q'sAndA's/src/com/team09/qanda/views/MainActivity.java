@@ -166,8 +166,8 @@ public class MainActivity extends Activity{ //Main question view
 			if ((name = new LocalStorageHandler().getUsername(context)) == null){
 				Log.i("Persistence", "fetching username...");
 				setUsername();
-				new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
 				Log.i("Persistence", "saving username...");
+				new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
 			} else {
 				User user = new User(context);
 				user.setName(name);
@@ -185,12 +185,11 @@ public class MainActivity extends Activity{ //Main question view
 		final User user = new User(context);
 	    View promptView = layoutInflater.inflate(R.layout.name_prompt, null);
 	
-	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 	
 	    // set name_prompt.xml to be the layout file of the alertdialog builder
 	    alertDialogBuilder.setView(promptView);
 	    final EditText input = (EditText) promptView.findViewById(R.id.usernameInput); 
-	    final Context c = this;
 	    
 	    // setup a dialog window
 	    alertDialogBuilder
@@ -201,11 +200,11 @@ public class MainActivity extends Activity{ //Main question view
 	            	String name = input.getText().toString();
 	            	if (name.trim().isEmpty()){
 	            		curState.setUser(user);
-	            		Toast.makeText(c, "Invalid entry! using default username...", Toast.LENGTH_SHORT).show();
+	            		Toast.makeText(context, "Invalid entry! using default username...", Toast.LENGTH_SHORT).show();
 	            	} else {
 		            	user.setName(name);
 		            	curState.setUser(user);
-		            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+		            	Toast.makeText(context, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
 	            	}
 	            }
 	        })
