@@ -1,6 +1,7 @@
 package com.team09.qanda;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ public class AddQuestionActivity extends Activity {
 	private EditText textField;
 	private ApplicationState curState = ApplicationState.getInstance();
 	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
+	private Context context = this;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	
@@ -21,11 +23,7 @@ public class AddQuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_add_question);
-		
-//		localStorageHandler.deleteFile(getBaseContext(), "My Questions.txt");
-		localStorageHandler.getThreadList(getBaseContext(), "My Questions.txt");
-		
+		setContentView(R.layout.activity_add_question);		
 		textField = (EditText) findViewById(R.id.add_question_field);
 	}
 
@@ -58,8 +56,9 @@ public class AddQuestionActivity extends Activity {
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
 
-    	localStorageHandler.saveQuestionThread(getBaseContext(), newQuestion, "My Questions.txt");
-   // 	localStorageHandler.saveText(getBaseContext(), "hajkhaksjdh", "My Questions.txt");
+		localStorageHandler.deleteFile(getBaseContext(), "My Questions.txt");
+		localStorageHandler.getThreadList(context, "My Questions.txt");
+    	localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
     	
     	AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
