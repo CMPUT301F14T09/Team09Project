@@ -2,6 +2,14 @@ package com.team09.qanda;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * This is the PostController class.
+ * This class makes changes to the Post class.
+ * When a post is upvoted, this class checks for duplicates and then adds or does not add an upvote based on the result.
+ * This class also adds replies to a post and attaches an image to a post.
+ * 
+ */
 
 public class PostController {
 	//Handles individual posts
