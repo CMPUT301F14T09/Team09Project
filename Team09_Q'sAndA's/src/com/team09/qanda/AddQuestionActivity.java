@@ -13,6 +13,7 @@ public class AddQuestionActivity extends Activity {
 	private String textFieldEntry;
 	private EditText textField;
 	private ApplicationState curState = ApplicationState.getInstance();
+	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	
@@ -21,6 +22,9 @@ public class AddQuestionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_add_question);
+		
+//		localStorageHandler.deleteFile(getBaseContext(), "My Questions.txt");
+		localStorageHandler.getThreadList(getBaseContext(), "My Questions.txt");
 		
 		textField = (EditText) findViewById(R.id.add_question_field);
 	}
@@ -53,6 +57,10 @@ public class AddQuestionActivity extends Activity {
     	Post newPost = new Post(curState.getUser(), textFieldEntry);
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
+
+    	localStorageHandler.saveQuestionThread(getBaseContext(), newQuestion, "My Questions.txt");
+   // 	localStorageHandler.saveText(getBaseContext(), "hajkhaksjdh", "My Questions.txt");
+    	
     	AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
 		//Intent result = new Intent();

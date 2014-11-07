@@ -1,9 +1,20 @@
 package com.team09.qanda;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * 
@@ -13,10 +24,19 @@ import android.view.MenuItem;
 
 public class UserThreadsActivity extends Activity {
 
+	private ThreadList threads;
+	private ThreadListController tlc;
+	private ThreadListAdapter adapter;
+	private ListView userThreadList;
+	private Context context=this;
+	private ApplicationState curState = ApplicationState.getInstance();
+	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_threads);
+		userThreadList = (ListView) findViewById(R.id.UserListView);
 	}
 
 	@Override
@@ -36,5 +56,15 @@ public class UserThreadsActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+	//	threads = localStorageHandler.getThreadList(getBaseContext(), "My Questions.txt");
+		String text = localStorageHandler.getText(getBaseContext(), "My Questions.txt");
+	//	tlc = new ThreadListController(threads); 
+		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 	}
 }

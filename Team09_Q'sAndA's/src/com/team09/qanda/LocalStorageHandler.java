@@ -54,7 +54,10 @@ public class LocalStorageHandler {
 					context.openFileOutput(filename, Context.MODE_APPEND));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(qt, QuestionThread.class, jw);
+			osw.close();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -77,7 +80,10 @@ public class LocalStorageHandler {
 					context.openFileOutput("user.txt", Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(user, User.class, jw);
+			osw.close();
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
