@@ -175,7 +175,7 @@ public class MainActivity extends Activity{ //Main question view
 	
 				//TODO:need to determine how username will be stored in file
 				while ((line = input.readLine()) != null) {
-					User user = new User();
+					User user = new User(context);
 					user.setName(line);
 					curState.setUser(user);
 				}
@@ -216,7 +216,7 @@ public class MainActivity extends Activity{ //Main question view
     */	
 	public void setUsername(){
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
-		final User user = new User();
+		final User user = new User(context);
 	    View promptView = layoutInflater.inflate(R.layout.name_prompt, null);
 	
 	    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

@@ -82,7 +82,7 @@ public class AddQuestionActivity extends Activity {
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
 
-		localStorageHandler.deleteFile(getBaseContext(), "My Questions.txt");
+	//	localStorageHandler.deleteFile(getBaseContext(), "My Questions.txt");
 		localStorageHandler.getThreadList(context, "My Questions.txt");
     	localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
     	
