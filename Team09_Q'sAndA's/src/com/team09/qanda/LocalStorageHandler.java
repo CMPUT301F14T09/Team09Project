@@ -56,6 +56,7 @@ public class LocalStorageHandler {
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
 		//Save a single question thread to a file. Can be used for favourite and read later.
 		try {
+			
 			OutputStreamWriter osw=new OutputStreamWriter(
 					context.openFileOutput(filename, Context.MODE_APPEND));
 			JsonWriter jw=new JsonWriter(osw);
