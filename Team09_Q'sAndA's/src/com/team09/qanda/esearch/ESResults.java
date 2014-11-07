@@ -1,4 +1,5 @@
-package com.team09.qanda;
+package com.team09.qanda.esearch;
+
 
 public class ESResults {
 	private int took;

@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import junit.framework.TestCase;
-
 import android.content.Context;
 
 import com.team09.qanda.LocalStorageHandler;
-import com.team09.qanda.Post;
-import com.team09.qanda.PostController;
-import com.team09.qanda.QuestionThread;
-import com.team09.qanda.QuestionThreadController;
-import com.team09.qanda.Reply;
-import com.team09.qanda.ThreadList;
-import com.team09.qanda.User;
+import com.team09.qanda.controllers.PostController;
+import com.team09.qanda.controllers.QuestionThreadController;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.Reply;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
 
 public class QuestionThreadControllerTest extends TestCase {
 	private Context context;

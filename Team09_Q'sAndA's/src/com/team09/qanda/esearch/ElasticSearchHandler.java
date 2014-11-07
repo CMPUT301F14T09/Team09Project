@@ -1,4 +1,4 @@
-package com.team09.qanda;
+package com.team09.qanda.esearch;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
@@ -15,6 +15,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
+import com.team09.qanda.R;
+import com.team09.qanda.R.string;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
 
 /**
  * 

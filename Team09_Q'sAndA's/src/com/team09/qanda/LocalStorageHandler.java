@@ -14,6 +14,9 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
 
 public class LocalStorageHandler {
 	//For local data storage using GSON/JSON

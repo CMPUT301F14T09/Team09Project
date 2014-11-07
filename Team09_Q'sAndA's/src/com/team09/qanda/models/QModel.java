@@ -1,6 +1,8 @@
-package com.team09.qanda;
+package com.team09.qanda.models;
 
 import java.util.ArrayList;
+
+import com.team09.qanda.views.QView;
 
 public class QModel<V extends QView> {
 	private ArrayList<V> views;

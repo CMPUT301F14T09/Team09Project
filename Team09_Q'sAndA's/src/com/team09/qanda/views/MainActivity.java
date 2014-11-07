@@ -1,4 +1,4 @@
-package com.team09.qanda;
+package com.team09.qanda.views;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -7,6 +7,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+
+import com.team09.qanda.ApplicationState;
+import com.team09.qanda.R;
+import com.team09.qanda.ThreadListAdapter;
+import com.team09.qanda.R.id;
+import com.team09.qanda.R.layout;
+import com.team09.qanda.R.menu;
+import com.team09.qanda.R.string;
+import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
 
 import android.app.ActionBar;
 import android.app.Activity;

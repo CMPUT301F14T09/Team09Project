@@ -1,8 +1,10 @@
-package com.team09.qanda;
+package com.team09.qanda.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+
+import com.team09.qanda.views.QView;
 
 /**
  * 

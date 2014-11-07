@@ -1,12 +1,12 @@
 package com.team09.qanda.test;
 
-import com.team09.qanda.ElasticSearchHandler;
-import com.team09.qanda.Post;
-import com.team09.qanda.QuestionThread;
-import com.team09.qanda.QuestionThreadController;
-import com.team09.qanda.ThreadList;
-import com.team09.qanda.ThreadListController;
-import com.team09.qanda.User;
+import com.team09.qanda.controllers.QuestionThreadController;
+import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.esearch.ElasticSearchHandler;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
 
 import junit.framework.TestCase;
 
