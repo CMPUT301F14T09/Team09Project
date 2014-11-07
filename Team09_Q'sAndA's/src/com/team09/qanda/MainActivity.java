@@ -107,15 +107,19 @@ public class MainActivity extends Activity{ //Main question view
 			return true;
 		}
 		if (id == R.id.favourites) {
-			userFavourites();
+			userThreadsActivity(
+					// Placeholder
+					"My Questions.txt");
 			return true;
 		}
 		if (id == R.id.saved) {
-			userSaved();
+			userThreadsActivity(
+					// Placeholder
+					"My Questions.txt");
 			return true;
 		}
 		if (id == R.id.my_questions) {
-			userQuestions();
+			userThreadsActivity("My Questions.txt");
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -187,7 +191,6 @@ public class MainActivity extends Activity{ //Main question view
 		/*mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
 				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
 				displayThread(selectedThread);
 												
@@ -277,21 +280,10 @@ public class MainActivity extends Activity{ //Main question view
 	    startActivity(intent);
 	}
 	
-	public void userFavourites() {
-		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
-	//	intent.putExtra("Selected Thread", thread);
-		startActivity(intent);
-	}
 	
-	public void userSaved() {
+	public void userThreadsActivity(String FILENAME) {
 		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
-	//	intent.putExtra("Selected Thread", thread);
-		startActivity(intent);
-	}
-	
-	public void userQuestions() {
-		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
-	//	intent.putExtra("Selected Thread", thread);
+		intent.putExtra("FILENAME", FILENAME);
 		startActivity(intent);
 	}
 	
