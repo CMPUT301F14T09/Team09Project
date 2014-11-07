@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.team09.qanda.models.QuestionThread;

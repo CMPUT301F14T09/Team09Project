@@ -84,6 +84,7 @@ public class ElasticSearchHandler {
 				threads.add(qt);
 			}
 			return threads;*/
+			Log.i("result",result.getJsonString());
 			ESResults r=gson.fromJson(result.getJsonString(), ESResults.class);
 			ArrayList<ESResult> esResults=r.getHits().getHits();
 			threads=new ArrayList<QuestionThread>();
