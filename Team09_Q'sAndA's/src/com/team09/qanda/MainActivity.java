@@ -95,6 +95,18 @@ public class MainActivity extends Activity{ //Main question view
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.favourites) {
+			userFavourites();
+			return true;
+		}
+		if (id == R.id.saved) {
+			userSaved();
+			return true;
+		}
+		if (id == R.id.my_questions) {
+			userQuestions();
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
@@ -244,6 +256,25 @@ public class MainActivity extends Activity{ //Main question view
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);
+		startActivity(intent);
+	}
+	
+	
+	public void userFavourites() {
+		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
+	//	intent.putExtra("Selected Thread", thread);
+		startActivity(intent);
+	}
+	
+	public void userSaved() {
+		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
+	//	intent.putExtra("Selected Thread", thread);
+		startActivity(intent);
+	}
+	
+	public void userQuestions() {
+		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
+	//	intent.putExtra("Selected Thread", thread);
 		startActivity(intent);
 	}
 	
