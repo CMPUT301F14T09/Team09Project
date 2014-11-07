@@ -22,6 +22,7 @@ public class LocalStorageHandler {
 	//For local data storage using GSON/JSON
 	private FileOutputStream os;
 	private Gson gson;
+	private static final String FILENAME = "user.txt";
 	
 	public LocalStorageHandler() {
 		this.gson=new Gson();
@@ -68,25 +69,27 @@ public class LocalStorageHandler {
 		}
 	}
 	
-	public User getUser(Context context) {
-		InputStreamReader in;
+	public String getUsername(Context context) {
 		try {
-			in = new InputStreamReader(context.openFileInput("user.txt"));
-			JsonReader reader=new JsonReader(in);
-			gson.fromJson(reader, User.class);
+			BufferedReader input = new BufferedReader(new InputStreamReader(context.openFileInput(FILENAME)));
+			String line;
+			if ((line = input.readLine()) != null){
+				return line;
+			}
 		} catch (FileNotFoundException e) {
+			return null;
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public void saveUser(Context context,User user) {
+	public void saveUsername(Context context,String username) {
 		try {
-			OutputStreamWriter osw=new OutputStreamWriter(
-					context.openFileOutput("user.txt", Context.MODE_PRIVATE));
-			JsonWriter jw=new JsonWriter(osw);
-			gson.toJson(user, User.class, jw);
-			osw.close();
+			FileOutputStream fos;
+			fos = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+			fos.write(username.getBytes());
+			fos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

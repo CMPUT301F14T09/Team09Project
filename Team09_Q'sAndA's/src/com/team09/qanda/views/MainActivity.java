@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.team09.qanda.ApplicationState;
+import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.R.id;
@@ -160,53 +161,19 @@ public class MainActivity extends Activity{ //Main question view
 		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
 		mainThreadsList.setAdapter(adapter);
 		
-		instantiate();
-	}
-	protected void instantiate() {
-		//super.onStart();
-		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
-		//populateList();
-		
 		if(curState.getUser() == null){
-			try {
-				BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
-				String line;
-	
-				//TODO:need to determine how username will be stored in file
-				while ((line = input.readLine()) != null) {
-					User user = new User(context);
-					user.setName(line);
-					curState.setUser(user);
-				}
-	
-			} catch (FileNotFoundException e) {
+			String name;
+			if ((name = new LocalStorageHandler().getUsername(context)) == null){
+				Log.i("Persistence", "fetching username...");
 				setUsername();
-			} catch (IOException e) {
-				e.printStackTrace();
+				new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
+				Log.i("Persistence", "saving username...");
+			} else {
+				User user = new User(context);
+				user.setName(name);
+				curState.setUser(user);
 			}
-			FileOutputStream fos;
-			try {
-				fos = this.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-				fos.write(curState.getUser().getName().getBytes());
-				fos.close();
-				Log.i("Persistence", "Saved: " + curState.getUser().getName());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}						
-		}
-		
-		
-		//TODO:Nullpointer exception here :/
-		//System.out.println(curState.getUser().getName());
-		
-		/*mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-				displayThread(selectedThread);
-												
-			}
-		});*/
+		}	
 	}
 	
 	/**
