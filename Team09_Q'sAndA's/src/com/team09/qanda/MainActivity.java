@@ -172,7 +172,6 @@ public class MainActivity extends Activity{ //Main question view
 		//TODO:Nullpointer exception here :/
 		//System.out.println(curState.getUser().getName());
 		
-<<<<<<< HEAD
 		/*mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -182,8 +181,6 @@ public class MainActivity extends Activity{ //Main question view
 												
 			}
 		});*/
-=======
->>>>>>> 7bb46cd1a3470387fe3443ed76658c0596fb625d
 	}
 	
 	/**
