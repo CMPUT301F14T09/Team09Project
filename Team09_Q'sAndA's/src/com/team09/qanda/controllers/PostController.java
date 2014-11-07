@@ -1,6 +1,11 @@
-package com.team09.qanda;
+package com.team09.qanda.controllers;
 
 import java.util.ArrayList;
+
+import com.team09.qanda.ApplicationState;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.Reply;
+import com.team09.qanda.models.User;
 
 /**
  * 
@@ -22,7 +27,7 @@ public class PostController {
 	// Called to add an upvote. Checks alreadyUpvoted() to see if user has already voted.
 	public void addUp() {
 		ArrayList<User> ups = post.getUpsList();
-		ApplicationState state = new ApplicationState();
+		ApplicationState state = ApplicationState.getInstance();
 		User user = state.getUser();
 		if (alreadyUpvoted() == false) {
 			ups.add(user);
@@ -33,7 +38,7 @@ public class PostController {
 	// Checks to see if user has already voted
 	public boolean alreadyUpvoted() {
 		ArrayList<User> ups = post.getUpsList();
-		ApplicationState state = new ApplicationState();
+		ApplicationState state = ApplicationState.getInstance();
 		User user = state.getUser();
 		for (int i = 0; i< post.getUps(); i++) {
 			if (ups.get(i).getName() == user.getName()) {

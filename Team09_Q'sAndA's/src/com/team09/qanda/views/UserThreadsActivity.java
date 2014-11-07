@@ -1,10 +1,20 @@
-package com.team09.qanda;
+package com.team09.qanda.views;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import com.team09.qanda.ApplicationState;
+import com.team09.qanda.LocalStorageHandler;
+import com.team09.qanda.R;
+import com.team09.qanda.ThreadListAdapter;
+import com.team09.qanda.R.id;
+import com.team09.qanda.R.layout;
+import com.team09.qanda.R.menu;
+import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.models.ThreadList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -64,9 +74,8 @@ public class UserThreadsActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-	//	threads = localStorageHandler.getThreadList(getBaseContext(), "My Questions.txt");
-		String text = localStorageHandler.getText(getBaseContext(), "My Questions.txt");
-	//	tlc = new ThreadListController(threads); 
-		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+		threads = localStorageHandler.getThreadList(context, "My Questions.txt");
+		String text = localStorageHandler.getText(context, "My Questions.txt");
+		tlc = new ThreadListController(threads); 
 	}
 }

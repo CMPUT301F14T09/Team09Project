@@ -7,11 +7,11 @@ import android.net.wifi.WifiManager;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.team09.qanda.LocalStorageHandler;
-import com.team09.qanda.Post;
-import com.team09.qanda.QuestionThread;
-import com.team09.qanda.QuestionThreadActivity;
-import com.team09.qanda.ThreadList;
-import com.team09.qanda.User;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
+import com.team09.qanda.views.QuestionThreadActivity;
 
 public class OfflineTest extends ActivityInstrumentationTestCase2<QuestionThreadActivity> {
 	

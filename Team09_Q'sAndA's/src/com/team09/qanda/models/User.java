@@ -1,6 +1,8 @@
-package com.team09.qanda;
+package com.team09.qanda.models;
 
 import java.io.Serializable;
+
+import com.team09.qanda.views.QView;
 
 import android.app.Application;
 import android.content.Context;

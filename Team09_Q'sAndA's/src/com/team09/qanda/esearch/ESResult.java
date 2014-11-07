@@ -1,4 +1,6 @@
-package com.team09.qanda;
+package com.team09.qanda.esearch;
+
+import com.team09.qanda.models.QuestionThread;
 
 public class ESResult {
 	private String _index;

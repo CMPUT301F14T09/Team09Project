@@ -1,4 +1,4 @@
-package com.team09.qanda;
+package com.team09.qanda.esearch;
 
 import java.util.ArrayList;
 

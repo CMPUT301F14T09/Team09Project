@@ -1,4 +1,9 @@
-package com.team09.qanda;
+package com.team09.qanda.views;
+
+import com.team09.qanda.R;
+import com.team09.qanda.R.id;
+import com.team09.qanda.R.layout;
+import com.team09.qanda.R.menu;
 
 import android.app.Activity;
 import android.os.Bundle;

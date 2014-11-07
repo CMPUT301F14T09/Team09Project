@@ -1,5 +1,7 @@
 package com.team09.qanda;
 
+import com.team09.qanda.models.User;
+
 /**
  * 
  * Stores any user preferences.

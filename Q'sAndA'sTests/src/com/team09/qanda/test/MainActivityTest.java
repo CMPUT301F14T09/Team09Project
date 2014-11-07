@@ -2,14 +2,14 @@ package com.team09.qanda.test;
 
 import java.util.ArrayList;
 
-import com.team09.qanda.MainActivity;
-import com.team09.qanda.Post;
-import com.team09.qanda.PostController;
-import com.team09.qanda.QuestionThread;
 import com.team09.qanda.ThreadListAdapter;
-import com.team09.qanda.ThreadList;
-import com.team09.qanda.ThreadListController;
-import com.team09.qanda.User;
+import com.team09.qanda.controllers.PostController;
+import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
+import com.team09.qanda.views.MainActivity;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;

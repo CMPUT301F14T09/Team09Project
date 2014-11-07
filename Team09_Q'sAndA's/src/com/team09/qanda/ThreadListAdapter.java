@@ -3,6 +3,8 @@ package com.team09.qanda;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import com.team09.qanda.models.QuestionThread;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,6 +1,6 @@
 package com.team09.qanda.test;
 
-import com.team09.qanda.User;
+import com.team09.qanda.models.User;
 
 import junit.framework.TestCase;
 

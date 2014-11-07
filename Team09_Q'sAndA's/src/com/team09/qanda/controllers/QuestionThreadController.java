@@ -1,6 +1,10 @@
-package com.team09.qanda;
+package com.team09.qanda.controllers;
 
 import java.util.ArrayList;
+
+import com.team09.qanda.esearch.ElasticSearchHandler;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
 
 /**
  * 
