@@ -17,6 +17,12 @@ import com.google.gson.Gson;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 
+/**
+ * 
+ * This class is used to connect with ElasticSearch and receive questionsThreads and upload new questionsThreads.
+ *
+ */
+
 public class ElasticSearchHandler {
 	private String URL;
 	private String INDEX;

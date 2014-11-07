@@ -19,6 +19,7 @@ public class PostController {
 		this.post=post;
 	}
 	
+	// Called to add an upvote. Checks alreadyUpvoted() to see if user has already voted.
 	public void addUp() {
 		ArrayList<User> ups = post.getUpsList();
 		ApplicationState state = new ApplicationState();
@@ -29,6 +30,7 @@ public class PostController {
 		}
 	}
 	
+	// Checks to see if user has already voted
 	public boolean alreadyUpvoted() {
 		ArrayList<User> ups = post.getUpsList();
 		ApplicationState state = new ApplicationState();
@@ -41,12 +43,14 @@ public class PostController {
 		return false;
 	}
 	
+	// Adds a reply to a post
 	public void addReply(Reply reply) {
 		ArrayList<Reply> replies=post.getReplies();
 		replies.add(reply);
 		post.setReplies(replies);
 	}
 	
+	// Sets the posts image
 	public void attachImage() {
 		post.setImage();
 	}

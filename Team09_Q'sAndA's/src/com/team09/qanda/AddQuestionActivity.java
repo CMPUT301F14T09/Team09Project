@@ -47,6 +47,7 @@ public class AddQuestionActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	// Creates a new question with the current user as the author
 	public void submitQuestion(View v) {
 		textFieldEntry = textField.getText().toString();
     	Post newPost = new Post(curState.getUser(), textFieldEntry);

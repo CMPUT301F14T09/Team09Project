@@ -7,6 +7,13 @@ import android.content.Context;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
 
+/**
+ * 
+ * Class to store the devices user. Stores username and deviceID to be used for creating posts and upvoting.
+ * If no name provided, username is generated.
+ * 
+ */
+
 public class User extends QModel<QView> implements Serializable {
 	private String name;
 	private String deviceID;

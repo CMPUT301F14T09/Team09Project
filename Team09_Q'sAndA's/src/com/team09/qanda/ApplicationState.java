@@ -1,5 +1,12 @@
 package com.team09.qanda;
 
+/**
+ * 
+ * Stores any user preferences.
+ * Currently only stores username.
+ * 
+ */
+
 public class ApplicationState {
 	private static ApplicationState appState = null;
 	private static User user;
