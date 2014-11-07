@@ -3,12 +3,17 @@ package com.team09.qanda;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class QuestionThreadActivity extends Activity {
 
@@ -17,7 +22,8 @@ public class QuestionThreadActivity extends Activity {
 	private ArrayList<Post> threadPosts;
 	private ListView threadPostsList;
 	private EditText answerTextField;
-	private User author;
+	private ApplicationState curState = ApplicationState.getInstance();
+	private PostController questionPostController;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +35,7 @@ public class QuestionThreadActivity extends Activity {
 		threadPostsList = (ListView) findViewById(R.id.ThreadPostsView);
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
-
-		// This is a test author
-		author = new User();
+		
 		
 		// Instantiate thread
 		instantiate();
@@ -125,13 +129,46 @@ public class QuestionThreadActivity extends Activity {
 		System.out.println("Answer Count : " + thread.getAnswers().size());
 		String answerText = answerTextField.getText().toString();
 		// Create a Post object for the answer
-		Post answer = new Post(author, answerText);
+		Post answer = new Post(curState.getUser(), answerText);
 		// PostController for QuestionThread
-		QuestionThreadController qctl = new QuestionThreadController(thread);
-		// Add answer in the questionThread
-		qctl.addAnswer(answer);
+		QuestionThreadController qtc = new QuestionThreadController(thread);
+		qtc.addAnswer(answer);
 		System.out.println("New Answer Count : " + thread.getAnswers().size());
+		AsyncSave task=new AsyncSave();
+		task.execute(new QuestionThreadController[] {qtc});
 		answerTextField.setText("");
+	}
+	
+	public void upvoteQuestion(View v) {
+		Post post = thread.getQuestion();
+		questionPostController = new PostController(post);
+		if (!questionPostController.alreadyUpvoted()) {
+			questionPostController.addUp();
+		    QuestionThreadController qtc = new QuestionThreadController(thread);
+			AsyncSave task=new AsyncSave();
+			task.execute(new QuestionThreadController[] {qtc});
+			Toast.makeText(this, "upvote added by " + curState.getUser().getName(), Toast.LENGTH_SHORT).show();
+		}
+		v.setEnabled(false);
+	}
+	
+	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
+		@Override
+		protected Void doInBackground(QuestionThreadController... params) {
+			for (QuestionThreadController qtc:params) {
+		    	qtc.saveThread();
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(Void result) {
+			threadPosts = thread.getAnswers();
+		//	threadPosts.add(0, thread.getQuestion());
+		//	threadPosts.add(1, thread.getQuestion());
+			adapter = new ThreadAdapter(QuestionThreadActivity.this, R.layout.thread_row_layout, threadPosts);
+			threadPostsList.setAdapter(adapter);
+			adapter.notifyDataSetChanged(); 
+		}
 	}
 }

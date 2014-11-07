@@ -1,7 +1,7 @@
 package com.team09.qanda;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +12,8 @@ public class AddQuestionActivity extends Activity {
 
 	private String textFieldEntry;
 	private EditText textField;
+	private ApplicationState curState = ApplicationState.getInstance();
+
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	
 	@Override
@@ -45,13 +47,34 @@ public class AddQuestionActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	/* TODO : Submit button method */
+	// Creates a new question with the current user as the author
 	public void submitQuestion(View v) {
 		textFieldEntry = textField.getText().toString();
-		Intent result = new Intent();
-		result.putExtra(ADD_QUESTION_RESULT, textFieldEntry);
-		setResult(RESULT_OK, result);
-		finish();
+    	Post newPost = new Post(curState.getUser(), textFieldEntry);
+    	QuestionThread newQuestion = new QuestionThread(newPost);
+    	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
+    	AsyncSave task=new AsyncSave();
+		task.execute(new QuestionThreadController[] {qtc});
+		//Intent result = new Intent();
+		//result.putExtra(ADD_QUESTION_RESULT, textFieldEntry);
+		//setResult(RESULT_OK, result);
+		//finish();
+	}
+	
+	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
+
+		@Override
+		protected Void doInBackground(QuestionThreadController... params) {
+			for (QuestionThreadController qtc:params) {
+		    	qtc.saveThread();
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			finish();
+		}
 	}
 	
 	

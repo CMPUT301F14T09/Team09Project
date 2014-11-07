@@ -2,6 +2,7 @@ package com.team09.qanda;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,9 +51,9 @@ public class MainActivity extends Activity{ //Main question view
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
 	private Context context=this;
-	private UserState curUser = UserState.getInstance();
+	private ApplicationState curState = ApplicationState.getInstance();
 	static final int ADD_QUESTION_REQUEST = 1;
-	static final String FILENAME = ""; //TODO: filename of where username is stored
+	static final String FILENAME = "user.txt"; //TODO: filename of where username is stored
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,24 +132,33 @@ public class MainActivity extends Activity{ //Main question view
 		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
 		//populateList();
 		
-		try {
-			BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
-			String line;
-
-			//TODO:need to determine how username will be stored in file
-			while ((line = input.readLine()) != null) {
-				User user = new User();
-				user.setName(line);
-				curUser.setUser(user);
+		if(curState.getUser() == null){
+			try {
+				BufferedReader input = new BufferedReader(new InputStreamReader(this.openFileInput(FILENAME)));
+				String line;
+	
+				//TODO:need to determine how username will be stored in file
+				while ((line = input.readLine()) != null) {
+					User user = new User();
+					user.setName(line);
+					curState.setUser(user);
+				}
+	
+			} catch (FileNotFoundException e) {
+				setUsername();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-
-		} catch (FileNotFoundException e) {
-			setUsername();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FileOutputStream fos;
+			try {
+				fos = this.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+				fos.write(curState.getUser().getName().getBytes());
+				fos.close();
+				Log.i("Persistence", "Saved: " + curState.getUser().getName());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}						
 		}
-		
 		
 		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
 		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
@@ -189,14 +200,20 @@ public class MainActivity extends Activity{ //Main question view
 	        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int id) {
 	                // get user input and set it to result
-	            	user.setName(input.getText().toString());
-	            	curUser.setUser(user);
-	            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            	String name = input.getText().toString();
+	            	if (name.trim().isEmpty()){
+	            		curState.setUser(user);
+	            		Toast.makeText(c, "Invalid entry! using default username...", Toast.LENGTH_SHORT).show();
+	            	} else {
+		            	user.setName(name);
+		            	curState.setUser(user);
+		            	Toast.makeText(c, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
+	            	}
 	            }
 	        })
 	        .setNegativeButton("Skip(Use default)", new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int id) {
-	            	curUser.setUser(user);
+	            	curState.setUser(user);
 	                dialog.cancel();
 	            }
 	        });
@@ -239,24 +256,8 @@ public class MainActivity extends Activity{ //Main question view
 	
 	/* Add question button method */
 	public void addQuestion(View v) {
-		Toast.makeText(getApplicationContext(), "CLICKED", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(this, AddQuestionActivity.class);
-	    startActivityForResult(intent, ADD_QUESTION_REQUEST);
-	}
-	
-	/* TODO : onActivityResult */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    // Check which request we're responding to
-	    if (requestCode == MainActivity.ADD_QUESTION_REQUEST) {
-	        // Make sure the request was successful
-	        if (resultCode == RESULT_OK) {
-	            // The Author asked a question
-	        	String textFieldEntry = data.getExtras().getString(AddQuestionActivity.ADD_QUESTION_RESULT);
-	        	Toast.makeText(getApplicationContext(), textFieldEntry, Toast.LENGTH_SHORT).show();
-	            // Do something with the contact here (bigger example below)
-	        }
-	    }
+	    startActivity(intent);
 	}
 	
 	private class AsyncGet extends AsyncTask<ThreadListController, Void, Void> {

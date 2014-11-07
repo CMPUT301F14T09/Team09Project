@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * 
+ * Activity for any locally stored questions, including favorites, user's questions, and read later. 
+ *
+ */
+
 public class UserThreadsActivity extends Activity {
 
 	@Override

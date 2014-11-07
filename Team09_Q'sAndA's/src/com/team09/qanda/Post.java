@@ -4,6 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * 
+ * This is the Post class. 
+ * Whenever a new question is asked or answer posted, a Post is created.
+ * This class stores the name of the author of the post, the text of the post,
+ * a list of all replies, and the number of upvotes that the post has, including a list of
+ * everyone who upvoted the post, to prevent a single user from upvoting a post twice.
+ * 
+ */
+
 public class Post extends QModel<QView> implements Serializable {
 	private String text;
 	private User author;
@@ -27,6 +37,7 @@ public class Post extends QModel<QView> implements Serializable {
 	}
 	
 	public int getUps() {
+		upVotes = ups.size();
 		return upVotes;
 	}
 	
