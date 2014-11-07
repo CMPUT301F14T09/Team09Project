@@ -1,10 +1,7 @@
 package com.team09.qanda.test;
 
-import java.util.ArrayList;
-
 import com.team09.qanda.ElasticSearchHandler;
 import com.team09.qanda.Post;
-import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
 import com.team09.qanda.QuestionThreadController;
 import com.team09.qanda.ThreadList;
@@ -38,14 +35,10 @@ public class ESHTest extends TestCase
 		Post testp = new Post(new User("test"), "testq");
 		ThreadList thread = new ThreadList();
 		ThreadListController  threadController = new ThreadListController(thread);
-		ArrayList<QuestionThread> old = (ArrayList<QuestionThread>)thread.getThreads().clone();
-		ElasticSearchHandler esh = new ElasticSearchHandler();
 		
-//		if (thread.getQuestions().contains(testp)) {
-//			esh.delete(testp);
-//			thread.refresh(0, 10);
-//		}
-//		
+		//connecting to local test elastic search environment
+		ElasticSearchHandler esh = new ElasticSearchHandler("http://localhost:9200/test");
+
 		QuestionThread q1 = new QuestionThread(testp);
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);
 		
@@ -55,12 +48,11 @@ public class ESHTest extends TestCase
 		try {
 			esh.saveThreads(thread);
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		//confirm questionthread object was added
-		assertTrue(esh.getThreads().contains(old));
+		assertNotNull(esh.getThreads().indexOf(q1));
 	}
 	
 	//Use case 21(kinda?):  As an author, I want to push my replies, questions and answers online once I get connectivity.

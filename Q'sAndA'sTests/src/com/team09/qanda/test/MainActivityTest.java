@@ -1,13 +1,11 @@
 package com.team09.qanda.test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import com.team09.qanda.MainActivity;
 import com.team09.qanda.Post;
 import com.team09.qanda.PostController;
 import com.team09.qanda.QuestionThread;
-import com.team09.qanda.QuestionThreadController;
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.ThreadList;
 import com.team09.qanda.ThreadListController;
@@ -17,9 +15,7 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	ThreadListAdapter adapter;
