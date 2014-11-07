@@ -167,7 +167,6 @@ public class MainActivity extends Activity{ //Main question view
 				Log.i("Persistence", "fetching username...");
 				setUsername();
 				Log.i("Persistence", "saving username...");
-				new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
 			} else {
 				User user = new User(context);
 				user.setName(name);
@@ -200,10 +199,12 @@ public class MainActivity extends Activity{ //Main question view
 	            	String name = input.getText().toString();
 	            	if (name.trim().isEmpty()){
 	            		curState.setUser(user);
+	            		new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
 	            		Toast.makeText(context, "Invalid entry! using default username...", Toast.LENGTH_SHORT).show();
 	            	} else {
 		            	user.setName(name);
 		            	curState.setUser(user);
+		            	new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
 		            	Toast.makeText(context, "Your Username is: " + user.getName(), Toast.LENGTH_SHORT).show();
 	            	}
 	            }
