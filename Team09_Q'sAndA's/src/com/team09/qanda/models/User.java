@@ -22,13 +22,12 @@ public class User extends QModel<QView> implements Serializable {
 	
 	public User(Context context) {
 		this.name="User"+System.currentTimeMillis();
-		String deviceID = Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+		this.deviceID = Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 	}
 	
 	public User(Context context, String name) {
 		this.name=name;
-		this.deviceID = android.provider.Settings.Secure.ANDROID_ID;
-		String deviceID = Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+		this.deviceID = Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
 
 	}
