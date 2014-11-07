@@ -75,6 +75,16 @@ public class MainActivity extends Activity{ //Main question view
                 false);
 		mainThreadsList.addFooterView(footer);
 		
+		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
+		
 	}
 
 	@Override
@@ -95,18 +105,6 @@ public class MainActivity extends Activity{ //Main question view
 		if (id == R.id.action_settings) {
 			return true;
 		}
-		if (id == R.id.favourites) {
-			userFavourites();
-			return true;
-		}
-		if (id == R.id.saved) {
-			userSaved();
-			return true;
-		}
-		if (id == R.id.my_questions) {
-			userQuestions();
-			return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 	
@@ -115,7 +113,6 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		//threads.refresh(0, 10);
 		threads = new ThreadList();
 		tlc=new ThreadListController(threads);
 		AsyncGet task=new AsyncGet();
@@ -127,28 +124,13 @@ public class MainActivity extends Activity{ //Main question view
 		//Log.i("threads loaded", threads.jsonify());
 		//populateList();
 		
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
+		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
 		mainThreadsList.setAdapter(adapter);
 		
-		
-		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-				displayThread(selectedThread);
-												
-			}
-		});
 		instantiate();
 	}
 	protected void instantiate() {
 		//super.onStart();
-		//threads.refresh(0, 10);
-		//threads = new ThreadList();
 		System.out.println("New Threads List Initialize Size : " + threads.getThreads().size());
 		//populateList();
 		
@@ -180,22 +162,8 @@ public class MainActivity extends Activity{ //Main question view
 			}						
 		}
 		
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
-		//mainThreadsList.setAdapter(adapter);
+			
 		
-		
-		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-				displayThread(selectedThread);
-												
-			}
-		});
 	}
 	
 	/**
@@ -256,25 +224,6 @@ public class MainActivity extends Activity{ //Main question view
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);
-		startActivity(intent);
-	}
-	
-	
-	public void userFavourites() {
-		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
-	//	intent.putExtra("Selected Thread", thread);
-		startActivity(intent);
-	}
-	
-	public void userSaved() {
-		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
-	//	intent.putExtra("Selected Thread", thread);
-		startActivity(intent);
-	}
-	
-	public void userQuestions() {
-		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
-	//	intent.putExtra("Selected Thread", thread);
 		startActivity(intent);
 	}
 	

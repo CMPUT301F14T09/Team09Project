@@ -46,18 +46,6 @@ public class QuestionThreadActivity extends Activity {
 		
 		// Instantiate thread
 		instantiate();
-		/*
-		TextView question = (TextView) findViewById(R.id.threadQuestion);
-		question.setText(thread.getQuestion().getText());
-
-		TextView author = (TextView) findViewById(R.id.threadQuestionAuthor);
-		author.setText(thread.getQuestion().getAuthor().getName());
-
-		TextView upvotes = (TextView) findViewById(R.id.questionUpvotes);
-		upvotes.setText(thread.getQuestion().getUps() + " Point(s)");
-
-		TextView 
-		 */
 	}
 
 	@Override
