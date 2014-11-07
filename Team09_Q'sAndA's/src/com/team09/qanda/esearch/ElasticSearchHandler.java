@@ -71,18 +71,7 @@ public class ElasticSearchHandler {
 				.setParameter("size", numThreads).build();
 		try {
 			JestResult result=client.execute(search);
-			
-			//Potential method for adding IDs to QuestionThreads
-			/*threads=new ArrayList<QuestionThread>();
-			List<ESResult> results=result.getSourceAsObjectList(ESResult.class);
-			Log.i("results",results.get(0).getId());
-			for (int i=0;i<results.size();i++) {
-				QuestionThread qt=results.get(i).getThread();
-				qt.setId(results.get(i).getId());
-				threads.add(qt);
-			}
-			return threads;*/
-			Log.i("result",result.getJsonString());
+			//Log.i("result",result.getJsonString());
 			ESResults r=gson.fromJson(result.getJsonString(), ESResults.class);
 			ArrayList<ESResult> esResults=r.getHits().getHits();
 			threads=new ArrayList<QuestionThread>();
