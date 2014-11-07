@@ -63,7 +63,6 @@ public class MainActivity extends Activity{ //Main question view
 	private ListView mainThreadsList;
 	private Context context=this;
 	private ApplicationState curState = ApplicationState.getInstance();
-	static final int ADD_QUESTION_REQUEST = 1;
 	static final String FILENAME = "user.txt"; //TODO: filename of where username is stored
 	
 	@Override
