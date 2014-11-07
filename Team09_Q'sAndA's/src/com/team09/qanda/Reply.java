@@ -2,6 +2,13 @@ package com.team09.qanda;
 
 import java.util.Date;
 
+/**
+ * 
+ * This class allows creation of a reply. The constructor takes in the User that created the reply,
+ * as well as the reply text. A timestamp is then generated.
+ *
+ */
+
 public class Reply extends QModel<QView> {
 	private String text;
 	private User author;

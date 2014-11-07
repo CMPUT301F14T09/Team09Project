@@ -3,6 +3,12 @@ package com.team09.qanda;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * 
+ * Class for storing everything from a question, including the question post and any answers.
+ *
+ */
+
 public class QuestionThread extends QModel<QView> implements Serializable {
 	private String id;
 	private Post question;

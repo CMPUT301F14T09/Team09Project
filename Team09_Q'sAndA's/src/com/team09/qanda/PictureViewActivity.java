@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * 
+ * Activity used to view an image attached to a post.
+ *
+ */
 public class PictureViewActivity extends Activity {
 
 	@Override

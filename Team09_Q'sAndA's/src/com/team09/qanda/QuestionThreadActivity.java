@@ -15,6 +15,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/**
+ * 
+ * This activity displays a questionThread. This includes displaying the question and any answers
+ * and allows the user to upvote questions and answers or post an answer or a reply.
+ *
+ */
+
 public class QuestionThreadActivity extends Activity {
 
 	private QuestionThread thread;
@@ -139,6 +146,7 @@ public class QuestionThreadActivity extends Activity {
 		answerTextField.setText("");
 	}
 	
+	// Called when user taps the upvote button. Gives the question post an upvote and updates the thread.
 	public void upvoteQuestion(View v) {
 		Post post = thread.getQuestion();
 		questionPostController = new PostController(post);
