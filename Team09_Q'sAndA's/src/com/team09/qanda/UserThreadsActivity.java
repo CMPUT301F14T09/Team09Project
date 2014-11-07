@@ -64,9 +64,8 @@ public class UserThreadsActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-	//	threads = localStorageHandler.getThreadList(getBaseContext(), "My Questions.txt");
-		String text = localStorageHandler.getText(getBaseContext(), "My Questions.txt");
-	//	tlc = new ThreadListController(threads); 
-		Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+		threads = localStorageHandler.getThreadList(context, "My Questions.txt");
+		String text = localStorageHandler.getText(context, "My Questions.txt");
+		tlc = new ThreadListController(threads); 
 	}
 }
