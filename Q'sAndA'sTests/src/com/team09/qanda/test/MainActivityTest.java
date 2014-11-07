@@ -13,11 +13,13 @@ import com.team09.qanda.ThreadList;
 import com.team09.qanda.ThreadListController;
 import com.team09.qanda.User;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	ThreadListAdapter adapter;
@@ -176,9 +178,27 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
 		
 	}
+	
 	@UiThreadTest
 	public void testSpinnerAdapter() {
 		//TODO
 	}
 	
+	//Use Case #23: As an author, I set my username.
+	//ensures the alertdialog actually shows up
+	public void testSetUsername() throws Throwable{
+		
+		Intent intent = new Intent();
+		setActivityIntent(intent);
+		
+		runTestOnUiThread(new Runnable() {
+			
+			public void run() {
+				mainAct.setUsername();
+				assertNotNull(mainAct.findViewById(com.team09.qanda.R.id.usernameInput));
+				assertNotNull(mainAct.findViewById(com.team09.qanda.R.id.usernamePrompt));
+			}
+		});
+		
+	}
 }
