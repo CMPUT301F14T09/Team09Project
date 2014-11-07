@@ -67,24 +67,10 @@ public class QuestionThreadActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void instantiate() {	
-		threadPosts = thread.getAnswers();
-		threadPosts.add(0, thread.getQuestion());
-		threadPosts.add(1, thread.getQuestion());
-		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, threadPosts);
+	public void instantiate() {
+		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
 		threadPostsList.setAdapter(adapter);
 
-		/*
-			mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-
-					QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-					displayThread(selectedThread);
-
-				}
-			});
-		 */
 	}
 	
 	/** This was moved and changed to instantiate(). I'm saving it for backup just in case anyone needs it.
@@ -99,22 +85,6 @@ public class QuestionThreadActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
 
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
-		threadPostsList.setAdapter(adapter);
-
-		
-		//mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-		//	public void onItemClick(AdapterView<?> parent, View view,
-		//			int position, long id) {
-
-		//		QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-		//		displayThread(selectedThread);
-
-		//	}
-		//});
 		 
 	}
 	*/
@@ -159,11 +129,6 @@ public class QuestionThreadActivity extends Activity {
 		}
 		@Override
 		protected void onPostExecute(Void result) {
-			threadPosts = thread.getAnswers();
-		//	threadPosts.add(0, thread.getQuestion());
-		//	threadPosts.add(1, thread.getQuestion());
-			adapter = new ThreadAdapter(QuestionThreadActivity.this, R.layout.thread_row_layout, threadPosts);
-			threadPostsList.setAdapter(adapter);
 			adapter.notifyDataSetChanged(); 
 		}
 	}

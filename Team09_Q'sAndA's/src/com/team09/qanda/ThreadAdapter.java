@@ -12,15 +12,19 @@ import android.widget.TextView;
 
 public class ThreadAdapter extends ArrayAdapter<Post> {
 
-	private ArrayList<Post> threadPosts;
+	private QuestionThread thread;
 	private Context context;
 	
-	public ThreadAdapter(Context context, int layoutResourceId, ArrayList<Post> threadPosts) {
-		super(context, layoutResourceId, threadPosts);
+	public ThreadAdapter(Context context, int layoutResourceId, QuestionThread thread) {
+		super(context, layoutResourceId);
 		
-		this.threadPosts = threadPosts;
+		this.thread = thread;
 		this.context = context;
-		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public int getCount() {
+		return thread.getAnswers().size() + 2;
 	}
 	
 	@Override
@@ -37,7 +41,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 		
 		if (position == 1) {
 			TextView text = (TextView) convertView.findViewById(R.id.answersHeading);
-			int numAnswers = threadPosts.size() - 2;
+			int numAnswers = thread.getAnswers().size();
 			text.setText(numAnswers + " Answers");
 		}
 		else {
@@ -45,8 +49,15 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
 			
-			Post post = threadPosts.get(position);
+			Post post;
 			
+			if (position == 0) {
+				post = thread.getQuestion();
+			}
+			else {
+				post = thread.getAnswers().get(position-2);
+			}
+				
 			text.setText(post.getText());
 			author.setText(" - " + post.getAuthor().getName());
 			upvotes.setText(post.getUps() + " Point(s)");

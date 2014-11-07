@@ -85,6 +85,7 @@ public class MainActivity extends Activity{ //Main question view
 			}
 		});
 		
+		
 	}
 
 	@Override
@@ -162,7 +163,9 @@ public class MainActivity extends Activity{ //Main question view
 			}						
 		}
 		
-			
+		
+		//TODO:Nullpointer exception here :/
+		//System.out.println(curState.getUser().getName());
 		
 	}
 	
