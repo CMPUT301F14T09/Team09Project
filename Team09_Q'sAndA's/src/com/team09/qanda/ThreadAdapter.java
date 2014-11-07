@@ -1,8 +1,5 @@
 package com.team09.qanda;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
@@ -62,7 +59,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			}
 				
 			text.setText(post.getText());
-			//author.setText(" - " + post.getAuthor().getName());
+			author.setText(" - " + post.getAuthor().getName());
 			upvotes.setText(post.getUps() + " Point(s)");
 		}
 		

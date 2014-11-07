@@ -6,7 +6,6 @@ import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import android.util.Log;
@@ -16,7 +15,6 @@ import com.google.gson.GsonBuilder;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.team09.qanda.R;
-import com.team09.qanda.R.string;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;

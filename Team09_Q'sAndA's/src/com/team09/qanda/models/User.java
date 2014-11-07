@@ -4,9 +4,7 @@ import java.io.Serializable;
 
 import com.team09.qanda.views.QView;
 
-import android.app.Application;
 import android.content.Context;
-import android.provider.Settings;
 import android.provider.Settings.Secure;
 
 /**
