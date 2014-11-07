@@ -12,7 +12,9 @@
     android:id="@+id/add_question_field"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/add_question_hint" />
+    android:hint="@string/add_question_hint"
+    android:inputType="text"
+    android:imeOptions="actionDone" />
 
     <Button
         android:id="@+id/submit_question_btn"

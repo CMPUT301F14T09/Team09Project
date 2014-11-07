@@ -117,7 +117,7 @@ public class QuestionThreadActivity extends Activity {
 		@Override
 		protected Void doInBackground(QuestionThreadController... params) {
 			for (QuestionThreadController qtc:params) {
-		    	qtc.saveThread();
+		    	qtc.saveThread(thread.getId());
 			}
 			return null;
 		}

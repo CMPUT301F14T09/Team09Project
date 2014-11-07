@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 public class AddQuestionActivity extends Activity {
 
@@ -25,6 +29,18 @@ public class AddQuestionActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_add_question);		
 		textField = (EditText) findViewById(R.id.add_question_field);
+		
+		textField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId,
+                    KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    submitQuestion(v);
+                    return true;
+                }
+                return false;
+            }
+        });
 	}
 
 	@Override
