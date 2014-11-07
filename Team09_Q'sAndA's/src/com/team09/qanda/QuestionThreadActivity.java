@@ -1,16 +1,11 @@
 package com.team09.qanda;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.provider.Settings.Secure;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,7 +21,6 @@ public class QuestionThreadActivity extends Activity {
 
 	private QuestionThread thread;
 	private ThreadAdapter adapter;
-	private ArrayList<Post> threadPosts;
 	private ListView threadPostsList;
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
@@ -113,7 +107,7 @@ public class QuestionThreadActivity extends Activity {
 		    QuestionThreadController qtc = new QuestionThreadController(thread);
 			AsyncSave task=new AsyncSave();
 			task.execute(new QuestionThreadController[] {qtc});
-			Toast.makeText(this, "upvote added by " + curState.getUser().getName(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "upvote added by " , Toast.LENGTH_SHORT).show();
 		}
 		v.setEnabled(false);
 	}
@@ -131,5 +125,9 @@ public class QuestionThreadActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			adapter.notifyDataSetChanged(); 
 		}
+	}
+	
+	public ThreadAdapter getAdapter() {
+		return adapter;
 	}
 }
