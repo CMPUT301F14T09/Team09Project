@@ -3,7 +3,6 @@ package com.team09.qanda;
 /**
  * 
  * Stores any user preferences.
- * Currently only stores username.
  * 
  */
 
