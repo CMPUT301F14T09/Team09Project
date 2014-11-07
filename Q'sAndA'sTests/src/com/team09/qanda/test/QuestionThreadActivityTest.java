@@ -1,5 +1,6 @@
 package com.team09.qanda.test;
 
+import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
@@ -15,6 +16,8 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 	ThreadAdapter adapter;
 	QuestionThreadActivity ta;
 	QuestionThread thread;
+	private Context context;
+
 	
 	public QuestionThreadActivityTest() {
 		super(QuestionThreadActivity.class);
@@ -37,7 +40,7 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 	
 	// Use Case #2 : View a question and its answers
 	public void testDisplayQuestion() {
-		Post question = new Post(new User(), "Question 1");
+		Post question = new Post(new User(context), "Question 1");
 		thread = new QuestionThread(question);
 		
 		Intent intent = new Intent();

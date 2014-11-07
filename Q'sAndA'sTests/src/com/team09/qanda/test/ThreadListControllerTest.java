@@ -24,7 +24,7 @@ public class ThreadListControllerTest extends
 	
 	// Use Case #1 : Browse questions
 	public void testBrowseQuestions() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
+		Post qpost1 = new Post(new User(context,"John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
@@ -32,9 +32,9 @@ public class ThreadListControllerTest extends
 		
 		pc1.addUp();
 		pc1.addUp();
-		qtc1.addAnswer(new Post(new User(), "Answer 1."));
+		qtc1.addAnswer(new Post(new User(context), "Answer 1."));
 		
-		Post qpost2 = new Post(new User(), "Question 2?");
+		Post qpost2 = new Post(new User(context), "Question 2?");
 		PostController pc2 = new PostController(qpost2);
 		
 		QuestionThread q2 = new QuestionThread(qpost2);
@@ -42,8 +42,8 @@ public class ThreadListControllerTest extends
 		
 		pc2.addUp();
 		pc2.addUp();
-		qtc2.addAnswer(new Post(new User(), "Answer 2."));
-		qtc2.addAnswer(new Post(new User(), "Answer 3."));
+		qtc2.addAnswer(new Post(new User(context), "Answer 2."));
+		qtc2.addAnswer(new Post(new User(context), "Answer 3."));
 		
 		ThreadList questions = new ThreadList();
 		ThreadListController cn1=new ThreadListController(questions);
@@ -60,7 +60,7 @@ public class ThreadListControllerTest extends
 	
 	// Use Case #4 : Add a question
 	public void testAddQuestion() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
+		Post qpost1 = new Post(new User(context, "John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
@@ -74,13 +74,13 @@ public class ThreadListControllerTest extends
 	
 	// Use Case #13.1: Most upvoted questions
 	public void testsortQuestionsByMostUpVotes(){
-		Post qpost1 = new Post(new User("John"), "Question 1?");
+		Post qpost1 = new Post(new User(context, "John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
-		Post qpost2 = new Post(new User("John"), "Question 2?");
+		Post qpost2 = new Post(new User(context, "John"), "Question 2?");
 		PostController pc2 = new PostController(qpost2);
 		pc2.addUp();
 		pc2.addUp();
-		Post qpost3 = new Post(new User("Bob"), "Question 3?");
+		Post qpost3 = new Post(new User(context, "Bob"), "Question 3?");
 		PostController pc3 = new PostController(qpost3);
 		pc3.addUp();
 
@@ -101,7 +101,7 @@ public class ThreadListControllerTest extends
 	
 	// Use Case #16: Remember which questions I asked
 	public void testStoreMyQuestionsLocally() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
+		Post qpost1 = new Post(new User(context, "John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
