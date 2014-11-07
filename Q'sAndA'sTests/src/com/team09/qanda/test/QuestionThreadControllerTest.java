@@ -20,7 +20,7 @@ public class QuestionThreadControllerTest extends TestCase {
 	
 	// Use Case #2 : View a question and its answers
 	public void testViewThread() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
+		Post qpost1 = new Post(new User(context,"John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
@@ -28,9 +28,9 @@ public class QuestionThreadControllerTest extends TestCase {
 		
 		pc1.addUp();
 		pc1.addUp();
-		Post apost1 = new Post(new User("Lia"), "Answer 1.");
+		Post apost1 = new Post(new User(context,"Lia"), "Answer 1.");
 		qtc1.addAnswer(apost1);
-		Post apost2 = new Post(new User("Liam"), "Answer 2.");
+		Post apost2 = new Post(new User(context,"Liam"), "Answer 2.");
 		qtc1.addAnswer(apost2);
 		
 		// Testing functionality to be used to display all the components
@@ -43,13 +43,13 @@ public class QuestionThreadControllerTest extends TestCase {
 	
 	// Use Case #3 : View replies to a question/answer
 	public void testViewReplies() {
-		Post qpost1 = new Post(new User("John"), "Question 1?");
+		Post qpost1 = new Post(new User(context,"John"), "Question 1?");
 		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);
 		
-		pc1.addReply(new Reply(new User("Brent"),"Reply 1"));
+		pc1.addReply(new Reply(new User(context,"Brent"),"Reply 1"));
 		
 		assertEquals(1,qpost1.getReplies().size());
 		assertEquals("Reply 1",qpost1.getReplies().get(0).getText());
@@ -63,8 +63,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		String answer = "This is Sparta.";
 		String name = "John";
 		String auth = "Pete";
-		User a = new User(name);
-		User a2 = new User(auth);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -81,8 +81,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		String answer = "This is Sparta.";
 		String name = "John";
 		String auth = "Pete";
-		User a = new User(name);
-		User a2 = new User(auth);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -101,8 +101,8 @@ public class QuestionThreadControllerTest extends TestCase {
 		String answer = "This is Sparta.";
 		String name = "John";
 		String auth = "Pete";
-		User a = new User(name);
-		User a2 = new User(auth);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -123,21 +123,21 @@ public class QuestionThreadControllerTest extends TestCase {
 	
 	// Use Case #13.2: Most upvoted answers
 	public void testsortAnswersByMostUpVotes(){
-		Post questionText=new Post(new User(),"This is a question.");
+		Post questionText=new Post(new User(context),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		Post answer1=new Post(new User(),"Second Best Answer");
+		Post answer1=new Post(new User(context),"Second Best Answer");
 		ArrayList<User> answer1Ups = answer1.getUpsList();
-		User user1 = new User();
-		User user2 = new User();
+		User user1 = new User(context);
+		User user2 = new User(context);
 		answer1Ups.add(user1);
 		answer1.setUps(answer1Ups);
-		Post answer2=new Post(new User(),"Best Answer");
+		Post answer2=new Post(new User(context),"Best Answer");
 		ArrayList<User> answer2Ups = answer2.getUpsList();
 		answer2Ups.add(user1);
 		answer2Ups.add(user2);
 		answer2.setUps(answer2Ups);
-		Post answer3=new Post(new User(),"Worst Answer");
+		Post answer3=new Post(new User(context),"Worst Answer");
 		qctl.addAnswer(answer1);
 		qctl.addAnswer(answer2);
 		qctl.addAnswer(answer3);
@@ -146,12 +146,12 @@ public class QuestionThreadControllerTest extends TestCase {
 	
 	// Test for someone upvoting same question twice
 	public void testUpvoteTwice(){
-		Post questionText=new Post(new User(),"This is a question.");
+		Post questionText=new Post(new User(context),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		Post answer1=new Post(new User(),"Second Best Answer");
+		Post answer1=new Post(new User(context),"Second Best Answer");
 		ArrayList<User> answer1Ups = answer1.getUpsList();
-		User user1 = new User();
+		User user1 = new User(context);
 		answer1Ups.add(user1);
 		answer1Ups.add(user1);
 		answer1.setUps(answer1Ups);
@@ -161,12 +161,12 @@ public class QuestionThreadControllerTest extends TestCase {
 
 	// Use Case #14: Number of answers
 	public void testNumberOfAnswers(){
-		Post questionText=new Post(new User(),"This is a question.");
+		Post questionText=new Post(new User(context),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		Post answer1=new Post(new User(),"Here is an answer.");
-		Post answer2=new Post(new User(),"Another answer.");
-		Post answer3=new Post(new User(),"A third answer.");
+		Post answer1=new Post(new User(context),"Here is an answer.");
+		Post answer2=new Post(new User(context),"Another answer.");
+		Post answer3=new Post(new User(context),"A third answer.");
 		qctl.addAnswer(answer1);
 		qctl.addAnswer(answer2);
 		qctl.addAnswer(answer3);
@@ -176,7 +176,7 @@ public class QuestionThreadControllerTest extends TestCase {
 	//Use case 17: Read later
 	public void testReadLater() {
 		LocalStorageHandler handler=new LocalStorageHandler();
-		Post question=new Post(new User(),"Can I read these things later?");
+		Post question=new Post(new User(context),"Can I read these things later?");
 		QuestionThread qt=new QuestionThread(question);
 		handler.saveQuestionThread(context, qt, "Later.txt");
 		ThreadList laters=handler.getThreadList(context, "Later.txt");
@@ -190,7 +190,7 @@ public class QuestionThreadControllerTest extends TestCase {
 	//Use case 18: Favourite questions
 	public void testFavourite() {
 		LocalStorageHandler handler=new LocalStorageHandler();
-		Post question=new Post(new User(),"This is my favourite");
+		Post question=new Post(new User(context),"This is my favourite");
 		QuestionThread qt=new QuestionThread(question);
 		handler.saveQuestionThread(context, qt, "Favourite.txt");
 		ThreadList favs=handler.getThreadList(context, "Favourite.txt");
@@ -203,13 +203,13 @@ public class QuestionThreadControllerTest extends TestCase {
 	
 	// Use Case #22: As a user, by default, I should see the most fresh comments
 	public void testDefaultCommentOrder(){
-		Post p1 = new Post(new User("test"), "q1");
+		Post p1 = new Post(new User(context,"test"), "q1");
 		PostController pc1 = new PostController(p1);
 		
-		Reply reply = new Reply(new User("test1"),"r2");
+		Reply reply = new Reply(new User(context,"test1"),"r2");
 		pc1.addReply(reply);
-		pc1.addReply(new Reply(new User("test1"),"r1", new Date(reply.getTimestamp().getTime()-1000)));
-		pc1.addReply(new Reply(new User("test1"),"r3", new Date(reply.getTimestamp().getTime()+1000)));
+		pc1.addReply(new Reply(new User(context,"test1"),"r1", new Date(reply.getTimestamp().getTime()-1000)));
+		pc1.addReply(new Reply(new User(context,"test1"),"r3", new Date(reply.getTimestamp().getTime()+1000)));
 			
 	    ArrayList<Reply> comm = p1.getReplies();
 	    for(int i = 1; i < comm.size(); i++){

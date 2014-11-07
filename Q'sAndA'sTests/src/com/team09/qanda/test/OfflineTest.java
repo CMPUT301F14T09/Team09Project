@@ -25,7 +25,7 @@ public class OfflineTest extends ActivityInstrumentationTestCase2<QuestionThread
 	//Use case 19: Offline viewing
 	public void testViewOffline() {
 		LocalStorageHandler handler=new LocalStorageHandler();
-		Post question=new Post(new User(), "Offline? No way");
+		Post question=new Post(new User(context), "Offline? No way");
 		QuestionThread qt=new QuestionThread(question);
 		handler.saveQuestionThread(context, qt, "Favourite.txt");
 		handler.saveQuestionThread(context, qt, "Later.txt");

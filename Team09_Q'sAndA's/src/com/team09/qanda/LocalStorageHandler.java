@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.team09.qanda.models.QuestionThread;
@@ -35,13 +34,13 @@ public class LocalStorageHandler {
 			ThreadList tl=new ThreadList();
 			InputStreamReader in=new InputStreamReader(context.openFileInput(filename));
 			JsonReader reader=new JsonReader(in);
-		/*	reader.beginArray();
+			reader.beginArray();
 			while (reader.hasNext()) {
 				qts.add((QuestionThread) gson.fromJson(reader, QuestionThread.class));
 			} 
 			reader.endArray();
-			reader.close(); */
-			qts.add((QuestionThread) gson.fromJson(reader, QuestionThread.class));
+			reader.close(); 
+		//	qts.add((QuestionThread) gson.fromJson(reader, QuestionThread.class));
 			tl.setThreads(qts);
 			return tl; 
 			
@@ -78,7 +77,7 @@ public class LocalStorageHandler {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		return new User("null");
+		return null;
 	}
 	
 	public void saveUser(Context context,User user) {

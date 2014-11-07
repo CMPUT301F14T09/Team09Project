@@ -11,6 +11,7 @@ import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
 import com.team09.qanda.views.MainActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
@@ -21,7 +22,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	ThreadListAdapter adapter;
 	MainActivity mainAct;
 	ArrayAdapter<String> spinner;
-	
+	private Context context;
+
 	public MainActivityTest() {
 		super(MainActivity.class);
 		
@@ -42,12 +44,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		ThreadList questions=new ThreadList();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");
-		QuestionThread NoPicture=new QuestionThread(new Post(new User(),"No picture?"));
+		QuestionThread NoPicture=new QuestionThread(new Post(new User(context),"No picture?"));
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
-		Post pic1=new Post(new User(),"Hello?");
+		Post pic1=new Post(new User(context),"Hello?");
 		pic1.setImage();
-		Post pic2=new Post(new User(),"Does this work?");
+		Post pic2=new Post(new User(context),"Does this work?");
 		pic2.setImage();
 		// Add threads using controller
 		tlc.addThread(new QuestionThread(pic1));
@@ -65,9 +67,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		int selection=spinner.getPosition("Most Recent");
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
-		QuestionThread first=new QuestionThread(new Post(new User(),"am I first?"));
-		QuestionThread second=new QuestionThread(new Post(new User(),"am I second?"));
-		QuestionThread third=new QuestionThread(new Post(new User(),"am I third?"));
+		QuestionThread first=new QuestionThread(new Post(new User(context),"am I first?"));
+		QuestionThread second=new QuestionThread(new Post(new User(context),"am I second?"));
+		QuestionThread third=new QuestionThread(new Post(new User(context),"am I third?"));
 		tlc.addThread(third);
 		tlc.addThread(second);
 		tlc.addThread(first);
@@ -81,9 +83,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		ThreadList questions=new ThreadList();
 		//get the position of the  "Oldest" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Oldest");
-		QuestionThread first=new QuestionThread(new Post(new User(),"am I first?"));
-		QuestionThread second=new QuestionThread(new Post(new User(),"am I second?"));
-		QuestionThread third=new QuestionThread(new Post(new User(),"am I third?"));
+		QuestionThread first=new QuestionThread(new Post(new User(context),"am I first?"));
+		QuestionThread second=new QuestionThread(new Post(new User(context),"am I second?"));
+		QuestionThread third=new QuestionThread(new Post(new User(context),"am I third?"));
 		// Make ThreadListController
 		ThreadListController tlc = new ThreadListController(questions);
 		tlc.addThread(first);
@@ -104,15 +106,15 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Upvoted");
 		
-		Post txt=new Post(new User(),"Do upvotes work?");
+		Post txt=new Post(new User(context),"Do upvotes work?");
 		controller=new PostController(txt);
 	    controller.addUp();
 	    controller.addUp();
 		
-	    Post txt2=new Post(new User(),"Do upvotes work?");
+	    Post txt2=new Post(new User(context),"Do upvotes work?");
 	    controller=new PostController(txt2);
 	    controller.addUp();
-		Post txt3=new Post(new User(),"Do upvotes work?");
+		Post txt3=new Post(new User(context),"Do upvotes work?");
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);
 		QuestionThread least=new QuestionThread(txt3);
@@ -132,22 +134,22 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		ThreadList questions=new ThreadList();
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
-		Post txt=new Post(new User(),"Do upvotes work?");
+		Post txt=new Post(new User(context),"Do upvotes work?");
 		
 		ArrayList<User> txtUps = txt.getUpsList();
-		User user1 = new User();
-		User user2 = new User();
+		User user1 = new User(context);
+		User user2 = new User(context);
 		txtUps.add(user1);
 		txtUps.add(user2);
 		txt.setUps(txtUps);
 		
-		Post txt2=new Post(new User(),"Do upvotes work?");
+		Post txt2=new Post(new User(context),"Do upvotes work?");
 		
 		ArrayList<User> txt2Ups = txt2.getUpsList();
 		txt2Ups.add(user1);
 		txt2.setUps(txt2Ups);
 		
-		Post txt3=new Post(new User(),"Do upvotes work?");
+		Post txt3=new Post(new User(context),"Do upvotes work?");
 		
 		QuestionThread most=new QuestionThread(txt);
 		QuestionThread middle=new QuestionThread(txt2);

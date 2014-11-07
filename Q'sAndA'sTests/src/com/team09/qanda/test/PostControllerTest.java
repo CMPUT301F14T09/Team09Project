@@ -2,6 +2,8 @@ package com.team09.qanda.test;
 
 import junit.framework.TestCase;
 
+import android.content.Context;
+
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.models.Post;
@@ -11,6 +13,8 @@ import com.team09.qanda.models.User;
 
 public class PostControllerTest extends TestCase {
 
+	private Context context;
+
 	// Use Case #6 : As an author, I want to reply to questions and answers to clarify things.
 	public void testAddReplytoAnswer() {
 		String message = "What is this?";
@@ -19,9 +23,9 @@ public class PostControllerTest extends TestCase {
 		String name = "John";
 		String auth = "Pete";
 		String replyName = "Luna";
-		User a = new User(name);
-		User a2 = new User(auth);
-		User a3 = new User(replyName);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
+		User a3 = new User(context,replyName);
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -46,9 +50,9 @@ public class PostControllerTest extends TestCase {
 		String name = "John";
 		String auth = "Pete";
 		String replyName = "Luna";
-		User a = new User(name);
-		User a2 = new User(auth);
-		User a3 = new User(replyName);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
+		User a3 = new User(context,replyName);
 		
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
@@ -70,8 +74,8 @@ public class PostControllerTest extends TestCase {
 		String answer = "This is Sparta.";
 		String name = "John";
 		String auth = "Pete";
-		User a = new User(name);
-		User a2 = new User(auth);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -92,8 +96,8 @@ public class PostControllerTest extends TestCase {
 		String answer = "This is Sparta.";
 		String name = "John";
 		String auth = "Pete";
-		User a = new User(name);
-		User a2 = new User(auth);
+		User a = new User(context,name);
+		User a2 = new User(context,auth);
 		Post q = new Post(a, message);
 		Post ans = new Post(a2, answer);
 		// Make a question thread
@@ -116,7 +120,7 @@ public class PostControllerTest extends TestCase {
 	
 	//Use Case 11, 12: Upvote a Question/Answer
 	public void testUpVotes(){
-		User user1 = new User();
+		User user1 = new User(context);
 		Post txt=new Post(user1,"Do upvotes work?");
 		PostController cn1=new PostController(txt);
 		cn1.addUp();
