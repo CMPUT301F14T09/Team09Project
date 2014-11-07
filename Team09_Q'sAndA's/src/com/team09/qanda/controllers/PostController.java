@@ -40,8 +40,8 @@ public class PostController {
 		ArrayList<User> ups = post.getUpsList();
 		ApplicationState state = ApplicationState.getInstance();
 		User user = state.getUser();
-		for (int i = 0; i< post.getUps(); i++) {
-			if (ups.get(i).getName() == user.getName()) {
+		for (int i = 0; i< post.getUpsList().size(); i++) {
+			if (ups.get(i).getID().equals(user.getID())) {
 				return true;
 			}
 		} 

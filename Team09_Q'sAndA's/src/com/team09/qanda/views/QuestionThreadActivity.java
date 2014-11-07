@@ -118,7 +118,7 @@ public class QuestionThreadActivity extends Activity {
 		    QuestionThreadController qtc = new QuestionThreadController(thread);
 			AsyncSave task=new AsyncSave();
 			task.execute(new QuestionThreadController[] {qtc});
-			Toast.makeText(this, "upvote added by " , Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "upvote added by "+curState.getUser().getID() , Toast.LENGTH_SHORT).show();
 		}
 		v.setEnabled(false);
 	}

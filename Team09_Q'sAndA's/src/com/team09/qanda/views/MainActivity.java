@@ -167,12 +167,14 @@ public class MainActivity extends Activity{ //Main question view
 				Log.i("Persistence", "fetching username...");
 				setUsername();
 				Log.i("Persistence", "saving username...");
+
+			//	new LocalStorageHandler().saveUsername(context, curState.getUser().getName());
 			} else {
 				User user = new User(context);
 				user.setName(name);
 				curState.setUser(user);
 			}
-		}	
+		}	 
 	}
 	
 	/**
