@@ -30,6 +30,7 @@ public class UserThreadsActivity extends Activity {
 	private ListView userThreadList;
 	private Context context=this;
 	private ApplicationState curState = ApplicationState.getInstance();
+	private String FILENAME;
 	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
 
 	@Override
@@ -37,6 +38,7 @@ public class UserThreadsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_threads);
 		userThreadList = (ListView) findViewById(R.id.UserListView);
+		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");
 	}
 
 	@Override
