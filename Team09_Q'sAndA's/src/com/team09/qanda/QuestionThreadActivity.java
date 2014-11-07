@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.provider.Settings.Secure;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -145,7 +147,7 @@ public class QuestionThreadActivity extends Activity {
 		    QuestionThreadController qtc = new QuestionThreadController(thread);
 			AsyncSave task=new AsyncSave();
 			task.execute(new QuestionThreadController[] {qtc});
-			Toast.makeText(this, "upvote added", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "upvote added by " + curState.getUser().getName(), Toast.LENGTH_SHORT).show();
 		}
 		v.setEnabled(false);
 	}

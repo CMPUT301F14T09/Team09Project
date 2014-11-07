@@ -2,7 +2,10 @@ package com.team09.qanda;
 
 import java.io.Serializable;
 
+import android.app.Application;
+import android.content.Context;
 import android.provider.Settings;
+import android.provider.Settings.Secure;
 
 public class User extends QModel<QView> implements Serializable {
 	private String name;
@@ -10,12 +13,15 @@ public class User extends QModel<QView> implements Serializable {
 	
 	public User() {
 		this.name="User"+System.currentTimeMillis();
-		this.deviceID = Settings.Secure.ANDROID_ID;
+//		String deviceID = Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 	}
 	
 	public User(String name) {
 		this.name=name;
-		this.deviceID = Settings.Secure.ANDROID_ID;
+		this.deviceID = android.provider.Settings.Secure.ANDROID_ID;
+//		String deviceID = Secure.getString(getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+
 	}
 	
 	public void setName(String name) {

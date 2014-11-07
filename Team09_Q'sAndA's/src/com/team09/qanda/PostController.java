@@ -26,7 +26,7 @@ public class PostController {
 		ApplicationState state = new ApplicationState();
 		User user = state.getUser();
 		for (int i = 0; i< post.getUps(); i++) {
-			if (ups.get(i).getID() == user.getID()) {
+			if (ups.get(i).getName() == user.getName()) {
 				return true;
 			}
 		} 
