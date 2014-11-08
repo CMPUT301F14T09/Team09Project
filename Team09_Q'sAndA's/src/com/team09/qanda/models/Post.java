@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import android.graphics.Bitmap;
+
 import com.team09.qanda.views.QView;
 
 /**
@@ -23,6 +25,7 @@ public class Post extends QModel<QView> implements Serializable {
 	//This is needed as the ArrayList shows up as an empty array on elastic search (unable to sort it)
 	private int upVotes;
 	private boolean hasPictures;
+	private Bitmap image;
 	private ArrayList<Reply> replies;
 	private Date timestamp;
 	//Strings are a little hard to sort on elastic search, so I'll use time in milliseconds

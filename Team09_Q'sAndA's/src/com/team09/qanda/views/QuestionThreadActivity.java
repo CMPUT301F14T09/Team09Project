@@ -9,6 +9,7 @@ import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -91,6 +92,13 @@ public class QuestionThreadActivity extends Activity {
 	}
 	*/
 
+	public void attachImage(View v) {
+		Intent intent = new Intent(Intent.ACTION_PICK);
+		intent.setType("image/*");
+		startActivity(intent);
+	}
+	
+	
 	// Method called by the onClick of answerSubmissionButton
 	public void submitAnswer(View v) {
 		System.out.println("Answer Count : " + thread.getAnswers().size());
@@ -106,19 +114,6 @@ public class QuestionThreadActivity extends Activity {
 		answerTextField.setText("");
 	}
 	
-	// Called when user taps the upvote button. Gives the question post an upvote and updates the thread.
-	public void upvoteQuestion(View v) {
-/*		Post post = thread.getQuestion();
-		questionPostController = new PostController(post);
-		if (!questionPostController.alreadyUpvoted()) {
-			questionPostController.addUp();
-		    QuestionThreadController qtc = new QuestionThreadController(thread);
-			AsyncSave task=new AsyncSave();
-			task.execute(new QuestionThreadController[] {qtc});
-			Toast.makeText(this, "upvote added by "+curState.getUser().getName() , Toast.LENGTH_SHORT).show();
-		}
-		v.setEnabled(false); */
-	}
 	
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 

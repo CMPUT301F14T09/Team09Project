@@ -33,9 +33,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@id/editAnswerText"
-        android:src="@drawable/ic_menu_attachment"
         android:background="?android:attr/selectableItemBackground"
-        android:contentDescription="@string/answerAttachmentButton" />
+        android:contentDescription="@string/answerAttachmentButton"
+        android:onClick="attachImage"
+        android:src="@drawable/ic_menu_attachment" />
 
     <Button
         android:id="@+id/answerSubmissionButton"

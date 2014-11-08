@@ -12,6 +12,7 @@ import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -72,9 +73,27 @@ public class AddQuestionActivity extends Activity {
 		//	NavUtils.navigateUpFromSameTask(this);
 	     //   return true;
 		//}
+		if (id == R.id.attach_image) {
+			attachImage();
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void attachImage() {
+		Intent intent = new Intent(Intent.ACTION_PICK);
+		intent.setType("image/*");
+		startActivity(intent);
+	}
+	
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+
 	// Creates a new question with the current user as the author
 	public void submitQuestion(View v) {
 		textFieldEntry = textField.getText().toString();
