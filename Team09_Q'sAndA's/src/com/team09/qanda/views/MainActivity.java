@@ -58,7 +58,7 @@ public class MainActivity extends Activity{ //Main question view
 	
 	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
-	private ThreadList threads;
+	private ThreadList threads=new ThreadList();
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
@@ -142,7 +142,6 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		threads = new ThreadList();
 		tlc=new ThreadListController(threads);
 		AsyncGet task=new AsyncGet();
 		task.execute(new ThreadListController[] {tlc});
