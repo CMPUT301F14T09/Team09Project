@@ -46,4 +46,8 @@ public class QuestionThread extends QModel<QView> implements Serializable {
 		notifyViews();
 	}
 
+	public void setQuestion(Post question) {
+		this.question = question;
+	}
+
 }
