@@ -1,24 +1,14 @@
 package com.team09.qanda;
 
-import java.util.ArrayList;
-
-import com.team09.qanda.controllers.PostController;
-import com.team09.qanda.controllers.QuestionThreadController;
-import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ThreadAdapter extends ArrayAdapter<Post> {
 
@@ -67,46 +57,19 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			else {
 				post = thread.getAnswers().get(position-2);
 			}
-			
+				
 			text.setText(post.getText());
 			author.setText(" - " + post.getAuthor().getName());
 			upvotes.setText(post.getUps() + " Point(s)");
 			author.setText("-"+post.getAuthor().getName());
-			
-			PostController qpc = new PostController(post);
-			CheckBox upvoteBox = (CheckBox) convertView.findViewById(R.id.upvoteCheckbox);
-			upvoteBox.setChecked(qpc.alreadyUpvoted());
-			
-			final int position_copy = position;
-
-			upvoteBox.setOnClickListener(new View.OnClickListener() {
-				
-				public void onClick(View v) {
-					PostController qpc;
-					QuestionThreadController qtc = new QuestionThreadController(thread);
-					if (position_copy == 0) {
-						Post post = thread.getQuestion();
-						qpc = new PostController(post);
-						thread.setQuestion(post);
-					}
-					else {
-						Post post = thread.getAnswers().get(position_copy-2);
-						qpc = new PostController(post);
-						qpc.addUp();
-						ArrayList<Post> answers = thread.getAnswers();
-						answers.set(position_copy-2, post);
-						thread.setAnswers(answers);
-					}
-			    	qtc.saveThread(thread.getId());
-			    	notifyDataSetChanged();
-				}
-			});
-			
-			
 		}
 		
 				
 				
 		return convertView;
 	}
+
+	
+	
+
 }

@@ -108,7 +108,7 @@ public class QuestionThreadActivity extends Activity {
 	
 	// Called when user taps the upvote button. Gives the question post an upvote and updates the thread.
 	public void upvoteQuestion(View v) {
-	/*	Post post = thread.getQuestion();
+		Post post = thread.getQuestion();
 		questionPostController = new PostController(post);
 		if (!questionPostController.alreadyUpvoted()) {
 			questionPostController.addUp();
@@ -117,7 +117,7 @@ public class QuestionThreadActivity extends Activity {
 			task.execute(new QuestionThreadController[] {qtc});
 			Toast.makeText(this, "upvote added by "+curState.getUser().getName() , Toast.LENGTH_SHORT).show();
 		}
-		v.setEnabled(false); */
+		v.setEnabled(false);
 	}
 	
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
