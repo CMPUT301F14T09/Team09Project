@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,9 +99,9 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 						answers.set(position_copy-2, post);
 						thread.setAnswers(answers);
 					}
-					
-			    	qtc.saveThread(thread.getId());
-			    	notifyDataSetChanged();
+					AsyncSave task=new AsyncSave();
+					task.execute(new QuestionThreadController[] {qtc});
+					notifyDataSetChanged();
 				}
 			});
 			
@@ -110,5 +111,16 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 				
 				
 		return convertView;
+	}
+	
+	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
+
+		@Override
+		protected Void doInBackground(QuestionThreadController... params) {
+			for (QuestionThreadController qtc:params) {
+		    	qtc.saveThread(thread.getId());
+			}
+			return null;
+		}
 	}
 }
