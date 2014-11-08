@@ -87,6 +87,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 					if (position_copy == 0) {
 						Post post = thread.getQuestion();
 						qpc = new PostController(post);
+						qpc.addUp();
 						thread.setQuestion(post);
 					}
 					else {
@@ -97,6 +98,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 						answers.set(position_copy-2, post);
 						thread.setAnswers(answers);
 					}
+					
 			    	qtc.saveThread(thread.getId());
 			    	notifyDataSetChanged();
 				}

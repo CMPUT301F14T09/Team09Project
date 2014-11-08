@@ -11,7 +11,7 @@
         android:layout_alignParentRight="true"
         android:focusable="false"
 		android:focusableInTouchMode="false"
-        android:button="@android:drawable/btn_star"/>
+        android:button="@drawable/save_checkbox"/>
     
     <TextView
         android:id="@+id/questionMain"
@@ -26,6 +26,7 @@
         android:id="@+id/authorMain"
 	    android:layout_width="wrap_content"
     	android:layout_height="30sp"
+    	android:paddingTop="10sp"
     	android:textSize="15sp"
     	android:textColor="@color/grey"
     	android:layout_below="@id/questionMain"
@@ -36,6 +37,7 @@
         android:id="@+id/numOfPoints"
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
+    	android:paddingTop="10sp"
     	android:textSize="12sp"
     	android:layout_below="@id/authorMain"
     	android:layout_alignParentLeft="true">
@@ -45,6 +47,7 @@
         android:id="@+id/numOfAnswers"
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
+    	android:paddingTop="10sp"
     	android:layout_below="@id/authorMain"
     	android:layout_alignParentRight="true"
     	android:textSize="12sp">
