@@ -33,6 +33,10 @@ public class QuestionThread extends QModel<QView> implements Serializable {
 		return this.question;
 	}
 	
+	public void setQuestion(Post question) {
+		this.question = question;
+	}
+	
 	public ArrayList<Post> getAnswers() {
 		return this.answers;
 	}
