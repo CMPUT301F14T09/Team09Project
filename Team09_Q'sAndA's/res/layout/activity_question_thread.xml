@@ -37,7 +37,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton" />
 
-    <Button
+    <ImageButton
         android:id="@+id/answerSubmissionButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -47,6 +47,8 @@
         android:layout_below="@id/ThreadPostsView"
         android:layout_toEndOf="@id/answerAttachmentButton"
         android:onClick="submitAnswer"
-        android:text="@string/answerSubmissionButton" />
+		android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_menu_send"
+        android:contentDescription="@string/answerSubmissionButton" />
 
 </RelativeLayout>
