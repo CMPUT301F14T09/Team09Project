@@ -1,10 +1,10 @@
 package com.team09.qanda.test;
 
-import java.util.ArrayList;
-
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.controllers.PostController;
+import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
@@ -23,7 +23,12 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	MainActivity mainAct;
 	ArrayAdapter<String> spinner;
 	private Context context;
-
+	ThreadList questions;
+	ThreadListController tlc;
+	ElasticSearchHandler esh;
+	QuestionThread one;
+	QuestionThread two;
+	QuestionThread three;
 	public MainActivityTest() {
 		super(MainActivity.class);
 		
@@ -31,139 +36,67 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	@Override
 	public void setUp() throws Exception{
 		super.setUp();
+		esh=new ElasticSearchHandler("http://cmput301.softwareprocess.es:8080", "cmput301f14t09","testq");
 		mainAct=getActivity();
 		adapter=mainAct.getAdapter();
 		spinner=mainAct.getSpinnerAdapter();
-	}
-	@Override
-	public void tearDown(){
-		adapter.clear();
+		questions=new ThreadList();
+		tlc = new ThreadListController(questions,esh);
+		createSampleList();
 	}
 	//Use Case 9
 	public void testSortbyHasPictures(){
-		ThreadList questions=new ThreadList();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Has Pictures");
-		QuestionThread NoPicture=new QuestionThread(new Post(new User(context),"No picture?"));
-		// Make ThreadListController
-		ThreadListController tlc = new ThreadListController(questions);
-		Post pic1=new Post(new User(context),"Hello?");
-		pic1.setImage();
-		Post pic2=new Post(new User(context),"Does this work?");
-		pic2.setImage();
-		// Add threads using controller
-		tlc.addThread(new QuestionThread(pic1));
-		tlc.addThread(new QuestionThread(pic2));
-		tlc.addThread(NoPicture);
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(NoPicture),0);
+		assertEquals(adapter.getPosition(three),0);
 	}
 	
 	//Use Case 10.1
 	public void testsortByMostRecent(){
-		ThreadList questions=new ThreadList();
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Recent");
-		// Make ThreadListController
-		ThreadListController tlc = new ThreadListController(questions);
-		QuestionThread first=new QuestionThread(new Post(new User(context),"am I first?"));
-		QuestionThread second=new QuestionThread(new Post(new User(context),"am I second?"));
-		QuestionThread third=new QuestionThread(new Post(new User(context),"am I third?"));
-		tlc.addThread(third);
-		tlc.addThread(second);
-		tlc.addThread(first);
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(third),2);
+		assertEquals(adapter.getPosition(three),2);
 	}
 	
 	//Use Case 10.2
 	public void testsortByOldest(){
-		ThreadList questions=new ThreadList();
 		//get the position of the  "Oldest" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Oldest");
 		QuestionThread first=new QuestionThread(new Post(new User(context),"am I first?"));
 		QuestionThread second=new QuestionThread(new Post(new User(context),"am I second?"));
 		QuestionThread third=new QuestionThread(new Post(new User(context),"am I third?"));
 		// Make ThreadListController
-		ThreadListController tlc = new ThreadListController(questions);
 		tlc.addThread(first);
 		tlc.addThread(second);
 		tlc.addThread(third);
 
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(third),0);
+		assertEquals(adapter.getPosition(three),0);
 
 	}
 	
 	//Use Case 10.3
 	public void testsortByMostUpVotes(){
-		ThreadList questions=new ThreadList();
 		PostController controller;
-		
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Most Upvoted");
-		
-		Post txt=new Post(new User(context),"Do upvotes work?");
-		controller=new PostController(txt);
-	    controller.addUp();
-	    controller.addUp();
-		
-	    Post txt2=new Post(new User(context),"Do upvotes work?");
-	    controller=new PostController(txt2);
-	    controller.addUp();
-		Post txt3=new Post(new User(context),"Do upvotes work?");
-		QuestionThread most=new QuestionThread(txt);
-		QuestionThread middle=new QuestionThread(txt2);
-		QuestionThread least=new QuestionThread(txt3);
-		// Make ThreadListController
-		ThreadListController tlc = new ThreadListController(questions);
-		tlc.addThread(least);
-		tlc.addThread(middle);
-		tlc.addThread(most);
-
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(most),0);
+		assertEquals(adapter.getPosition(one),0);
 	}
 	
 	//Use Case 10.4
 	public void testsortByLeastUpvotes(){
-		ThreadList questions=new ThreadList();
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
 		int selection=spinner.getPosition("Least Upvoted");
-		Post txt=new Post(new User(context),"Do upvotes work?");
-		
-		ArrayList<User> txtUps = txt.getUpsList();
-		User user1 = new User(context);
-		User user2 = new User(context);
-		txtUps.add(user1);
-		txtUps.add(user2);
-		txt.setUps(txtUps);
-		
-		Post txt2=new Post(new User(context),"Do upvotes work?");
-		
-		ArrayList<User> txt2Ups = txt2.getUpsList();
-		txt2Ups.add(user1);
-		txt2.setUps(txt2Ups);
-		
-		Post txt3=new Post(new User(context),"Do upvotes work?");
-		
-		QuestionThread most=new QuestionThread(txt);
-		QuestionThread middle=new QuestionThread(txt2);
-		QuestionThread least=new QuestionThread(txt3);
-		
-		// Make ThreadListController
-		ThreadListController tlc = new ThreadListController(questions);
-		tlc.addThread(most);
-		tlc.addThread(middle);
-		tlc.addThread(least);
-
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(most),0);
+		assertEquals(adapter.getPosition(one),2);
 	}
 	
 	@UiThreadTest
@@ -175,8 +108,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		
 		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
 		
-	}
-	
+	}	
 	@UiThreadTest
 	public void testSpinnerAdapter() {
 		//TODO
@@ -197,6 +129,34 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 				assertNotNull(mainAct.findViewById(com.team09.qanda.R.id.usernamePrompt));
 			}
 		});
+		
+	}
+	private void createSampleList() {
+		if(esh.getThreads().isEmpty()){
+			PostController controller;
+			Post txt=new Post(new User(mainAct),"Hello?");
+			
+			controller=new PostController(txt);
+		    controller.addUp();
+		    controller.addUp();
+			
+		    Post txt2=new Post(new User(mainAct),"Do upvotes work?");
+		    controller=new PostController(txt2);
+		    controller.addUp();
+		    
+			Post txt3=new Post(new User(mainAct),"Why?");
+			txt.setImage();
+			
+			one=new QuestionThread(txt);
+			two=new QuestionThread(txt2);
+			three=new QuestionThread(txt3);
+			
+			for(QuestionThread question:new QuestionThread[]{one,two,three}){
+				QuestionThreadController qtc=new QuestionThreadController(question,esh);
+				qtc.saveThread();
+				tlc.addThread(question);
+			}
+		}
 		
 	}
 }

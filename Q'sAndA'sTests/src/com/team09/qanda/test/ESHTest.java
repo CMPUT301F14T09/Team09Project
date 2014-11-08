@@ -40,7 +40,7 @@ public class ESHTest extends TestCase
 		ThreadListController  threadController = new ThreadListController(thread);
 		
 		//connecting to local test elastic search environment
-		ElasticSearchHandler esh = new ElasticSearchHandler("http://localhost:9200/test");
+		ElasticSearchHandler esh = new ElasticSearchHandler("http://localhost:9200/test","cmput301f14t09", "qthread");
 
 		QuestionThread q1 = new QuestionThread(testp);
 		QuestionThreadController qtc1 = new QuestionThreadController(q1);

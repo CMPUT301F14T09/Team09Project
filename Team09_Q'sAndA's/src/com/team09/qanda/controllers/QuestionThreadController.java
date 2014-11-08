@@ -18,8 +18,11 @@ public class QuestionThreadController {
 	private ElasticSearchHandler esh;
 	
 	public QuestionThreadController(QuestionThread thread) {
+		this(thread,new ElasticSearchHandler());
+	}
+	public QuestionThreadController(QuestionThread thread,ElasticSearchHandler esh){
 		this.thread=thread;
-		this.esh=new ElasticSearchHandler();
+		this.esh=esh;
 	}
 	
 	public void addAnswer(Post answer) {

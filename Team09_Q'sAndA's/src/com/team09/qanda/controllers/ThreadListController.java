@@ -12,8 +12,11 @@ public class ThreadListController {
 	private ElasticSearchHandler esh;
 	
 	public ThreadListController(ThreadList threadList) {
+		this(threadList,new ElasticSearchHandler());
+	}
+	public ThreadListController(ThreadList threadList, ElasticSearchHandler esh){
 		this.tl=threadList;
-		this.esh=new ElasticSearchHandler();
+		this.esh=esh;
 	}
 	
 	public void addThread(QuestionThread thread) {
