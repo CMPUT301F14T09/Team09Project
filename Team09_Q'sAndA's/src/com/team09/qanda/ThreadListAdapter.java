@@ -38,7 +38,12 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		
 		question.setText(thread.getQuestion().getText());
 		author.setText(" - " + thread.getQuestion().getAuthor().getName());
-		points.setText(thread.getQuestion().getUps() + " Point(s)");
+		if (thread.getQuestion().getUps() == 1) {
+			points.setText(thread.getQuestion().getUps() + " Point");
+		}
+		else { 
+			points.setText(thread.getQuestion().getUps() + " Points");
+		}
 		answers.setText(thread.getAnswers().size() + " Answer(s)");
 		
 		return convertView;

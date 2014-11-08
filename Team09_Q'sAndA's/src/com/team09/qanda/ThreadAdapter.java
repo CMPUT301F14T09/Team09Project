@@ -72,7 +72,12 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			
 			text.setText(post.getText());
 			author.setText(" - " + post.getAuthor().getName());
-			upvotes.setText(post.getUps() + " Point(s)");
+			if (post.getUps() == 1) {
+				upvotes.setText(post.getUps() + " Point");
+			}
+			else { 
+				upvotes.setText(post.getUps() + " Points"); 
+			}
 			author.setText("-"+post.getAuthor().getName());
 			
 			PostController qpc = new PostController(post);
