@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,12 +55,17 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 		if (position == 1) {
 			TextView text = (TextView) convertView.findViewById(R.id.answersHeading);
 			int numAnswers = thread.getAnswers().size();
-			text.setText(numAnswers + " Answers");
+			if (numAnswers == 1) {
+				text.setText(numAnswers + " Answer");		}
+			else { 
+				text.setText(numAnswers + " Answers");		}
+			
 		}
 		else {
 			TextView text = (TextView) convertView.findViewById(R.id.post);
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
+			ImageButton attachmentButton = (ImageButton) convertView.findViewById(R.id.attachmentButton);
 			
 			Post post;
 			
@@ -72,13 +78,19 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			
 			text.setText(post.getText());
 			author.setText(" - " + post.getAuthor().getName());
+			
 			if (post.getUps() == 1) {
-				upvotes.setText(post.getUps() + " Point");
+				upvotes.setText(post.getUps() + " Point  ");
 			}
 			else { 
 				upvotes.setText(post.getUps() + " Points"); 
 			}
+			
 			author.setText("-"+post.getAuthor().getName());
+			
+			if (post.isImageSet() == false) {
+				attachmentButton.setVisibility(View.INVISIBLE);
+			}
 			
 			PostController qpc = new PostController(post);
 			CheckBox upvoteBox = (CheckBox) convertView.findViewById(R.id.upvoteCheckbox);
