@@ -21,12 +21,14 @@
     
     <Button
         android:id="@+id/askQuestionButton"
+        style="@style/ButtonText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/ask_button"
         android:onClick="addQuestion"
         android:text="@string/askAQuestion" />
 
