@@ -110,6 +110,7 @@ public class QuestionThreadActivity extends Activity {
 		startActivityForResult(intent, IMAGE_REQUEST);
 	}
 	
+	// Called when an image has been chosen by the user
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

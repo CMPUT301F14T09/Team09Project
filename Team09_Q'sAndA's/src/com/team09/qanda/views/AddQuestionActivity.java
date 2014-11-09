@@ -104,14 +104,14 @@ public class AddQuestionActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	
 	public void attachImage() {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
 		startActivityForResult(intent, IMAGE_REQUEST);
 	}
 	
-	
-	
+	// Called when an image has been chosen by the user
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -163,11 +163,7 @@ public class AddQuestionActivity extends Activity {
     	}
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
-
-		localStorageHandler.deleteFile(getBaseContext(), "My Questions.txt");
-		localStorageHandler.getThreadList(context, "My Questions.txt");
     	localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
-    	
     	AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
 	}
