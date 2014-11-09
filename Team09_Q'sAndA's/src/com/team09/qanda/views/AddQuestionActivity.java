@@ -36,6 +36,17 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+/**
+ * 
+ * This is the AddQuestionActivity class. 
+ * This class handles the tasks related to adding a
+ * new question in the threadList. This class uses the curState
+ * singleton to provide the user object to as an author for the
+ * new questions made. This class also handles the adding of the images
+ * in the questions.
+ * 
+ */
+
 public class AddQuestionActivity extends Activity {
 
 	private String textFieldEntry;
@@ -136,9 +147,9 @@ public class AddQuestionActivity extends Activity {
 
 	/**
     *
-    * This method creates a new question, with the current
-    * user as its author. It creates a new post object and
-    * converts it to a question thread object.
+    * This method submits a new question to the server, with the current
+    * user as its author. It creates a new post object and coverts it to
+    * a question thread object.
     *
     * @param 
     * @see 
