@@ -37,7 +37,8 @@ public class ElasticSearchHandler {
 	public ElasticSearchHandler(){
 	//	URL = "http://cmput301.softwareprocess.es:8080";
 		//URL="http://192.168.1.105:9200";
-		this("http://206.75.37.9:9200","cmput301f14t09","qthread");
+		//this("http://206.75.37.9:9200","cmput301f14t09","qthread");
+		this("http://cmput301.softwareprocess.es:8080/","cmput301f14t09","qthread");
 	}
 	public ElasticSearchHandler(String URL,String Index,String Type){
 		this.URL = URL;
@@ -46,7 +47,7 @@ public class ElasticSearchHandler {
 		this.gson=new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").create();
 		JestClientFactory f=new JestClientFactory();
 		f.setDroidClientConfig(new DroidClientConfig.Builder(URL).discoveryEnabled(true)
-				.discoveryFrequency(120, TimeUnit.SECONDS).multiThreaded(true).build());
+				.discoveryFrequency(120, TimeUnit.SECONDS).connTimeout(10000).multiThreaded(true).build());
 		client=f.getObject();
 	}
 	
