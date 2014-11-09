@@ -7,10 +7,13 @@ import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.views.PictureViewActivity;
+import com.team09.qanda.views.QuestionThreadActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -94,6 +97,19 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 				
 			if (post.isImageSet() == false) {
 				attachmentButton.setVisibility(View.INVISIBLE);
+			}
+			else {
+				final Post post_copy = post;
+				attachmentButton.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(context, PictureViewActivity.class);
+						intent.putExtra("Selected Post", post_copy);
+						context.startActivity(intent);
+					}
+				});
 			}
 			
 			PostController qpc = new PostController(post);
