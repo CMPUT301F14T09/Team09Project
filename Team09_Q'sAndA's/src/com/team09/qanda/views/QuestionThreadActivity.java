@@ -132,10 +132,10 @@ public class QuestionThreadActivity extends Activity {
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
 					image = out.toByteArray();
-					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
 				else {
-					Toast.makeText(this, "Image too large: "+ imageSize, Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
