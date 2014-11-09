@@ -160,6 +160,11 @@ public class QuestionThreadActivity extends Activity {
 		answerTextField.setText("");
 	}
 	
+	public void viewImage(View v) {
+		Intent intent = new Intent(QuestionThreadActivity.this, PictureViewActivity.class);
+		intent.putExtra("Selected Post", thread.getQuestion());
+		startActivity(intent);
+	}
 	
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
