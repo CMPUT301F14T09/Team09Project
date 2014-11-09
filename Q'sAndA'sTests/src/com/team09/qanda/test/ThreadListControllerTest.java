@@ -22,6 +22,17 @@ public class ThreadListControllerTest extends
 		super(MainActivity.class);
 	}
 	
+	
+	
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		context = getInstrumentation().getContext();
+	}
+
+
+
 	// Use Case #1 : Browse questions
 	public void testBrowseQuestions() {
 		Post qpost1 = new Post(new User(context,"John"), "Question 1?");
@@ -102,17 +113,12 @@ public class ThreadListControllerTest extends
 	// Use Case #16: Remember which questions I asked
 	public void testStoreMyQuestionsLocally() {
 		Post qpost1 = new Post(new User(context, "John"), "Question 1?");
-		PostController pc1 = new PostController(qpost1);
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
-		QuestionThreadController qtc1 = new QuestionThreadController(q1);			
-		
-		ThreadList myQuestions = new ThreadList();
-		ThreadListController cn1=new ThreadListController(myQuestions);
-		cn1.addThread(q1);
 		
 		LocalStorageHandler lsh = new LocalStorageHandler();
+		lsh.saveQuestionThread(context, q1, "MyQuestions.txt");
 	
-		assertSame(lsh.getThreadList(context, "MyQuestions.txt").get(0), q1);
+		assertEquals(lsh.getThreadList(context, "MyQuestions.txt").get(0), q1);
 	}
 }

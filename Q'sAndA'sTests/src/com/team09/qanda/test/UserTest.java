@@ -1,14 +1,22 @@
 package com.team09.qanda.test;
 
 import android.content.Context;
+import android.test.InstrumentationTestCase;
 
 import com.team09.qanda.models.User;
 
 import junit.framework.TestCase;
 
-public class UserTest extends TestCase {
+public class UserTest extends InstrumentationTestCase {
 
 	private Context context;
+	
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		context = getInstrumentation().getContext();
+	}
 
 	//Use Case #23: As an author, I set my username.
 	public void testSetUsernameDefault(){
