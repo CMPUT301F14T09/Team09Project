@@ -124,10 +124,10 @@ public class AddQuestionActivity extends Activity {
 					image = out.toByteArray();
 					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 					imageView.setImageBitmap(selectedImage);
-					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
 				else {
-					Toast.makeText(this, "Image too large", Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
