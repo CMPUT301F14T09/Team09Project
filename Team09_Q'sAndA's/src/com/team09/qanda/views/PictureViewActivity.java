@@ -8,6 +8,8 @@ import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +34,8 @@ public class PictureViewActivity extends Activity {
 		post = (Post) getIntent().getExtras().getSerializable("Selected Post");
 		ImageView postImage = (ImageView) findViewById(R.id.postImage);
 		TextView postText = (TextView) findViewById(R.id.postText);
-		postImage.setImageBitmap(post.getImage());
+		Bitmap image = BitmapFactory.decodeByteArray(post.getImage(), 0, post.getImage().length);
+		postImage.setImageBitmap(image);
 		postText.setText(post.getText());
 
 		
