@@ -3,6 +3,10 @@ package com.team09.qanda.test;
 import junit.framework.TestCase;
 
 import android.content.Context;
+import android.content.Intent;
+import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
+import android.test.mock.MockContext;
 
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -11,9 +15,17 @@ import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.Reply;
 import com.team09.qanda.models.User;
 
-public class PostControllerTest extends TestCase {
+public class PostControllerTest extends InstrumentationTestCase {
 
 	private Context context;
+
+
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		context = getInstrumentation().getContext();
+	}
 
 	// Use Case #6 : As an author, I want to reply to questions and answers to clarify things.
 	public void testAddReplytoAnswer() {
@@ -73,12 +85,10 @@ public class PostControllerTest extends TestCase {
 		String message = "What is this?";
 		String answer = "This is Sparta.";
 		String name = "John";
-		String auth = "Pete";
 		User a = new User(context,name);
-		User a2 = new User(context,auth);
 		Post q = new Post(a, message);
-		Post ans = new Post(a2, answer);
-		// Make a question thread
+		Post ans = new Post(a, answer);
+		//	 Make a question thread
 		QuestionThread qThread = new QuestionThread(q);
 		// Create a question thread controller
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
@@ -87,7 +97,7 @@ public class PostControllerTest extends TestCase {
 		// Create a post (answer) controller
 		PostController pctl = new PostController(ans);
 		ans.setHasPicture(true);
-		assertTrue("Image is not set!", ans.isImageSet());
+		assertTrue("Image is not set!", ans.isImageSet()); 
 	}
 	
 	// Use Case #8 : As a sysadmin, I do not want the pictures to be large (> 64kb).
