@@ -38,8 +38,16 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		
 		question.setText(thread.getQuestion().getText());
 		author.setText(" - " + thread.getQuestion().getAuthor().getName());
-		points.setText(thread.getQuestion().getUps() + " Point(s)");
-		answers.setText(thread.getAnswers().size() + " Answer(s)");
+		if (thread.getQuestion().getUps() == 1) {
+			points.setText(thread.getQuestion().getUps() + " Point");		}
+		else { 
+			points.setText(thread.getQuestion().getUps() + " Points");		}
+		
+		if (thread.getAnswers().size() == 1) {
+			answers.setText(thread.getAnswers().size() + " Answer");		}
+		else { 
+			answers.setText(thread.getAnswers().size() + " Answers");		}
+		
 		
 		return convertView;
 	}

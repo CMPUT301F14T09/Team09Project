@@ -91,7 +91,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
 		qctl.addAnswer(ans);
 		// Attach image in question using question thread controller
-		q.setImage();
+		q.setHasPicture(true);
 		assertTrue("There is no image!", q.isImageSet());
 	}
 	
@@ -113,7 +113,7 @@ public class QuestionThreadControllerTest extends TestCase {
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
 		Boolean thrown = false;
 		try {
-			q.setImage();
+			q.setHasPicture(true);;
 		} catch (IllegalArgumentException e) {
 			thrown = true;
 		}

@@ -86,7 +86,7 @@ public class PostControllerTest extends TestCase {
 		assertTrue("This is not answered", !qThread.getAnswers().isEmpty());
 		// Create a post (answer) controller
 		PostController pctl = new PostController(ans);
-		pctl.attachImage();
+		ans.setHasPicture(true);
 		assertTrue("Image is not set!", ans.isImageSet());
 	}
 	
@@ -110,7 +110,7 @@ public class PostControllerTest extends TestCase {
 		// Create a post (answer) controller
 		PostController pctl = new PostController(ans);
 		try {
-			pctl.attachImage();
+			ans.setHasPicture(true);
 		} catch (IllegalArgumentException e) {
 			thrown = true;
 		}

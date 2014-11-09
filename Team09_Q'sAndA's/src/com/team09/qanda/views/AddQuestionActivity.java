@@ -1,17 +1,27 @@
 package com.team09.qanda.views;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.R.id;
 import com.team09.qanda.R.layout;
 import com.team09.qanda.R.menu;
+import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -20,8 +30,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 public class AddQuestionActivity extends Activity {
 
@@ -30,8 +42,10 @@ public class AddQuestionActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
 	private Context context = this;
+	private Bitmap image = null;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
+	private static int IMAGE_REQUEST = 1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +86,59 @@ public class AddQuestionActivity extends Activity {
 		//	NavUtils.navigateUpFromSameTask(this);
 	     //   return true;
 		//}
+		if (id == R.id.attach_image) {
+			attachImage();
+		}
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void attachImage() {
+		Intent intent = new Intent(Intent.ACTION_PICK);
+		intent.setType("image/*");
+		startActivityForResult(intent, IMAGE_REQUEST);
+	}
+	
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (resultCode == RESULT_OK) {
+			if (requestCode == IMAGE_REQUEST) {
+				Uri uri = data.getData();
+				InputStream input = null; 
+				try {
+					input = getContentResolver().openInputStream(uri);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Bitmap selectedImage = BitmapFactory.decodeStream(input);
+				int imageSize = selectedImage.getByteCount();
+				if (imageSize <= (64*1024)) {
+					image = selectedImage;
+					ImageView imageView = (ImageView)findViewById(R.id.attchedImage); 
+					imageView.setImageBitmap(image);
+					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(this, "Image too large", Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	}
+	
+
 	// Creates a new question with the current user as the author
 	public void submitQuestion(View v) {
 		textFieldEntry = textField.getText().toString();
     	Post newPost = new Post(curState.getUser(), textFieldEntry);
+    	PostController pc = new PostController(newPost);
+    	if (image != null) {
+    		pc.attachImage(image);
+    	}
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
 

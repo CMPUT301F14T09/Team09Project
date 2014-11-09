@@ -9,12 +9,12 @@
     tools:context="com.team09.qanda.views.AddQuestionActivity" >
 
     <EditText
-    android:id="@+id/add_question_field"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:hint="@string/add_question_hint"
-    android:inputType="text"
-    android:imeOptions="actionDone" />
+        android:id="@+id/add_question_field"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/add_question_hint"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/submit_question_btn"
@@ -25,5 +25,14 @@
         android:layout_marginBottom="19dp"
         android:onClick="submitQuestion"
         android:text="@string/submit_question_btn" />
+
+    <ImageView
+        android:id="@+id/attchedImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_question_btn"
+        android:layout_alignLeft="@+id/add_question_field"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/add_question_field" />
 
 </RelativeLayout>
