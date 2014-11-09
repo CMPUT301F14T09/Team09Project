@@ -115,10 +115,13 @@ public class ThreadListControllerTest extends
 		Post qpost1 = new Post(new User(context, "John"), "Question 1?");
 		
 		QuestionThread q1 = new QuestionThread(qpost1);
+		ThreadList tl = new ThreadList();
+		ThreadListController tlc = new ThreadListController(tl);
+		tlc.addThread(q1);
 		
 		LocalStorageHandler lsh = new LocalStorageHandler();
 		lsh.saveQuestionThread(context, q1, "MyQuestions.txt");
 	
-		assertEquals(lsh.getThreadList(context, "MyQuestions.txt").get(0), q1);
+		assertTrue(lsh.getThreadList(context, "MyQuestions.txt").equals(tl)); 
 	}
 }

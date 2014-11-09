@@ -35,14 +35,7 @@ public class LocalStorageHandler {
 			ThreadList tl=new ThreadList();
 			InputStreamReader in=new InputStreamReader(context.openFileInput(filename));
 			JsonReader reader=new JsonReader(in);
-	//		reader.beginArray();
-	/*		while (reader.hasNext()) {
-				qts.add((QuestionThread) gson.fromJson(reader, QuestionThread.class));
-			} */
-			tl = (ThreadList) gson.fromJson(reader, ThreadList.class);
-	//		reader.endArray();
-	//		reader.close(); 
-		//	tl.setThreads(qts);
+			tl = (ThreadList) gson.fromJson(reader, ThreadList.class);;
 			return tl; 
 			
 		} catch (FileNotFoundException e) {
@@ -57,7 +50,6 @@ public class LocalStorageHandler {
 		//Save a single question thread to a file. Can be used for favourite and read later.
 		try {
 			ThreadList threadList = getThreadList(context, filename);
-	//		ThreadList threadList = new ThreadList();
 			ThreadListController tlc = new ThreadListController(threadList);
 			tlc.addThread(qt);
 			deleteFile(context, filename);
