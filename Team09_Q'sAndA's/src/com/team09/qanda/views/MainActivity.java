@@ -1,10 +1,5 @@
 package com.team09.qanda.views;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,12 +7,7 @@ import com.team09.qanda.ApplicationState;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
-import com.team09.qanda.R.id;
-import com.team09.qanda.R.layout;
-import com.team09.qanda.R.menu;
-import com.team09.qanda.R.string;
 import com.team09.qanda.controllers.ThreadListController;
-import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
@@ -97,6 +87,11 @@ public class MainActivity extends Activity{ //Main question view
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		//set up the search bar
+		/*The following Android Developer Guide was used, in order
+		 * to learn how to setup a Search Bar widget: http://developer.android.com/guide/topics/search/search-dialog.html
+		 * Obtained: Nov 9, 2014
+		 * */
 		getSearchView(menu).setSearchableInfo(getSearchManager().getSearchableInfo(getComponentName()));
 	    getSearchView(menu).setIconifiedByDefault(true);
 		return true;
@@ -302,17 +297,10 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		
 	}
-	
-	
-	//for testing purposes
-	public ThreadListAdapter getAdapter(){
-		return adapter;
-	}
-
-	public void setAdapter(ThreadListAdapter adapter){
-		this.adapter = adapter;
-	}
-	
+	/**For testing purposes only!
+	 * Gets the spinner of the Main Activity's Action Bar
+	 * @return the Spinner Adapter
+	 */
 	public ArrayAdapter<String> getSpinnerAdapter(){
 		return spinner;
 	}
@@ -374,7 +362,10 @@ public class MainActivity extends Activity{ //Main question view
 		};
 		bar.setListNavigationCallbacks(spinner,listener);
 	}
-	//for testing purposes only
+	/**For testing purposes only!
+	 * Gets the ThreadList of the Main Activity
+	 * @return threads, the ThreadList of the Main Activity
+	 */
 	public ThreadList getThreadList(){
 		return this.threads;
 	}
@@ -386,8 +377,16 @@ public class MainActivity extends Activity{ //Main question view
 										getString(R.string.sort_LeastUpvoted));
 	}
 
+	/**
+	 * For testing puroposes only!
+	 * @return tlc, the ThreadListController of the Main Activity
+	 */
 	public ThreadListController getThreadListController() {
 		return tlc;
+	}
+
+	public ArrayAdapter<QuestionThread> getAdapter() {
+		return adapter;
 	}
 	
 }

@@ -137,8 +137,8 @@ public class ElasticSearchHandler {
 	public void cleanup() {
 		this.client.shutdownClient();
 	}
+	//create Sort object... will use create a factory in the next iteration
 	private Sort getSortQuery(int sortType) {
-		//default means don't sort (should be most upvoted later on)
 		String sort ="";
 		Sorting direction=Sorting.DESC;
 		if(sortType==R.string.sort_HasPicture){
