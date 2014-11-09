@@ -77,7 +77,6 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			}
 			
 			text.setText(post.getText());
-			author.setText(" - " + post.getAuthor().getName());
 			
 			if (post.getUps() == 1) {
 				upvotes.setText(post.getUps() + " Point  ");
@@ -86,8 +85,13 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 				upvotes.setText(post.getUps() + " Points"); 
 			}
 			
-			author.setText("-"+post.getAuthor().getName());
-			
+			try {
+				author.setText("- "+post.getAuthor().getName());
+			}
+			catch (NullPointerException e) {
+				author.setText("- Null");
+			}
+				
 			if (post.isImageSet() == false) {
 				attachmentButton.setVisibility(View.INVISIBLE);
 			}
