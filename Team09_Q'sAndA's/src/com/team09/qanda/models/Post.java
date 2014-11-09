@@ -81,9 +81,16 @@ public class Post extends QModel<QView> implements Serializable {
 		return this.text;
 	}
 	
-	public void setImage() {
-		// TODO
-		hasPictures=true;
+	public Bitmap getImage() {
+		return this.image;
+	}
+	
+	public void setImage(Bitmap image) {
+		this.image = image;
+	}
+	
+	public void setHasPicture(boolean result) {
+		hasPictures=result;
 	}
 
 	public Boolean isImageSet() {

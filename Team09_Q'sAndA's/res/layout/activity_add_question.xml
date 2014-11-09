@@ -26,4 +26,13 @@
         android:onClick="submitQuestion"
         android:text="@string/submit_question_btn" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_question_btn"
+        android:layout_alignLeft="@+id/add_question_field"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/add_question_field" />
+
 </RelativeLayout>

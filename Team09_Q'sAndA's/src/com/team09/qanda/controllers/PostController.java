@@ -2,6 +2,8 @@ package com.team09.qanda.controllers;
 
 import java.util.ArrayList;
 
+import android.graphics.Bitmap;
+
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.Reply;
@@ -56,7 +58,8 @@ public class PostController {
 	}
 	
 	// Sets the posts image
-	public void attachImage() {
-		post.setImage();
+	public void attachImage(Bitmap image) {
+		post.setImage(image);
+		post.setHasPicture(true);
 	}
 }

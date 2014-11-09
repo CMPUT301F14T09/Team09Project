@@ -1,5 +1,8 @@
 package com.team09.qanda.views;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadAdapter;
@@ -10,12 +13,16 @@ import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +41,8 @@ public class QuestionThreadActivity extends Activity {
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
 	private PostController questionPostController;
+	private static int IMAGE_REQUEST = 1;
+	private Bitmap image = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +107,31 @@ public class QuestionThreadActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (resultCode == RESULT_OK) {
+			if (requestCode == IMAGE_REQUEST) {
+				Uri uri = data.getData();
+				InputStream input = null; 
+				try {
+					input = getContentResolver().openInputStream(uri);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Bitmap selectedImage = BitmapFactory.decodeStream(input);
+				int imageSize = selectedImage.getByteCount();
+				if (imageSize <= (64*1024)) {
+					image = selectedImage;
+					ImageView imageView = (ImageView)findViewById(R.id.imageView1); 
+					imageView.setImageBitmap(image);
+				}
+			}
+		}
+	}
 	
 	// Method called by the onClick of answerSubmissionButton
 	public void submitAnswer(View v) {
@@ -105,6 +139,10 @@ public class QuestionThreadActivity extends Activity {
 		String answerText = answerTextField.getText().toString();
 		// Create a Post object for the answer
 		Post answer = new Post(curState.getUser(), answerText);
+		PostController pc = new PostController(answer);
+		if (image!= null) {
+			pc.attachImage(image);
+		}
 		// PostController for QuestionThread
 		QuestionThreadController qtc = new QuestionThreadController(thread);
 		qtc.addAnswer(answer);
