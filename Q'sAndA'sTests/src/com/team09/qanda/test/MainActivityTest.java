@@ -10,7 +10,6 @@ import com.team09.qanda.controllers.ThreadListController;
 import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
-import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
 import com.team09.qanda.views.MainActivity;
 
@@ -37,7 +36,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	@Override
 	public void setUp() throws Exception{
 		super.setUp();
-		esh=new ElasticSearchHandler("http://cmput301.softwareprocess.es:8080", "cmput301f14t09","testq");
+		esh=new ElasticSearchHandler("http://cmput301.softwareprocess.es:8080", "cmput301f14t09","sortTests");
 		mainAct=getActivity();
 		spinner=mainAct.getSpinnerAdapter();
 		createSampleList();
@@ -193,7 +192,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		    controller=new PostController(txt2);
 		    controller.addUp();
 		    
-			txt3.setImage();
+			txt3.setImage(new byte[2]);
 			
 			one=new QuestionThread(txt);
 			two=new QuestionThread(txt2);

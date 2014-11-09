@@ -113,14 +113,12 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		if (id == R.id.favourites) {
 			userThreadsActivity(
-					// Placeholder
-					"My Questions.txt");
+					"favourites.txt");
 			return true;
 		}
 		if (id == R.id.saved) {
 			userThreadsActivity(
-					// Placeholder
-					"My Questions.txt");
+					"saved.txt");
 			return true;
 		}
 		if (id == R.id.my_questions) {
@@ -246,7 +244,15 @@ public class MainActivity extends Activity{ //Main question view
 		task.execute(new ThreadListController[] {tlc});
 	}
 	
-	/* Add question button method */
+	/**
+    *
+    * This method starts the add question thread activity.
+    * The adding of the questiong thread is done within the 
+    * AddQuestion Activity
+    * 
+    * @param 
+    * @see 
+    */
 	public void addQuestion(View v) {
 		Intent intent = new Intent(this, AddQuestionActivity.class);
 	    startActivity(intent);

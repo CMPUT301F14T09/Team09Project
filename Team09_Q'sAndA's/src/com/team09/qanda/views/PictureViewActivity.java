@@ -4,11 +4,18 @@ import com.team09.qanda.R;
 import com.team09.qanda.R.id;
 import com.team09.qanda.R.layout;
 import com.team09.qanda.R.menu;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * 
@@ -17,10 +24,21 @@ import android.view.MenuItem;
  */
 public class PictureViewActivity extends Activity {
 
+	private Post post;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_picture_view);
+		
+		post = (Post) getIntent().getExtras().getSerializable("Selected Post");
+		ImageView postImage = (ImageView) findViewById(R.id.postImage);
+		TextView postText = (TextView) findViewById(R.id.postText);
+		Bitmap image = BitmapFactory.decodeByteArray(post.getImage(), 0, post.getImage().length);
+		postImage.setImageBitmap(image);
+		postText.setText(post.getText());
+
+		
 	}
 
 	@Override

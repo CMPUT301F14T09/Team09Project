@@ -14,6 +14,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.team09.qanda.controllers.ThreadListController;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 
@@ -34,14 +35,14 @@ public class LocalStorageHandler {
 			ThreadList tl=new ThreadList();
 			InputStreamReader in=new InputStreamReader(context.openFileInput(filename));
 			JsonReader reader=new JsonReader(in);
-			reader.beginArray();
-			while (reader.hasNext()) {
+	//		reader.beginArray();
+	/*		while (reader.hasNext()) {
 				qts.add((QuestionThread) gson.fromJson(reader, QuestionThread.class));
-			} 
-			reader.endArray();
-			reader.close(); 
-		//	qts.add((QuestionThread) gson.fromJson(reader, QuestionThread.class));
-			tl.setThreads(qts);
+			} */
+			tl = (ThreadList) gson.fromJson(reader, ThreadList.class);
+	//		reader.endArray();
+	//		reader.close(); 
+		//	tl.setThreads(qts);
 			return tl; 
 			
 		} catch (FileNotFoundException e) {
@@ -55,11 +56,15 @@ public class LocalStorageHandler {
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
 		//Save a single question thread to a file. Can be used for favourite and read later.
 		try {
-			
+			ThreadList threadList = getThreadList(context, filename);
+	//		ThreadList threadList = new ThreadList();
+			ThreadListController tlc = new ThreadListController(threadList);
+			tlc.addThread(qt);
+			deleteFile(context, filename);
 			OutputStreamWriter osw=new OutputStreamWriter(
-					context.openFileOutput(filename, Context.MODE_APPEND));
+					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
-			gson.toJson(qt, QuestionThread.class, jw);
+			gson.toJson(threadList, ThreadList.class, jw);
 			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

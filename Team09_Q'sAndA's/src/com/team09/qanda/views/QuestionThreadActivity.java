@@ -1,5 +1,11 @@
 package com.team09.qanda.views;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadAdapter;
@@ -9,12 +15,17 @@ import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,6 +44,8 @@ public class QuestionThreadActivity extends Activity {
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
 	private PostController questionPostController;
+	private static int IMAGE_REQUEST = 1;
+	private byte[] image = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,12 +104,54 @@ public class QuestionThreadActivity extends Activity {
 	}
 	*/
 
+	public void attachImage(View v) {
+		Intent intent = new Intent(Intent.ACTION_PICK);
+		intent.setType("image/*");
+		startActivityForResult(intent, IMAGE_REQUEST);
+	}
+	
+	// Called when an image has been chosen by the user
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (resultCode == RESULT_OK) {
+			if (requestCode == IMAGE_REQUEST) {
+				Uri uri = data.getData();
+				InputStream input = null; 
+				try {
+					input = getContentResolver().openInputStream(uri);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Bitmap selectedImage = BitmapFactory.decodeStream(input);
+				int imageSize = selectedImage.getByteCount();
+				
+				if (imageSize <= (64*1024)) {
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+					image = out.toByteArray();
+					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
+	}
+	
 	// Method called by the onClick of answerSubmissionButton
 	public void submitAnswer(View v) {
 		System.out.println("Answer Count : " + thread.getAnswers().size());
 		String answerText = answerTextField.getText().toString();
 		// Create a Post object for the answer
 		Post answer = new Post(curState.getUser(), answerText);
+		PostController pc = new PostController(answer);
+		if (image!= null) {
+			pc.attachImage(image);
+		}
 		// PostController for QuestionThread
 		QuestionThreadController qtc = new QuestionThreadController(thread);
 		qtc.addAnswer(answer);
@@ -106,18 +161,10 @@ public class QuestionThreadActivity extends Activity {
 		answerTextField.setText("");
 	}
 	
-	// Called when user taps the upvote button. Gives the question post an upvote and updates the thread.
-	public void upvoteQuestion(View v) {
-/*		Post post = thread.getQuestion();
-		questionPostController = new PostController(post);
-		if (!questionPostController.alreadyUpvoted()) {
-			questionPostController.addUp();
-		    QuestionThreadController qtc = new QuestionThreadController(thread);
-			AsyncSave task=new AsyncSave();
-			task.execute(new QuestionThreadController[] {qtc});
-			Toast.makeText(this, "upvote added by "+curState.getUser().getName() , Toast.LENGTH_SHORT).show();
-		}
-		v.setEnabled(false); */
+	public void viewImage(View v) {
+		Intent intent = new Intent(QuestionThreadActivity.this, PictureViewActivity.class);
+		intent.putExtra("Selected Post", thread.getQuestion());
+		startActivity(intent);
 	}
 	
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {

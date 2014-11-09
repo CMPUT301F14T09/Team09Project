@@ -7,10 +7,13 @@ import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.views.PictureViewActivity;
+import com.team09.qanda.views.QuestionThreadActivity;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,12 +58,17 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 		if (position == 1) {
 			TextView text = (TextView) convertView.findViewById(R.id.answersHeading);
 			int numAnswers = thread.getAnswers().size();
-			text.setText(numAnswers + " Answers");
+			if (numAnswers == 1) {
+				text.setText(numAnswers + " Answer");		}
+			else { 
+				text.setText(numAnswers + " Answers");		}
+			
 		}
 		else {
 			TextView text = (TextView) convertView.findViewById(R.id.post);
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
+			ImageButton attachmentButton = (ImageButton) convertView.findViewById(R.id.attachmentButton);
 			
 			Post post;
 			
@@ -71,14 +80,37 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 			}
 			
 			text.setText(post.getText());
-			author.setText(" - " + post.getAuthor().getName());
+			
 			if (post.getUps() == 1) {
-				upvotes.setText(post.getUps() + " Point");
+				upvotes.setText(post.getUps() + " Point  ");
 			}
 			else { 
 				upvotes.setText(post.getUps() + " Points"); 
 			}
-			author.setText("-"+post.getAuthor().getName());
+			
+			try {
+				author.setText("- "+post.getAuthor().getName());
+			}
+			catch (NullPointerException e) {
+				author.setText("- Null");
+			}
+				
+			if (post.isImageSet() == false) {
+				attachmentButton.setVisibility(View.INVISIBLE);
+			}
+			else {
+				final Post post_copy = post;
+				attachmentButton.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						Intent intent = new Intent(context, PictureViewActivity.class);
+						intent.putExtra("Selected Post", post_copy);
+						context.startActivity(intent);
+					}
+				});
+			}
 			
 			PostController qpc = new PostController(post);
 			CheckBox upvoteBox = (CheckBox) convertView.findViewById(R.id.upvoteCheckbox);
