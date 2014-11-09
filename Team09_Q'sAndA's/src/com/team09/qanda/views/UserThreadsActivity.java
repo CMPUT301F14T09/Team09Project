@@ -14,17 +14,22 @@ import com.team09.qanda.R.id;
 import com.team09.qanda.R.layout;
 import com.team09.qanda.R.menu;
 import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 /**
  * 
@@ -51,6 +56,20 @@ public class UserThreadsActivity extends Activity {
 		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");
 		threads=localStorageHandler.getThreadList(context, FILENAME);
 		tlc = new ThreadListController(threads);
+		
+		
+		userThreadList.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				displayThread(selectedThread);
+												
+			}
+		});
+		
+		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+		userThreadList.setAdapter(adapter);
 	}
 
 	@Override
@@ -77,5 +96,11 @@ public class UserThreadsActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
  
+	}
+	
+	public void displayThread(QuestionThread thread) {
+		Intent intent = new Intent(UserThreadsActivity.this, QuestionThreadActivity.class);
+		intent.putExtra("Selected Thread", thread);
+		startActivity(intent);
 	}
 }

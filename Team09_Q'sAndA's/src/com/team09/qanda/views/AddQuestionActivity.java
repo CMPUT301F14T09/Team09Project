@@ -163,10 +163,7 @@ public class AddQuestionActivity extends Activity {
     	}
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
-
-    	
     	localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
-    	
     	AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
 	}
