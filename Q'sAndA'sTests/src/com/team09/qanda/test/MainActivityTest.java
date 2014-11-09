@@ -39,6 +39,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		esh=new ElasticSearchHandler("http://cmput301.softwareprocess.es:8080", "cmput301f14t09","sortTests");
 		mainAct=getActivity();
 		spinner=mainAct.getSpinnerAdapter();
+		mainAct.getThreadListController().changeESHHandler(esh);
 		createSampleList();
 	}
 	//Use Case 9

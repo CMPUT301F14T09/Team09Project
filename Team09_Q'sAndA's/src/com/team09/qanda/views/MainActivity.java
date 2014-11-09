@@ -385,5 +385,9 @@ public class MainActivity extends Activity{ //Main question view
 										getString(R.string.sort_MostUpvotes),
 										getString(R.string.sort_LeastUpvoted));
 	}
+
+	public ThreadListController getThreadListController() {
+		return tlc;
+	}
 	
 }

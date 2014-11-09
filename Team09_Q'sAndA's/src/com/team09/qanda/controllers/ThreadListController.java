@@ -46,5 +46,9 @@ public class ThreadListController {
 	public void cleanup() {
 		esh.cleanup();
 	}
+	//For testing purposes only
+	public void changeESHHandler(ElasticSearchHandler esh){
+		this.esh=esh;
+	}
 	
 }
