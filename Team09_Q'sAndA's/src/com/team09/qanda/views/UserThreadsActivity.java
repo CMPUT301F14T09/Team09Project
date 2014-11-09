@@ -49,6 +49,8 @@ public class UserThreadsActivity extends Activity {
 		setContentView(R.layout.activity_user_threads);
 		userThreadList = (ListView) findViewById(R.id.UserListView);
 		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");
+		threads=localStorageHandler.getThreadList(context, FILENAME);
+		tlc = new ThreadListController(threads);
 	}
 
 	@Override
@@ -74,8 +76,8 @@ public class UserThreadsActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		threads = localStorageHandler.getThreadList(context, "My Questions.txt");
-		String text = localStorageHandler.getText(context, "My Questions.txt");
-		tlc = new ThreadListController(threads); 
+		//threads = localStorageHandler.getThreadList(context, FILENAME);
+		String text = localStorageHandler.getText(context, FILENAME);
+		//tlc = new ThreadListController(threads); 
 	}
 }

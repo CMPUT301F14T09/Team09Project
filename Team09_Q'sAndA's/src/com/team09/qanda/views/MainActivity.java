@@ -120,14 +120,12 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		if (id == R.id.favourites) {
 			userThreadsActivity(
-					// Placeholder
-					"My Questions.txt");
+					"favourites.txt");
 			return true;
 		}
 		if (id == R.id.saved) {
 			userThreadsActivity(
-					// Placeholder
-					"My Questions.txt");
+					"saved.txt");
 			return true;
 		}
 		if (id == R.id.my_questions) {
