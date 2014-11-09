@@ -1,5 +1,8 @@
 package com.team09.qanda.test;
 
+import java.util.ArrayList;
+
+import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -23,8 +26,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	MainActivity mainAct;
 	ArrayAdapter<String> spinner;
 	private Context context;
-	ThreadList questions;
-	ThreadListController tlc;
 	ElasticSearchHandler esh;
 	QuestionThread one;
 	QuestionThread two;
@@ -38,65 +39,110 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		super.setUp();
 		esh=new ElasticSearchHandler("http://cmput301.softwareprocess.es:8080", "cmput301f14t09","testq");
 		mainAct=getActivity();
-		adapter=mainAct.getAdapter();
 		spinner=mainAct.getSpinnerAdapter();
-		questions=new ThreadList();
-		tlc = new ThreadListController(questions,esh);
 		createSampleList();
 	}
 	//Use Case 9
-	public void testSortbyHasPictures(){
+	public void testSortbyHasPictures() throws Throwable{
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
-		int selection=spinner.getPosition("Has Pictures");
+		int selection=spinner.getPosition(mainAct.getString(R.string.sort_HasPicture));
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(three),0);
+		//need time for an asynchronous thread to finish executing
+		Thread.sleep(1000);
+		//Did we get all the items in the list (or did my crude timer not work?)
+		assertEquals(mainAct.getThreadList().getThreads().size(),3);
+		QuestionThread q=mainAct.getThreadList().getThreads().get(0);
+		//QuestionThread three should be at the top of the list
+		//Just make sure its the same question
+		assertTrue(q.getQuestion().isImageSet());
+		assertTrue(q.getQuestion().getText().equals(three.getQuestion().getText()));
+		assertEquals(q.answerCount(),three.answerCount());
 	}
 	
 	//Use Case 10.1
-	public void testsortByMostRecent(){
+	public void testsortByMostRecent() throws InterruptedException{
 		//get the position of the  "HasPictures" sorting option in the Drop Down List of ActionBar
-		int selection=spinner.getPosition("Most Recent");
+		int selection=spinner.getPosition(mainAct.getString(R.string.sort_MostRecent));
+		
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(three),2);
+		//need time for an asynchronous thread to finish executing
+		Thread.sleep(1000);
+		
+		//Did we get all the items in the list (or did my crude timer not work?)
+		assertEquals(mainAct.getThreadList().getThreads().size(),3);
+		
+		//QuestionThread three should be at the bottom of the list
+		QuestionThread q=mainAct.getThreadList().getThreads().get(2);
+		
+		//Just make sure its the same question
+		assertTrue(q.getQuestion().getText().equals(three.getQuestion().getText()));
+		assertEquals(q.answerCount(),three.answerCount());
 	}
 	
 	//Use Case 10.2
-	public void testsortByOldest(){
+	public void testsortByOldest() throws InterruptedException{
 		//get the position of the  "Oldest" sorting option in the Drop Down List of ActionBar
-		int selection=spinner.getPosition("Oldest");
-		QuestionThread first=new QuestionThread(new Post(new User(context),"am I first?"));
-		QuestionThread second=new QuestionThread(new Post(new User(context),"am I second?"));
-		QuestionThread third=new QuestionThread(new Post(new User(context),"am I third?"));
-		// Make ThreadListController
-		tlc.addThread(first);
-		tlc.addThread(second);
-		tlc.addThread(third);
-
-		//choose Sorting Option
+		int selection=spinner.getPosition(mainAct.getString(R.string.sort_Oldest));
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(three),0);
+		
+		//need time for an asynchronous thread to finish executing
+		Thread.sleep(1000);
+		//Did we get all the items in the list (or did my crude timer not work?)
+		assertEquals(mainAct.getThreadList().getThreads().size(),3);
+		
+		//QuestionThread three should be at the bottom of the list
+		QuestionThread q=mainAct.getThreadList().getThreads().get(0);
+		
+		//Just make sure its the same question
+
+		assertTrue(q.getQuestion().getText().equals(three.getQuestion().getText()));
+		assertEquals(q.answerCount(),three.answerCount());
 
 	}
 	
 	//Use Case 10.3
-	public void testsortByMostUpVotes(){
-		PostController controller;
+	public void testsortByMostUpVotes() throws InterruptedException{
 		//get the position of the  "Most Upvoted" sorting option in the Drop Down List of ActionBar
-		int selection=spinner.getPosition("Most Upvoted");
+		int selection=spinner.getPosition(mainAct.getString(R.string.sort_MostUpvotes));
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(one),0);
+
+		//need time for an asynchronous thread to finish executing
+		Thread.sleep(1000);
+		
+		//Did we get all the items in the list (or did my crude timer not work?)
+		assertEquals(mainAct.getThreadList().getThreads().size(),3);
+		
+		//QuestionThread one should be at the at the top of the list
+		QuestionThread q=mainAct.getThreadList().getThreads().get(0);
+		//Just make sure its the same question
+	
+		assertTrue(q.getQuestion().getText().equals(one.getQuestion().getText()));
+		assertEquals(q.answerCount(),one.answerCount());
 	}
 	
 	//Use Case 10.4
-	public void testsortByLeastUpvotes(){
+	public void testsortByLeastUpvotes() throws InterruptedException{
 		//get the position of the  "Least Upvoted" sorting option in the Drop Down List of ActionBar
-		int selection=spinner.getPosition("Least Upvoted");
+		int selection=spinner.getPosition(mainAct.getString(R.string.sort_LeastUpvoted));
 		//choose Sorting Option
 		mainAct.getNavigationListener().onNavigationItemSelected(selection,spinner.getItemId(selection));
-		assertEquals(adapter.getPosition(one),2);
+		
+		//need time for an asynchronous thread to finish executing
+		Thread.sleep(1000);
+		
+		//Did we get all the items in the list (or did my crude timer not work?)
+		assertEquals(mainAct.getThreadList().getThreads().size(),3);
+				
+		//QuestionThread one should be at the at the bottom of the list
+		QuestionThread q=mainAct.getThreadList().getThreads().get(2);
+				
+		//Just make sure its the same question
+
+		assertTrue(q.getQuestion().getText().equals(one.getQuestion().getText()));
+		assertEquals(q.answerCount(),one.answerCount());
 	}
 	
 	@UiThreadTest
@@ -131,32 +177,36 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		});
 		
 	}
-	private void createSampleList() {
-		if(esh.getThreads().isEmpty()){
+	private void createSampleList() throws InterruptedException {
 			PostController controller;
 			Post txt=new Post(new User(mainAct),"Hello?");
+			Post txt2=new Post(new User(mainAct),"Do upvotes work?");
+			Post txt3=new Post(new User(mainAct),"Why?");
+			ArrayList<User> txtUps = txt.getUpsList();
+			User user1 = new User(mainAct);
+			User user2 = new User(mainAct);
+			txtUps.add(user1);
+			txtUps.add(user2);
+			txt.setUps(txtUps);
 			
-			controller=new PostController(txt);
-		    controller.addUp();
-		    controller.addUp();
-			
-		    Post txt2=new Post(new User(mainAct),"Do upvotes work?");
+		    
 		    controller=new PostController(txt2);
 		    controller.addUp();
 		    
-			Post txt3=new Post(new User(mainAct),"Why?");
-			txt.setImage();
+			txt3.setImage();
 			
 			one=new QuestionThread(txt);
 			two=new QuestionThread(txt2);
 			three=new QuestionThread(txt3);
-			
-			for(QuestionThread question:new QuestionThread[]{one,two,three}){
-				QuestionThreadController qtc=new QuestionThreadController(question,esh);
+			if(esh.getThreads().isEmpty()){
+				QuestionThreadController qtc=new QuestionThreadController(one,esh);
 				qtc.saveThread();
-				tlc.addThread(question);
+				
+			    qtc=new QuestionThreadController(two,esh);
+				qtc.saveThread();
+				
+			    qtc=new QuestionThreadController(three,esh);
+				qtc.saveThread();
 			}
-		}
-		
 	}
 }
