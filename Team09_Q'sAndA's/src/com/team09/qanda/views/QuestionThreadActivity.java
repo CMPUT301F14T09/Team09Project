@@ -1,7 +1,10 @@
 package com.team09.qanda.views;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.R;
@@ -42,7 +45,7 @@ public class QuestionThreadActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private PostController questionPostController;
 	private static int IMAGE_REQUEST = 1;
-	private Bitmap image = null;
+	private byte[] image = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +127,11 @@ public class QuestionThreadActivity extends Activity {
 				}
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
 				int imageSize = selectedImage.getByteCount();
+				
 				if (imageSize <= (64*1024)) {
-					image = selectedImage;
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					selectedImage.compress(Bitmap.CompressFormat.JPEG, 75, out);
+					image = out.toByteArray();
 					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
 				}
 				else {

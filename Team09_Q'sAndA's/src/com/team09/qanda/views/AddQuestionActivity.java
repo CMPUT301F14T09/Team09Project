@@ -1,5 +1,6 @@
 package com.team09.qanda.views;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,7 +43,7 @@ public class AddQuestionActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
 	private Context context = this;
-	private Bitmap image = null;
+	private byte[] image = null;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	private static int IMAGE_REQUEST = 1;
@@ -118,9 +119,11 @@ public class AddQuestionActivity extends Activity {
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
 				int imageSize = selectedImage.getByteCount();
 				if (imageSize <= (64*1024)) {
-					image = selectedImage;
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					selectedImage.compress(Bitmap.CompressFormat.JPEG, 75, out);
+					image = out.toByteArray();
 					ImageView imageView = (ImageView)findViewById(R.id.attchedImage); 
-					imageView.setImageBitmap(image);
+					imageView.setImageBitmap(selectedImage);
 					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
 				}
 				else {
