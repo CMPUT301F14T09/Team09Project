@@ -119,8 +119,12 @@ public class AddQuestionActivity extends Activity {
 				int imageSize = selectedImage.getByteCount();
 				if (imageSize <= (64*1024)) {
 					image = selectedImage;
-					ImageView imageView = (ImageView)findViewById(R.id.imageView1); 
+					ImageView imageView = (ImageView)findViewById(R.id.attchedImage); 
 					imageView.setImageBitmap(image);
+					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(this, "Image too large", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}

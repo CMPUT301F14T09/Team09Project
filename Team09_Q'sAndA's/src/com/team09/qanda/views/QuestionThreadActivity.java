@@ -104,7 +104,7 @@ public class QuestionThreadActivity extends Activity {
 	public void attachImage(View v) {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
-		startActivity(intent);
+		startActivityForResult(intent, IMAGE_REQUEST);
 	}
 	
 	@Override
@@ -126,8 +126,10 @@ public class QuestionThreadActivity extends Activity {
 				int imageSize = selectedImage.getByteCount();
 				if (imageSize <= (64*1024)) {
 					image = selectedImage;
-					ImageView imageView = (ImageView)findViewById(R.id.imageView1); 
-					imageView.setImageBitmap(image);
+					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
+				}
+				else {
+					Toast.makeText(this, "Image too large: "+ imageSize, Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
