@@ -145,7 +145,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		    controller.addUp();
 		    
 			Post txt3=new Post(new User(mainAct),"Why?");
-			txt.setImage();
+			txt.setHasPicture(true);
 			
 			one=new QuestionThread(txt);
 			two=new QuestionThread(txt2);
