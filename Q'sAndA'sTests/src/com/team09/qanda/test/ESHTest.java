@@ -1,6 +1,7 @@
 package com.team09.qanda.test;
 
 import android.content.Context;
+import android.test.InstrumentationTestCase;
 
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -14,9 +15,18 @@ import com.team09.qanda.models.User;
 import junit.framework.TestCase;
 
 
-public class ESHTest extends TestCase
-{
+public class ESHTest extends InstrumentationTestCase {
+
 	private Context context;
+
+
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		context = getInstrumentation().getContext();
+	}
+	
 	//Use case #15: Search for questions and answers
 	public void testNumberOfAnswers(){
 		ThreadListController  threadController = new ThreadListController(new ThreadList());

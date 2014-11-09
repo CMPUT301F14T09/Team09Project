@@ -19,6 +19,14 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 	private Context context;
 
 	
+	
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		context = getInstrumentation().getContext();
+	}
+
 	public QuestionThreadActivityTest() {
 		super(QuestionThreadActivity.class);
 		

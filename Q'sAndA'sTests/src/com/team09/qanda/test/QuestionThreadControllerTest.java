@@ -5,7 +5,9 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 import android.content.Context;
+import android.test.InstrumentationTestCase;
 
+import com.team09.qanda.ApplicationState;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -15,9 +17,18 @@ import com.team09.qanda.models.Reply;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
 
-public class QuestionThreadControllerTest extends TestCase {
+public class QuestionThreadControllerTest extends InstrumentationTestCase {
 	private Context context;
 	
+	
+	
+	@Override
+	protected void setUp() throws Exception {
+		// TODO Auto-generated method stub
+		super.setUp();
+		context = getInstrumentation().getContext();
+	}
+
 	// Use Case #2 : View a question and its answers
 	public void testViewThread() {
 		Post qpost1 = new Post(new User(context,"John"), "Question 1?");
@@ -149,12 +160,14 @@ public class QuestionThreadControllerTest extends TestCase {
 		Post questionText=new Post(new User(context),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread);
-		Post answer1=new Post(new User(context),"Second Best Answer");
+		Post answer1=new Post(new User(context),"Answer");
+		PostController pc1 = new PostController(answer1);
 		ArrayList<User> answer1Ups = answer1.getUpsList();
 		User user1 = new User(context);
-		answer1Ups.add(user1);
-		answer1Ups.add(user1);
-		answer1.setUps(answer1Ups);
+		ApplicationState curState = ApplicationState.getInstance();
+		curState.setUser(user1);
+		pc1.addUp();
+		pc1.addUp();
 		qctl.addAnswer(answer1);
 		assertEquals(qThread.getAnswers().get(0).getUps(),1);
 	}
