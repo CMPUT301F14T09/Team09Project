@@ -76,8 +76,6 @@ public class UserThreadsActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		//threads = localStorageHandler.getThreadList(context, FILENAME);
-		String text = localStorageHandler.getText(context, FILENAME);
-		//tlc = new ThreadListController(threads); 
+ 
 	}
 }
