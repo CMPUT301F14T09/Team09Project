@@ -4,6 +4,8 @@ import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
+import io.searchbox.core.search.sort.Sort;
+import io.searchbox.core.search.sort.Sort.Sorting;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +31,7 @@ public class ElasticSearchHandler {
 	private String URL;
 	private String INDEX;
 	private String TYPE;
-	private static final int DEFAULT=0;
+	private static final int DEFAULT=R.string.sort_MostUpvotes;
 	private ArrayList<QuestionThread> threads=new ArrayList<QuestionThread>();
 	private JestClient client;
 	private Gson gson;
@@ -64,10 +66,10 @@ public class ElasticSearchHandler {
 	//overloaded more specific version, for sorting
 	//this is default version
 	public ArrayList<QuestionThread> getThreads(int sortType, int numThreads) {
-		String sortQuery=getSortQuery(sortType);
-		String query="{"+sortQuery+"\"query\":{\"match_all\":{}}}";
+		Sort sortQuery=getSortQuery(sortType);
+		String query="{\"query\":{\"match_all\":{}}}";
 		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE)
-				.setParameter("size", numThreads).build();
+				.setParameter("size", numThreads).addSort(sortQuery).build();
 		try {
 			JestResult result=client.execute(search);
 			//Log.i("result",result.getJsonString());
@@ -134,28 +136,25 @@ public class ElasticSearchHandler {
 	public void cleanup() {
 		this.client.shutdownClient();
 	}
-	private String getSortQuery(int sortType) {
+	private Sort getSortQuery(int sortType) {
 		//default means don't sort (should be most upvoted later on)
-		String sort="";
-		String direction="\"desc\"";
-		if(sortType==DEFAULT){
-			return sort;
-		}
-		else if(sortType==R.string.sort_HasPicture){
+		String sort ="";
+		Sorting direction=Sorting.DESC;
+		if(sortType==R.string.sort_HasPicture){
 			sort="hasPictures";
 		}
 		else if(sortType==R.string.sort_MostUpvotes || sortType==R.string.sort_LeastUpvoted){
 			sort="upVotes";
 			if(sortType==R.string.sort_LeastUpvoted){
-				direction="\"asc\"";
+				direction=Sorting.ASC;
 			}
 		}
 		else if(sortType==R.string.sort_MostRecent || sortType==R.string.sort_Oldest){
 			sort="relativeDate";
-			if(sortType==R.string.sort_Oldest){
-				direction="\"asc\"";
+			if(sortType==R.string.sort_MostRecent){
+				direction=Sorting.ASC;
 			}
 		}
-		return "\"sort\":[{\""+sort+"\": {\"order\": "+direction+"}}],";
+		return new Sort(sort, direction);
 	}
 }

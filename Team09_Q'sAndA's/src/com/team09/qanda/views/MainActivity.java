@@ -17,6 +17,7 @@ import com.team09.qanda.R.layout;
 import com.team09.qanda.R.menu;
 import com.team09.qanda.R.string;
 import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
@@ -73,14 +74,6 @@ public class MainActivity extends Activity{ //Main question view
 		setUpActionBarSpinner();
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
-		
-		listener=new ActionBar.OnNavigationListener() {
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				return false;
-			}
-		};
-		
 		mainThreadsList = (ListView) findViewById(R.id.MainListView);
 		
 		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
@@ -362,15 +355,22 @@ public class MainActivity extends Activity{ //Main question view
 					Rstring=R.string.sort_MostUpvotes;
 				}
 				else if(item.equals(getString(R.string.sort_LeastUpvoted))){
-					Rstring=R.string.sort_MostRecent;
+					Rstring=R.string.sort_LeastUpvoted;
 				}
 				else if(item.equals(getString(R.string.sort_Oldest))){
 					Rstring=R.string.sort_Oldest;
+				}
+				else if(item.equals(getString(R.string.sort_MostRecent))){
+					Rstring=R.string.sort_MostRecent;
 				}
 				return Rstring;
 			}
 		};
 		bar.setListNavigationCallbacks(spinner,listener);
+	}
+	//for testing purposes only
+	public ThreadList getThreadList(){
+		return this.threads;
 	}
 	private List<String> getSortOptionsList(){
 		return Arrays.asList(getString(R.string.sort_HasPicture),
