@@ -134,7 +134,15 @@ public class AddQuestionActivity extends Activity {
 	}
 	
 
-	// Creates a new question with the current user as the author
+	/**
+    *
+    * This method creates a new question, with the current
+    * user as its author. It creates a new post object and
+    * converts it to a question thread object.
+    *
+    * @param 
+    * @see 
+    */
 	public void submitQuestion(View v) {
 		textFieldEntry = textField.getText().toString();
     	Post newPost = new Post(curState.getUser(), textFieldEntry);
@@ -151,12 +159,16 @@ public class AddQuestionActivity extends Activity {
     	
     	AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
-		//Intent result = new Intent();
-		//result.putExtra(ADD_QUESTION_RESULT, textFieldEntry);
-		//setResult(RESULT_OK, result);
-		//finish();
 	}
 	
+	/**
+    *
+    * This inner class uses AsyncTask to call the saveThread() method in
+    * the QuestionThreadController which saves the question in the server.
+    *
+    * @param 
+    * @see 
+    */
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
 		@Override
