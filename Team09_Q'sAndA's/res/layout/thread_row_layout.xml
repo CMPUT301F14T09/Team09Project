@@ -74,6 +74,7 @@
         android:layout_toRightOf="@+id/post"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton"
+        android:onClick="viewImage"
         android:src="@drawable/ic_menu_attachment" />
     
 </RelativeLayout>
