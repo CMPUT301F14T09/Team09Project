@@ -118,11 +118,11 @@ public class AddQuestionActivity extends Activity {
 				}
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
 				int imageSize = selectedImage.getByteCount();
-				if (imageSize <= (64*1024)) {
+				if (imageSize < (64*1024)) {
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					selectedImage.compress(Bitmap.CompressFormat.JPEG, 75, out);
+					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
 					image = out.toByteArray();
-					ImageView imageView = (ImageView)findViewById(R.id.attchedImage); 
+					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 					imageView.setImageBitmap(selectedImage);
 					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
 				}

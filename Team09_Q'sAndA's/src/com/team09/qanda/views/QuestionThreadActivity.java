@@ -130,7 +130,7 @@ public class QuestionThreadActivity extends Activity {
 				
 				if (imageSize <= (64*1024)) {
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					selectedImage.compress(Bitmap.CompressFormat.JPEG, 75, out);
+					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
 					image = out.toByteArray();
 					Toast.makeText(this, "Image attached", Toast.LENGTH_SHORT).show();
 				}
