@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.team09.qanda.ThreadAdapter;
 import com.team09.qanda.models.Post;
@@ -13,9 +15,10 @@ import com.team09.qanda.models.User;
 import com.team09.qanda.views.QuestionThreadActivity;
 
 public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2<QuestionThreadActivity> {
-	ThreadAdapter adapter;
-	QuestionThreadActivity ta;
-	QuestionThread thread;
+	private ThreadAdapter adapter;
+	private QuestionThreadActivity ta;
+	private QuestionThread thread;
+	private EditText textInput;
 	private Context context;
 
 	
@@ -25,6 +28,14 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 		// TODO Auto-generated method stub
 		super.setUp();
 		context = getInstrumentation().getContext();
+		
+		Post question = new Post(new User(context), "Question 1");
+		thread = new QuestionThread(question);
+		
+		Intent intent = new Intent();
+    	intent.putExtra("Selected Thread", thread);
+    	
+    	setActivityIntent(intent);
 	}
 
 	public QuestionThreadActivityTest() {
@@ -46,6 +57,15 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 	}
 	*/
 	
+	private void makeAnswer(String text) {
+		ta = getActivity();
+		assertNotNull(ta.findViewById(com.team09.qanda.R.id.answerSubmissionButton));
+		textInput = ((EditText) ta.findViewById(com.team09.qanda.R.id.editAnswerText));
+		textInput.setText(text);
+		((ImageButton) ta.findViewById(com.team09.qanda.R.id.answerSubmissionButton)).performClick();
+	}
+	
+	
 	// Use Case #2 : View a question and its answers
 	public void testDisplayQuestion() {
 		Post question = new Post(new User(context), "Question 1");
@@ -64,4 +84,22 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 		ViewAsserts.assertOnScreen(ta.getWindow().getDecorView(), ta.findViewById(com.team09.qanda.R.id.ThreadPostsView));
 		
 	}
+	
+	// Use Case #5: Add an answer
+	@UiThreadTest
+	public void testAddAnswer() {
+		
+		QuestionThreadActivity activity = getActivity();
+		ThreadAdapter adapter = activity.getAdapter();
+		
+		int oldLength = adapter.getCount();
+		
+		makeAnswer("Answer 1");
+		
+		assertEquals(oldLength+1,adapter.getCount());
+		
+		ViewAsserts.assertOnScreen(activity.getWindow().getDecorView(), activity.findViewById(com.team09.qanda.R.id.post));
+		
+	}
+	
 }
