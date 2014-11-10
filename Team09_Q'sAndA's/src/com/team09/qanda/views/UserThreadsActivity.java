@@ -63,12 +63,18 @@ public class UserThreadsActivity extends Activity {
 					int position, long id) {
 
 				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+				if (FILENAME.equals("read_later.txt")) {
+					tlc.removeThread(selectedThread);
+					localStorageHandler.saveQuestionThreads(context, threads.getThreads(), "read_later.txt");
+					adapter = new ThreadListAdapter(context, R.layout.user_row_layout, threads.getThreads(),false);
+					userThreadList.setAdapter(adapter);
+				}
 				displayThread(selectedThread);
 												
 			}
 		});
 		
-		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+		adapter = new ThreadListAdapter(context, R.layout.user_row_layout, threads.getThreads(),false);
 		userThreadList.setAdapter(adapter);
 	}
 

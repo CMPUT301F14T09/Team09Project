@@ -161,7 +161,7 @@ public class MainActivity extends Activity{ //Main question view
 		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
 		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
 		//mainThreadsList.setAdapter(adapter);
-		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads(),true);
 		mainThreadsList.setAdapter(adapter);
 		
 		if(curState.getUser() == null){
@@ -290,7 +290,7 @@ public class MainActivity extends Activity{ //Main question view
 		
 		@Override
 		protected void onPostExecute(Void result) {
-			adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+			adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads(),true);
 			mainThreadsList.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 		}
@@ -309,7 +309,7 @@ public class MainActivity extends Activity{ //Main question view
 
 		@Override
 		protected void onPostExecute(Void result) {
-			adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads());
+			adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads(),true);
 			mainThreadsList.setAdapter(adapter);
 			adapter.notifyDataSetChanged();
 		}

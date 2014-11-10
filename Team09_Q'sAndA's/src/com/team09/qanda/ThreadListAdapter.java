@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.team09.qanda.models.QuestionThread;
 
 public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
@@ -23,20 +20,24 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 	private LocalStorageHandler lsh;
 	private ArrayList<QuestionThread> threads;
 	private Context context;
+	private int resId;
+	private boolean isMain;
 	
-	public ThreadListAdapter(Context context, int layoutResourceId, ArrayList<QuestionThread> threads) {
+	public ThreadListAdapter(Context context, int layoutResourceId, ArrayList<QuestionThread> threads, boolean isMain) {
 		super(context, layoutResourceId, threads);
 		this.threads = threads;
 		this.context = context;
+		this.isMain=isMain;
+		this.resId=layoutResourceId;
 		this.lsh=new LocalStorageHandler();
 	}
 	
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		ids=lsh.getIds(context, "read_later.txt");
+
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.main_row_layout, parent, false);
+			convertView = inflater.inflate(this.resId, parent, false);
 		}
 		final ListView list=(ListView)parent.findViewById(R.id.MainListView);
 		TextView question = (TextView) convertView.findViewById(R.id.questionMain);
@@ -47,23 +48,26 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		
 		final QuestionThread thread = threads.get(position);
 		
-		later.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (ids.contains(thread.getId())) {
-					list.performItemClick(null, -1*position, -2);
+		if (isMain) {
+			ids=lsh.getIds(context, "read_later.txt");
+			later.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (ids.contains(thread.getId())) {
+						list.performItemClick(null, -1*position, -2);
+					}
+					else {
+						list.performItemClick(null, -1*position, -1);
+					}
+					ids=lsh.getIds(context, "read_later.txt");
 				}
-				else {
-					list.performItemClick(null, -1*position, -1);
-				}
-				ids=lsh.getIds(context, "read_later.txt");
+			});
+			if (ids.contains(thread.getId())) {
+				later.setChecked(true);
 			}
-		});
-		if (ids.contains(thread.getId())) {
-			later.setChecked(true);
-		}
-		else {
-			later.setChecked(false);
+			else {
+				later.setChecked(false);
+			}
 		}
 		
 		question.setText(thread.getQuestion().getText());
