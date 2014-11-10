@@ -25,6 +25,17 @@ public class ThreadListController {
 		tl.setThreads(threads);
 	}
 	
+	public void removeThread(QuestionThread thread) {
+		ArrayList<QuestionThread> threads=tl.getThreads();
+		for (int i=0;i<threads.size();i++) {
+			if (threads.get(i).getId().equals(thread.getId())) {
+				threads.remove(i);
+				break;
+			}
+		}
+		tl.setThreads(threads);
+	}
+	
 	public void refreshThreads() {
 		tl.setThreads(esh.getThreads(tl.getSortType(), tl.getNumThreads()));
 	}

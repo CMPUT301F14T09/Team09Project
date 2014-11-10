@@ -3,15 +3,6 @@ package com.team09.qanda.views;
 import java.util.Arrays;
 import java.util.List;
 
-import com.team09.qanda.ApplicationState;
-import com.team09.qanda.LocalStorageHandler;
-import com.team09.qanda.R;
-import com.team09.qanda.ThreadListAdapter;
-import com.team09.qanda.controllers.ThreadListController;
-import com.team09.qanda.models.QuestionThread;
-import com.team09.qanda.models.ThreadList;
-import com.team09.qanda.models.User;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,6 +26,16 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.team09.qanda.ApplicationState;
+import com.team09.qanda.LocalStorageHandler;
+import com.team09.qanda.R;
+import com.team09.qanda.ThreadListAdapter;
+import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.models.User;
+
 /**
  * 
  * This class is the activity for the main screen
@@ -50,9 +51,12 @@ public class MainActivity extends Activity{ //Main question view
 	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads=new ThreadList();
+	private ThreadList readLaters;
+	private ThreadListController laterController;
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
+	private LocalStorageHandler lsh=new LocalStorageHandler();
 	private Context context=this;
 	private ApplicationState curState = ApplicationState.getInstance();
 	static final String FILENAME = "user.txt"; //TODO: filename of where username is stored
@@ -61,6 +65,10 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		readLaters=lsh.getThreadList(context, "read_later.txt");
+		laterController=new ThreadListController(readLaters);
+		
 		setUpActionBarSpinner();
 		
 		getActionBar().setDisplayShowTitleEnabled(false);
@@ -73,13 +81,23 @@ public class MainActivity extends Activity{ //Main question view
 		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-
-				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-				displayThread(selectedThread);
+				
+				if (id==-2) {
+					laterController.removeThread(threads.get(-1*position));
+					lsh.saveQuestionThreads(context, readLaters.getThreads(), "read_later.txt");
+				}
+				else if (id==-1) {
+					laterController.addThread(threads.get(-1*position));
+					lsh.saveQuestionThreads(context, readLaters.getThreads(), "read_later.txt");
+				}
+				
+				else {
+					QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
+					displayThread(selectedThread);
+				}
 												
 			}
 		});
-		
 		
 	}
 
@@ -113,7 +131,7 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		if (id == R.id.saved) {
 			userThreadsActivity(
-					"saved.txt");
+					"read_later.txt");
 			return true;
 		}
 		if (id == R.id.my_questions) {

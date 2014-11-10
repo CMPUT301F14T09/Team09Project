@@ -3,17 +3,24 @@ package com.team09.qanda;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import com.team09.qanda.models.QuestionThread;
-
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.team09.qanda.models.QuestionThread;
 
 public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 
+	private ArrayList<String> ids;
+	private LocalStorageHandler lsh;
 	private ArrayList<QuestionThread> threads;
 	private Context context;
 	
@@ -21,20 +28,43 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		super(context, layoutResourceId, threads);
 		this.threads = threads;
 		this.context = context;
+		this.lsh=new LocalStorageHandler();
 	}
 	
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		ids=lsh.getIds(context, "read_later.txt");
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.main_row_layout, parent, false);
 		}
+		final ListView list=(ListView)parent.findViewById(R.id.MainListView);
 		TextView question = (TextView) convertView.findViewById(R.id.questionMain);
 		TextView author = (TextView) convertView.findViewById(R.id.authorMain);
 		TextView points = (TextView) convertView.findViewById(R.id.numOfPoints);
 		TextView answers = (TextView) convertView.findViewById(R.id.numOfAnswers);
+		CheckBox later = (CheckBox) convertView.findViewById(R.id.saveQuestion);
 		
-		QuestionThread thread = threads.get(position);
+		final QuestionThread thread = threads.get(position);
+		
+		later.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (ids.contains(thread.getId())) {
+					list.performItemClick(null, -1*position, -2);
+				}
+				else {
+					list.performItemClick(null, -1*position, -1);
+				}
+				ids=lsh.getIds(context, "read_later.txt");
+			}
+		});
+		if (ids.contains(thread.getId())) {
+			later.setChecked(true);
+		}
+		else {
+			later.setChecked(false);
+		}
 		
 		question.setText(thread.getQuestion().getText());
 		author.setText(" - " + thread.getQuestion().getAuthor().getName());

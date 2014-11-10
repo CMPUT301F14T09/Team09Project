@@ -10,8 +10,10 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.team09.qanda.controllers.ThreadListController;
@@ -25,13 +27,21 @@ public class LocalStorageHandler {
 	private static final String FILENAME = "user.txt";
 	
 	public LocalStorageHandler() {
-		this.gson=new Gson();
+		this.gson=new GsonBuilder().setPrettyPrinting().create();
+	}
+	
+	public ArrayList<String> getIds(Context context, String filename) {
+		ThreadList list=getThreadList(context, filename);
+		ArrayList<String> ids=new ArrayList<String>();
+		for (QuestionThread qt:list.getThreads()) {
+			ids.add(qt.getId());
+		}
+		return ids;
 	}
 	
 	public ThreadList getThreadList(Context context, String filename) {
 		//Load all the Question threads from a given file (favourites or read later) and return a ThreadList containing them
 		try {
-			ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
 			ThreadList tl=new ThreadList();
 			InputStreamReader in=new InputStreamReader(context.openFileInput(filename));
 			JsonReader reader=new JsonReader(in);
@@ -53,6 +63,26 @@ public class LocalStorageHandler {
 			ThreadListController tlc = new ThreadListController(threadList);
 			tlc.addThread(qt);
 			deleteFile(context, filename);
+			OutputStreamWriter osw=new OutputStreamWriter(
+					context.openFileOutput(filename, Context.MODE_PRIVATE));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(threadList, ThreadList.class, jw);
+			osw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveQuestionThreads(Context context, ArrayList<QuestionThread> qts, String filename) {
+		try {
+			ThreadList threadList = new ThreadList();
+			ThreadListController tlc = new ThreadListController(threadList);
+			for (QuestionThread qt:qts) {
+				tlc.addThread(qt);
+			}
+			Log.i("deleting",String.valueOf(deleteFile(context, filename)));
 			OutputStreamWriter osw=new OutputStreamWriter(
 					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
