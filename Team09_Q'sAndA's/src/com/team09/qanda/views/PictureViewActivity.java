@@ -34,9 +34,11 @@ public class PictureViewActivity extends Activity {
 		post = (Post) getIntent().getExtras().getSerializable("Selected Post");
 		ImageView postImage = (ImageView) findViewById(R.id.postImage);
 		TextView postText = (TextView) findViewById(R.id.postText);
+		TextView postAuthor = (TextView) findViewById(R.id.postAuthor);
 		Bitmap image = BitmapFactory.decodeByteArray(post.getImage(), 0, post.getImage().length);
 		postImage.setImageBitmap(image);
 		postText.setText(post.getText());
+		postAuthor.setText("- "+post.getAuthor().getName());
 
 		
 	}

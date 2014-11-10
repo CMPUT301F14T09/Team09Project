@@ -8,22 +8,34 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team09.qanda.views.PictureViewActivity" >
 
-    <ImageView
-        android:id="@+id/postImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/postText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@android:drawable/ic_delete" />
-
     <TextView
         android:id="@+id/postText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/postImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Post text goes here..."
+        android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/postImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/postText"
         android:layout_alignParentBottom="true"
-        android:text="TextView" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/postAuthor"
+        android:src="@android:drawable/ic_delete" />
+
+    <TextView
+        android:id="@+id/postAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/postText"
+        android:layout_below="@+id/postText"
+        android:text="-author"
+        android:textColor="@color/grey"
+        android:textSize="15sp" />
 
 </RelativeLayout>
