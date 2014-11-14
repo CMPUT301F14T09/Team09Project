@@ -108,6 +108,7 @@ public class QuestionThreadActivity extends Activity {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
 		startActivityForResult(intent, IMAGE_REQUEST);
+		
 	}
 	
 	// Called when an image has been chosen by the user
@@ -128,16 +129,18 @@ public class QuestionThreadActivity extends Activity {
 				}
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
 				int imageSize = selectedImage.getByteCount();
-				
-				if (imageSize <= (64*1024)) {
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+				ByteArrayOutputStream out = new ByteArrayOutputStream();
+				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);	
+				int imageByteSize = out.toByteArray().length;
+				if (imageByteSize <= (64*1024)) {
 					image = out.toByteArray();
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
 				else {
+					image = null;
 					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
 				}
+				
 			}
 		}
 	}
@@ -159,6 +162,8 @@ public class QuestionThreadActivity extends Activity {
 		AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
 		answerTextField.setText("");
+		// set image null to avoid lingering image
+		image = null;
 	}
 	
 	public void viewImage(View v) {
