@@ -136,8 +136,8 @@ public class QuestionThreadActivity extends Activity {
 					image = out.toByteArray();
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
+				// TODO: Implement image compression
 				else {
-					image = null;
 					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
 				}
 				

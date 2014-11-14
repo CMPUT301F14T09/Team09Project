@@ -128,15 +128,16 @@ public class AddQuestionActivity extends Activity {
 					e.printStackTrace();
 				}
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
-				int imageSize = selectedImage.getByteCount();
-				if (imageSize < (64*1024)) {
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+				ByteArrayOutputStream out = new ByteArrayOutputStream();
+				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+				int imageByteSize = out.toByteArray().length;
+				if (imageByteSize <= (64*1024)) {
 					image = out.toByteArray();
 					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 					imageView.setImageBitmap(selectedImage);
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
+				// TODO: Implement image compression
 				else {
 					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
 				}
@@ -163,9 +164,11 @@ public class AddQuestionActivity extends Activity {
     	}
     	QuestionThread newQuestion = new QuestionThread(newPost);
     	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
-    	localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
+    	//localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
     	AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
+		// set image to null to avoid lingering attachment
+		image = null;
 	}
 	
 	/**
