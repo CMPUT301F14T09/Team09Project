@@ -369,11 +369,11 @@ public class MainActivity extends Activity{ //Main question view
 		return this.threads;
 	}
 	private List<String> getSortOptionsList(){
-		return Arrays.asList(getString(R.string.sort_HasPicture),
-										getString(R.string.sort_MostRecent),
-										getString(R.string.sort_Oldest),
-										getString(R.string.sort_MostUpvotes),
-										getString(R.string.sort_LeastUpvoted));
+		return Arrays.asList(new String[]{SimpleSortFactory.MostUpvotes,
+										SimpleSortFactory.LeastUpvotes,
+										SimpleSortFactory.MostRecent,
+										SimpleSortFactory.Oldest,
+										SimpleSortFactory.HasPictures});
 	}
 
 	/**
