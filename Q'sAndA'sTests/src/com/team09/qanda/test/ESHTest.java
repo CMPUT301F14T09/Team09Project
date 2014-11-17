@@ -1,5 +1,7 @@
 package com.team09.qanda.test;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
@@ -39,8 +41,8 @@ public class ESHTest extends InstrumentationTestCase {
 		threadController.addThread(new QuestionThread(new Post(new User(context),"Does this work?")));
 		threadController.addThread(new QuestionThread(new Post(new User(context),"This will not be returned.")));
 		ElasticSearchHandler esh = new ElasticSearchHandler();
-		ThreadList searchResults = esh.search("do");
-		assertEquals(searchResults.getThreads().size(),2);
+		ArrayList<QuestionThread> searchResults = esh.search("do");
+		assertEquals(searchResults.size(),2);
 	}
 	
 	//Use case 21: As an author, I want to push my replies, questions and answers online once I get connectivity.

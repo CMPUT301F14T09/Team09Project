@@ -66,7 +66,10 @@ public class ElasticSearchHandler {
 	//overloaded more specific version, for sorting
 	//this is default version
 	public ArrayList<QuestionThread> getThreads(Sort sort, int numThreads) {
-		String query="{\"query\":{\"match_all\":{}}}";
+		return getThreads("{\"query\":{\"match_all\":{}}}",sort,numThreads);
+	}
+	
+	public ArrayList<QuestionThread> getThreads(String query,Sort sort, int numThreads) {
 		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE)
 				.setParameter("size", numThreads).addSort(sort).build();
 		try {
@@ -128,8 +131,9 @@ public class ElasticSearchHandler {
 		return true;
 	}
 	
-	public ThreadList search(String searchString) {
-		return new ThreadList();
+	public ArrayList<QuestionThread> search(String searchString) {
+		String query="\"query\": {\"query_string\" : {\"fields\" : [\"answers.text\", \"question.text\"],\"query\" : \""+searchString+"\"}";
+		return getThreads(query, new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(), 10);
 	}
 	
 	public void cleanup() {

@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;

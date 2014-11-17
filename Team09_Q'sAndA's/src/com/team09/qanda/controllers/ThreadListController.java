@@ -50,6 +50,9 @@ public class ThreadListController {
 	public void changeSortType(SimpleSortFactory factory){
 		tl.setSortType(factory.createSort());
 	}
+	public void search(String query){
+		tl.setThreads(esh.search(query));
+	}
 	
 	public void clear() {
 		tl.setThreads(new ArrayList<QuestionThread>());
