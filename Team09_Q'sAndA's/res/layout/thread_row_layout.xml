@@ -3,13 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content" >
     
-<!--     <CheckBox -->
-<!--         android:id="@+id/saveQuestion" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignParentRight="true" -->
-<!--         android:button="@android:drawable/btn_star"/> -->
-    
     <TextView
         android:id="@+id/post"
 	    android:layout_width="wrap_content"
@@ -43,16 +36,6 @@
         android:textSize="12sp" >
 
     </TextView>
-    
-    <TextView
-        android:id="@+id/numOfAnswers"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:paddingLeft="5dp"
-    	android:layout_below="@id/authorMain"
-    	android:layout_alignParentRight="true"
-    	android:textSize="12sp">
-    </TextView>
 
     <CheckBox
         android:id="@+id/upvoteCheckbox"
@@ -63,6 +46,15 @@
         android:button="@drawable/upvote_checkbox" 
 	    android:onClick="upvoteQuestion" />
 
+    <CheckBox
+        android:id="@+id/repliesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/postUpvotes"
+        android:layout_alignTop="@+id/postUpvotes"
+        android:layout_alignParentLeft="true"
+        android:button="@drawable/btn_replies" />
+
     <ImageButton
         android:id="@+id/attachmentButton"
         style="?android:attr/buttonStyleSmall"
@@ -71,7 +63,7 @@
         android:layout_alignBottom="@+id/upvoteCheckbox"
         android:layout_alignTop="@+id/upvoteCheckbox"
         android:layout_toEndOf="@id/editAnswerText"
-        android:layout_toRightOf="@+id/post"
+        android:layout_toRightOf="@+id/repliesButton"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton"
         android:src="@drawable/ic_menu_attachment" />
