@@ -29,6 +29,7 @@
         android:id="@+id/postUpvotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/postAuthor"
         android:paddingLeft="5dp"
@@ -41,6 +42,7 @@
         android:id="@+id/upvoteCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:layout_alignBottom="@+id/postUpvotes"
         android:layout_toLeftOf="@+id/postUpvotes"
         android:button="@drawable/upvote_checkbox" 
@@ -50,8 +52,10 @@
         android:id="@+id/repliesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:layout_alignBaseline="@+id/postUpvotes"
-        android:layout_alignTop="@+id/postUpvotes"
+        android:layout_alignTop="@+id/upvoteCheckbox"
+        android:layout_alignBottom="@+id/upvoteCheckbox"
         android:layout_alignParentLeft="true"
         android:button="@drawable/btn_replies" />
 
