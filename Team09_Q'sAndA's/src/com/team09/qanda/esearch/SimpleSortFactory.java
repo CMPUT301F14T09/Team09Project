@@ -21,7 +21,7 @@ public class SimpleSortFactory {
 			sort="hasPictures";
 		}
 		else if(category.equals(MostUpvotes) || category.equals(LeastUpvotes)){
-			sort="upVotes";
+			sort="question.upVotes";
 			if(category.equals(LeastUpvotes)){
 				direction=Sorting.ASC;
 			}
