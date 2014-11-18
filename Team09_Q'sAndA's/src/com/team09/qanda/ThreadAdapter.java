@@ -1,6 +1,8 @@
 package com.team09.qanda;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -137,6 +139,7 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 						answers.set(position_copy-2, post);
 						thread.setAnswers(answers);
 					}
+					sortAnswers();
 					AsyncSave task=new AsyncSave();
 					task.execute(new QuestionThreadController[] {qtc});
 					notifyDataSetChanged();
@@ -151,6 +154,19 @@ public class ThreadAdapter extends ArrayAdapter<Post> {
 		return convertView;
 	}
 	
+	protected void sortAnswers() {
+		Collections.sort(thread.getAnswers(), new Comparator<Post>(){
+
+			@Override
+			public int compare(Post lhs, Post rhs) {
+				return new Integer(lhs.getUps()).compareTo(rhs.getUps());
+			}
+			
+		});
+		Collections.reverse(thread.getAnswers());
+		notifyDataSetChanged();
+	}
+
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
 		@Override
