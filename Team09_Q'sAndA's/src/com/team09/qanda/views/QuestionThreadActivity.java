@@ -25,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -40,7 +42,7 @@ public class QuestionThreadActivity extends Activity {
 
 	private QuestionThread thread;
 	private ThreadAdapter adapter;
-	private ListView threadPostsList;
+	private ExpandableListView threadPostsList;
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
 	private PostController questionPostController;
@@ -54,10 +56,20 @@ public class QuestionThreadActivity extends Activity {
 
 		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
 		
-		threadPostsList = (ListView) findViewById(R.id.ThreadPostsView);
+		threadPostsList = (ExpandableListView) findViewById(R.id.ThreadPostsView);
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
 		
+		
+		threadPostsList.setOnGroupExpandListener(new OnGroupExpandListener() {
+			 
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(),
+                        " Expanded",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 		
 		// Instantiate thread
 		instantiate();
