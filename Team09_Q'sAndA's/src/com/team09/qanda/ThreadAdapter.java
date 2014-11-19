@@ -236,16 +236,12 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			});
 		}
 		
-				
-				
 		return convertView;
 	}
 
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
-		
-		//final String childText = (String) getChild(groupPosition, childPosition);
 		
 		LayoutInflater inflater = (LayoutInflater) this.context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -254,7 +250,21 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.replies_layout, null);
         }
 		
-		if (isLastChild) {
+		if (!isLastChild) {
+			convertView = inflater.inflate(R.layout.replies_layout, null);
+			TextView replyText = (TextView) convertView.findViewById(R.id.reply);
+			TextView replyAuthor = (TextView) convertView.findViewById(R.id.replyAuthor);
+						
+			if (groupPosition != 1) {
+				Reply reply = getChild(groupPosition, childPosition);
+				System.out.println(reply.getText() + "Reply is not null!");
+				System.out.println(replyText);
+				replyText.setText(reply.getText());
+				replyAuthor.setText("- " + reply.getAuthor().getName());
+			}
+			
+		}
+		else {
 			convertView = inflater.inflate(R.layout.add_reply_layout, null);
 			
 			Button submitReplyButton = (Button) convertView.findViewById(R.id.submitReplyBtn);
@@ -288,20 +298,10 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 					AsyncSave task=new AsyncSave();
 					task.execute(new QuestionThreadController[] {qtc});
 					notifyDataSetChanged();
+					System.out.println("whaaaaaa");
 					replyTextField.setText("");
 				}
 			});
-			
-		}
-		else {
-			TextView replyText = (TextView) convertView.findViewById(R.id.reply);
-			TextView replyAuthor = (TextView) convertView.findViewById(R.id.replyAuthor);
-						
-			if (groupPosition != 1) {
-				Reply reply = getChild(groupPosition, childPosition);
-				replyText.setText(reply.getText());
-				replyAuthor.setText("- " + reply.getAuthor().getName());
-			}
 		}
 		return convertView;
 	}
