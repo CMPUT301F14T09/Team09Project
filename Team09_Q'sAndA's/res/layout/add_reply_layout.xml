@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_light" >
 
     <EditText
         android:id="@+id/editReplyText"
@@ -11,8 +12,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignBaseline="@+id/submitReplyBtn"
         android:ems="10" >
-
-        <requestFocus />
     </EditText>
 
     <Button

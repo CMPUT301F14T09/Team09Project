@@ -13,6 +13,7 @@ import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.Reply;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -169,7 +170,7 @@ public class QuestionThreadActivity extends Activity {
 		// set image null to avoid lingering image
 		image = null;
 	}
-	
+		
 	public void viewImage(View v) {
 		Intent intent = new Intent(QuestionThreadActivity.this, PictureViewActivity.class);
 		intent.putExtra("Selected Post", thread.getQuestion());

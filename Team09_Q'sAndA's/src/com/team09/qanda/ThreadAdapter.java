@@ -4,51 +4,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import com.team09.qanda.controllers.PostController;
-import com.team09.qanda.controllers.QuestionThreadController;
-import com.team09.qanda.esearch.ElasticSearchHandler;
-import com.team09.qanda.models.Post;
-import com.team09.qanda.models.QuestionThread;
-import com.team09.qanda.models.Reply;
-import com.team09.qanda.views.PictureViewActivity;
-import com.team09.qanda.views.QuestionThreadActivity;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.DialogInterface.OnClickListener;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.team09.qanda.controllers.PostController;
+import com.team09.qanda.controllers.QuestionThreadController;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.Reply;
+import com.team09.qanda.views.PictureViewActivity;
 
 public class ThreadAdapter extends BaseExpandableListAdapter {
 
 	private QuestionThread thread;
 	private Context context;
+	private ApplicationState curState = ApplicationState.getInstance();
 	
 	public ThreadAdapter(Context context, int layoutResourceId, QuestionThread thread) {
 		
 		this.thread = thread;
 		this.context = context;
-		
-//		PostController pc = new PostController(thread.getQuestion());
-//		Reply reply = new Reply());
-//		pc.addReply(reply)
 	}
 
-	
-
-	
 	protected void sortAnswers() {
 		Collections.sort(thread.getAnswers(), new Comparator<Post>(){
 
@@ -105,22 +93,16 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public Object getChild(int groupPosition, int childPosition) {
+	public Reply getChild(int groupPosition, int childPosition) {
 		if (groupPosition == 0) {
 			return thread.getQuestion().getReplies().get(childPosition);
 		}
 		else if (groupPosition == 1) {
-			return 0;
+			return null;
 		}
 		else {
 			return thread.getAnswers().get(groupPosition - 2).getReplies().get(childPosition);
 		}
-//		if (childPosition == 0){
-//			return "looool";
-//		}
-//		else {
-//			return "haha";
-//		}
 	}
 
 	@Override
@@ -275,13 +257,50 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		if (isLastChild) {
 			convertView = inflater.inflate(R.layout.add_reply_layout, null);
 			
+			Button submitReplyButton = (Button) convertView.findViewById(R.id.submitReplyBtn);
+			
+			final EditText replyTextField = (EditText) convertView.findViewById(R.id.editReplyText);
+			
+			final int position_copy = groupPosition;
+			
+			submitReplyButton.setOnClickListener(new View.OnClickListener() {
+				
+				public void onClick(View v) {
+					String replyText = replyTextField.getText().toString();
+					Reply reply = new Reply(curState.getUser(), replyText);
+					PostController pc;
+					QuestionThreadController qtc = new QuestionThreadController(thread);
+					if (position_copy == 0) {
+						Post post = thread.getQuestion();
+						pc = new PostController(post);
+						pc.addReply(reply);
+						thread.setQuestion(post);
+					}
+					else {
+						Post post = thread.getAnswers().get(position_copy-2);
+						pc = new PostController(post);
+						pc.addReply(reply);
+						ArrayList<Post> answers = thread.getAnswers();
+						answers.set(position_copy-2, post);
+						thread.setAnswers(answers);
+					}
+					
+					AsyncSave task=new AsyncSave();
+					task.execute(new QuestionThreadController[] {qtc});
+					notifyDataSetChanged();
+					replyTextField.setText("");
+				}
+			});
+			
 		}
 		else {
-			TextView txtListChild = (TextView) convertView
-		                .findViewById(R.id.lblListItem);
-			
+			TextView replyText = (TextView) convertView.findViewById(R.id.reply);
+			TextView replyAuthor = (TextView) convertView.findViewById(R.id.replyAuthor);
+						
 			if (groupPosition != 1) {
-				txtListChild.setText("WHaaaa");
+				Reply reply = getChild(groupPosition, childPosition);
+				replyText.setText(reply.getText());
+				replyAuthor.setText("- " + reply.getAuthor().getName());
 			}
 		}
 		return convertView;
