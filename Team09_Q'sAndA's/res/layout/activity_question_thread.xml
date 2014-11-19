@@ -14,8 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/editAnswerText"
         android:layout_alignParentTop="true"
+        android:groupIndicator="@null"
         android:scrollbars="vertical" >
-
     </ExpandableListView>
     
     <EditText

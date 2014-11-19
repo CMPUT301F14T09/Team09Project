@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -138,8 +139,8 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 	}
 
 	@Override
-	public View getGroupView(int groupPosition, boolean isExpanded,
-			View convertView, ViewGroup parent) {
+	public View getGroupView(final int groupPosition, final boolean isExpanded,
+			View convertView, final ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.thread_row_layout, parent, false);
@@ -241,40 +242,16 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			});
 			
 			CheckBox repliesButton = (CheckBox) convertView.findViewById(R.id.repliesButton);
+			int imageResourceId = isExpanded ? R.drawable.replies_on : R.drawable.replies_off;
+		    repliesButton.setButtonDrawable(imageResourceId);
 			
-			
-			
-//			
-//			final ListView listView = (ListView) convertView.findViewById(R.id.RepliesView);
-//			 
-//			String[] values = new String[] {
-//                    "Adapter implementation",
-//                    "Simple List View In Android",
-//                    "Create List View Android", 
-//                    "Android Example", 
-//                    "List View Source Code", 
-//                    "List View Array Adapter", 
-//                    "Android Example List View" 
-//                   };
-//			
-//			ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
-//		              android.R.layout.simple_list_item_1, values);
-//			
-//			listView.setAdapter(adapter);
-//			
-//			repliesButton.setOnClickListener(new View.OnClickListener() {
-//				
-//				public void onClick(View v) {
-//					Toast.makeText(context, "loool", Toast.LENGTH_SHORT).show();
-//					
-//					if (listView.getVisibility() == View.VISIBLE) {
-//						listView.setVisibility(View.GONE);
-//					}
-//					else {
-//						listView.setVisibility(View.VISIBLE);
-//					}
-//				}
-//			});
+			repliesButton.setOnClickListener(new View.OnClickListener() {
+				
+				public void onClick(View v) {					
+					if(isExpanded) ((ExpandableListView) parent).collapseGroup(groupPosition);
+		            else ((ExpandableListView) parent).expandGroup(groupPosition, true);
+				}
+			});
 		}
 		
 				
@@ -296,17 +273,17 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
         }
 		
 		if (isLastChild) {
-			convertView = inflater.inflate(R.layout.replies_layout, null);
+			convertView = inflater.inflate(R.layout.add_reply_layout, null);
 			
 		}
-		
-		TextView txtListChild = (TextView) convertView
-	                .findViewById(R.id.lblListItem);
-		
-		if (groupPosition != 2) {
-			txtListChild.setText("WHaaaa");
-		}
+		else {
+			TextView txtListChild = (TextView) convertView
+		                .findViewById(R.id.lblListItem);
 			
+			if (groupPosition != 1) {
+				txtListChild.setText("WHaaaa");
+			}
+		}
 		return convertView;
 	}
 

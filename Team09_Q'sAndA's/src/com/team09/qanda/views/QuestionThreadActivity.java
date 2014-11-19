@@ -61,15 +61,7 @@ public class QuestionThreadActivity extends Activity {
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
 		
 		
-		threadPostsList.setOnGroupExpandListener(new OnGroupExpandListener() {
-			 
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
-                        " Expanded",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+		
 		
 		// Instantiate thread
 		instantiate();
