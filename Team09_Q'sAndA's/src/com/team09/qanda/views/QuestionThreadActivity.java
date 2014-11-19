@@ -13,6 +13,7 @@ import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
+import com.team09.qanda.models.Reply;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +26,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -40,7 +43,7 @@ public class QuestionThreadActivity extends Activity {
 
 	private QuestionThread thread;
 	private ThreadAdapter adapter;
-	private ListView threadPostsList;
+	private ExpandableListView threadPostsList;
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
 	private PostController questionPostController;
@@ -54,9 +57,11 @@ public class QuestionThreadActivity extends Activity {
 
 		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
 		
-		threadPostsList = (ListView) findViewById(R.id.ThreadPostsView);
+		threadPostsList = (ExpandableListView) findViewById(R.id.ThreadPostsView);
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
+		
+		
 		
 		
 		// Instantiate thread
@@ -108,6 +113,7 @@ public class QuestionThreadActivity extends Activity {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
 		startActivityForResult(intent, IMAGE_REQUEST);
+		
 	}
 	
 	// Called when an image has been chosen by the user
@@ -128,16 +134,18 @@ public class QuestionThreadActivity extends Activity {
 				}
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
 				int imageSize = selectedImage.getByteCount();
-				
-				if (imageSize <= (64*1024)) {
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+				ByteArrayOutputStream out = new ByteArrayOutputStream();
+				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);	
+				int imageByteSize = out.toByteArray().length;
+				if (imageByteSize <= (64*1024)) {
 					image = out.toByteArray();
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
+				// TODO: Implement image compression
 				else {
 					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
 				}
+				
 			}
 		}
 	}
@@ -159,8 +167,10 @@ public class QuestionThreadActivity extends Activity {
 		AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
 		answerTextField.setText("");
+		// set image null to avoid lingering image
+		image = null;
 	}
-	
+		
 	public void viewImage(View v) {
 		Intent intent = new Intent(QuestionThreadActivity.this, PictureViewActivity.class);
 		intent.putExtra("Selected Post", thread.getQuestion());

@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
-    
-<!--     <CheckBox -->
-<!--         android:id="@+id/saveQuestion" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_alignParentRight="true" -->
-<!--         android:button="@android:drawable/btn_star"/> -->
+    android:layout_height="match_parent" >
     
     <TextView
         android:id="@+id/post"
@@ -36,6 +29,7 @@
         android:id="@+id/postUpvotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/postAuthor"
         android:paddingLeft="5dp"
@@ -43,25 +37,27 @@
         android:textSize="12sp" >
 
     </TextView>
-    
-    <TextView
-        android:id="@+id/numOfAnswers"
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:paddingLeft="5dp"
-    	android:layout_below="@id/authorMain"
-    	android:layout_alignParentRight="true"
-    	android:textSize="12sp">
-    </TextView>
 
     <CheckBox
         android:id="@+id/upvoteCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingTop="10dp"
         android:layout_alignBottom="@+id/postUpvotes"
         android:layout_toLeftOf="@+id/postUpvotes"
-        android:button="@drawable/upvote_checkbox" 
+        android:button="@drawable/upvote_checkbox"
 	    android:onClick="upvoteQuestion" />
+
+    <CheckBox
+        android:id="@+id/repliesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_alignBaseline="@+id/postUpvotes"
+        android:layout_alignTop="@+id/upvoteCheckbox"
+        android:layout_alignBottom="@+id/upvoteCheckbox"
+        android:layout_alignParentLeft="true"
+        android:button="@drawable/btn_replies" />
 
     <ImageButton
         android:id="@+id/attachmentButton"
@@ -71,9 +67,10 @@
         android:layout_alignBottom="@+id/upvoteCheckbox"
         android:layout_alignTop="@+id/upvoteCheckbox"
         android:layout_toEndOf="@id/editAnswerText"
-        android:layout_toRightOf="@+id/post"
+        android:layout_toRightOf="@+id/repliesButton"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton"
         android:src="@drawable/ic_menu_attachment" />
+    
     
 </RelativeLayout>

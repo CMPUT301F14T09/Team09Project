@@ -31,7 +31,6 @@ public class ElasticSearchHandler {
 	private String URL;
 	private String INDEX;
 	private String TYPE;
-	private static final int DEFAULT=R.string.sort_MostUpvotes;
 	private ArrayList<QuestionThread> threads=new ArrayList<QuestionThread>();
 	private JestClient client;
 	private Gson gson;
@@ -59,18 +58,20 @@ public class ElasticSearchHandler {
 	//or just sortstyle is passed and not numQuestions **will be a data type problem 
 	//but could be resolved by changing sortStyle to char or something, if necessary**
 	public ArrayList<QuestionThread> getThreads() {
-		return getThreads(DEFAULT,10);
+		return getThreads(new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(),10);
 	}
 	
 	//sortStyle is id of the element found at the
 	//the index of the spinner element found in the string resource
 	//overloaded more specific version, for sorting
 	//this is default version
-	public ArrayList<QuestionThread> getThreads(int sortType, int numThreads) {
-		Sort sortQuery=getSortQuery(sortType);
-		String query="{\"query\":{\"match_all\":{}}}";
+	public ArrayList<QuestionThread> getThreads(Sort sort, int numThreads) {
+		return getThreads("{\"query\":{\"match_all\":{}}}",sort,numThreads);
+	}
+	
+	public ArrayList<QuestionThread> getThreads(String query,Sort sort, int numThreads) {
 		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE)
-				.setParameter("size", numThreads).addSort(sortQuery).build();
+				.setParameter("size", numThreads).addSort(sort).build();
 		try {
 			JestResult result=client.execute(search);
 			//Log.i("result",result.getJsonString());
@@ -130,32 +131,12 @@ public class ElasticSearchHandler {
 		return true;
 	}
 	
-	public ThreadList search(String searchString) {
-		return new ThreadList();
+	public ArrayList<QuestionThread> search(String searchString) {
+		String query="\"query\": {\"query_string\" : {\"fields\" : [\"answers.text\", \"question.text\"],\"query\" : \""+searchString+"\"}";
+		return getThreads(query, new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(), 10);
 	}
 	
 	public void cleanup() {
 		this.client.shutdownClient();
-	}
-	//create Sort object... will use create a factory in the next iteration
-	private Sort getSortQuery(int sortType) {
-		String sort ="";
-		Sorting direction=Sorting.DESC;
-		if(sortType==R.string.sort_HasPicture){
-			sort="hasPictures";
-		}
-		else if(sortType==R.string.sort_MostUpvotes || sortType==R.string.sort_LeastUpvoted){
-			sort="upVotes";
-			if(sortType==R.string.sort_LeastUpvoted){
-				direction=Sorting.ASC;
-			}
-		}
-		else if(sortType==R.string.sort_MostRecent || sortType==R.string.sort_Oldest){
-			sort="relativeDate";
-			if(sortType==R.string.sort_MostRecent){
-				direction=Sorting.ASC;
-			}
-		}
-		return new Sort(sort, direction);
 	}
 }

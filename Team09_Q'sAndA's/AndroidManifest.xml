@@ -26,7 +26,7 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".SearchActivity"
+                android:value="com.team09.qanda.views.SearchActivity"
         	 />
         </activity>
         <activity
@@ -46,7 +46,7 @@
             android:label="@string/title_activity_add_question"
             android:parentActivityName="com.team09.qanda.views.MainActivity" >
         </activity>
-        <activity
+        <activity 
             android:name="com.team09.qanda.views.PictureViewActivity"
             android:label="@string/title_activity_picture_view" >
         </activity>
@@ -58,7 +58,7 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <meta-data android:name="android.app.searchable"
-                   android:resource="@xml/searchable"/>     	
+                   		android:resource="@xml/searchable"/>     	
         </activity>
     </application>
 

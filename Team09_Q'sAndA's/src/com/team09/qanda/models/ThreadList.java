@@ -1,40 +1,43 @@
 package com.team09.qanda.models;
 
+import io.searchbox.core.search.sort.Sort;
+
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+import com.team09.qanda.esearch.SimpleSortFactory;
 import com.team09.qanda.views.QView;
 
 public class ThreadList extends QModel<QView> {
 	private ArrayList<QuestionThread> threads;
 	private transient Gson gson;
-	private int sortType;
+	private Sort sortType;
 	private int numThreads;
 	
 	public ThreadList() {
 		gson=new Gson();
 		numThreads=10;
-		sortType=0; //Should probably be R.string.sort_MostUpvoted
+		sortType=new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort();
 		this.threads=new ArrayList<QuestionThread>();
 	}
 	
-	public ThreadList(int sortType) {
+	public ThreadList(Sort sortType) {
 		gson=new Gson();
 		numThreads=10;
 		this.sortType=sortType;
 		this.threads=new ArrayList<QuestionThread>();
 	}
 	
-	public ThreadList(int sortType, int numThreads) {
+	public ThreadList(Sort sortType, int numThreads) {
 		gson=new Gson();
 		this.numThreads=numThreads;
 		this.sortType=sortType;
 		this.threads=new ArrayList<QuestionThread>();
 	}
-	public void setSortType(int sortType){
-		this.sortType=sortType;
+	public void setSortType(Sort sort){
+		this.sortType=sort;
 	}
-	public int getSortType() {
+	public Sort getSortType() {
 		return this.sortType;
 	}
 	

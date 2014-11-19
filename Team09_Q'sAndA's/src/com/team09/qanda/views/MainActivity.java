@@ -26,12 +26,12 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.esearch.SimpleSortFactory;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
@@ -352,30 +352,10 @@ public class MainActivity extends Activity{ //Main question view
 		listener=new ActionBar.OnNavigationListener() {
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-				tlc.changeSortType(getRvalue(spinner.getItem(itemPosition)));
+				tlc.changeSortType(new SimpleSortFactory(spinner.getItem(itemPosition)));
 				AsyncGet task=new AsyncGet();
 				task.execute(new ThreadListController[] {tlc});
 				return true;
-			}
-
-			private int getRvalue(String item) {
-				int Rstring=0;
-				if(item.equals(getString(R.string.sort_HasPicture))){
-					Rstring=R.string.sort_HasPicture;
-				}
-				else if(item.equals(getString(R.string.sort_MostUpvotes))){
-					Rstring=R.string.sort_MostUpvotes;
-				}
-				else if(item.equals(getString(R.string.sort_LeastUpvoted))){
-					Rstring=R.string.sort_LeastUpvoted;
-				}
-				else if(item.equals(getString(R.string.sort_Oldest))){
-					Rstring=R.string.sort_Oldest;
-				}
-				else if(item.equals(getString(R.string.sort_MostRecent))){
-					Rstring=R.string.sort_MostRecent;
-				}
-				return Rstring;
 			}
 		};
 		bar.setListNavigationCallbacks(spinner,listener);
@@ -388,11 +368,11 @@ public class MainActivity extends Activity{ //Main question view
 		return this.threads;
 	}
 	private List<String> getSortOptionsList(){
-		return Arrays.asList(getString(R.string.sort_HasPicture),
-										getString(R.string.sort_MostRecent),
-										getString(R.string.sort_Oldest),
-										getString(R.string.sort_MostUpvotes),
-										getString(R.string.sort_LeastUpvoted));
+		return Arrays.asList(new String[]{SimpleSortFactory.MostUpvotes,
+										SimpleSortFactory.LeastUpvotes,
+										SimpleSortFactory.MostRecent,
+										SimpleSortFactory.Oldest,
+										SimpleSortFactory.HasPictures});
 	}
 
 	/**

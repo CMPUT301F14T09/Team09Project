@@ -1,5 +1,6 @@
 package com.team09.qanda.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.team09.qanda.views.QView;
@@ -11,7 +12,7 @@ import com.team09.qanda.views.QView;
  *
  */
 
-public class Reply extends QModel<QView> {
+public class Reply extends QModel<QView> implements Serializable {
 	private String text;
 	private User author;
 	private Date timestamp;

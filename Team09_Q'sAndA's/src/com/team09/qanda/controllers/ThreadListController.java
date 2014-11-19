@@ -2,6 +2,7 @@ package com.team09.qanda.controllers;
 import java.util.ArrayList;
 
 import com.team09.qanda.esearch.ElasticSearchHandler;
+import com.team09.qanda.esearch.SimpleSortFactory;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 
@@ -46,8 +47,11 @@ public class ThreadListController {
 		tl.setNumThreads(more);
 		tl.setThreads(esh.getThreads(tl.getSortType(), tl.getNumThreads()));
 	}
-	public void changeSortType(int sortType){
-		tl.setSortType(sortType);
+	public void changeSortType(SimpleSortFactory factory){
+		tl.setSortType(factory.createSort());
+	}
+	public void search(String query){
+		tl.setThreads(esh.search(query));
 	}
 	
 	public void clear() {
