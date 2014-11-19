@@ -11,7 +11,7 @@ import com.team09.qanda.views.QView;
 public class ThreadList extends QModel<QView> {
 	private ArrayList<QuestionThread> threads;
 	private transient Gson gson;
-	private Sort sortType;
+	private transient Sort sortType;
 	private int numThreads;
 	
 	public ThreadList() {
