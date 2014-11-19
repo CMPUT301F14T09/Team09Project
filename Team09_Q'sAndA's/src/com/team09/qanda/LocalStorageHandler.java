@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
@@ -30,13 +31,52 @@ public class LocalStorageHandler {
 		this.gson=new GsonBuilder().setPrettyPrinting().create();
 	}
 	
-	public ArrayList<String> getIds(Context context, String filename) {
-		ThreadList list=getThreadList(context, filename);
-		ArrayList<String> ids=new ArrayList<String>();
-		for (QuestionThread qt:list.getThreads()) {
-			ids.add(qt.getId());
+	public void saveId(Context context, String id, String filename) {
+		try {
+			ArrayList<String> ids=getIds(context, filename);
+			ids.add(id);
+			deleteFile(context, filename);
+			OutputStreamWriter osw = new OutputStreamWriter(
+					context.openFileOutput(filename, Context.MODE_PRIVATE));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(ids,new TypeToken<ArrayList<String>>(){}.getType(),jw);
+			osw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return ids;
+	}
+	
+	public void saveIds(Context context, ArrayList<String> ids, String filename) {
+		try {
+			deleteFile(context, filename);
+			OutputStreamWriter osw = new OutputStreamWriter(
+					context.openFileOutput(filename, Context.MODE_PRIVATE));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(ids,new TypeToken<ArrayList<String>>(){}.getType(),jw);
+			osw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<String> getIds(Context context, String filename) {
+		InputStreamReader in;
+		try {
+			in = new InputStreamReader(context.openFileInput(filename));
+			JsonReader reader=new JsonReader(in);
+			ArrayList<String> ids=gson.fromJson(reader, new TypeToken<ArrayList<String>>(){}.getType());
+			in.close();
+			return ids;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<String>();
 	}
 	
 	public ThreadList getThreadList(Context context, String filename) {
@@ -82,7 +122,7 @@ public class LocalStorageHandler {
 			for (QuestionThread qt:qts) {
 				tlc.addThread(qt);
 			}
-			Log.i("deleting",String.valueOf(deleteFile(context, filename)));
+			deleteFile(context, filename);
 			OutputStreamWriter osw=new OutputStreamWriter(
 					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);

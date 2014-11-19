@@ -16,6 +16,7 @@ import com.team09.qanda.models.QuestionThread;
 
 public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 
+	private static final String READ_LATER_FILENAME = "read_later.txt";
 	private ArrayList<String> ids;
 	private LocalStorageHandler lsh;
 	private ArrayList<QuestionThread> threads;
@@ -30,6 +31,7 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		this.isMain=isMain;
 		this.resId=layoutResourceId;
 		this.lsh=new LocalStorageHandler();
+		this.ids=lsh.getIds(context, "later_ids.txt");
 	}
 	
 	@Override
@@ -49,17 +51,18 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		final QuestionThread thread = threads.get(position);
 		
 		if (isMain) {
-			ids=lsh.getIds(context, "read_later.txt");
+			//ids=lsh.getIds(context, READ_LATER_FILENAME);
 			later.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					ids=lsh.getIds(context, "later_ids.txt");
 					if (ids.contains(thread.getId())) {
 						list.performItemClick(null, -1*position, -2);
 					}
 					else {
 						list.performItemClick(null, -1*position, -1);
 					}
-					ids=lsh.getIds(context, "read_later.txt");
+					//ids=lsh.getIds(context, READ_LATER_FILENAME);
 				}
 			});
 			if (ids.contains(thread.getId())) {

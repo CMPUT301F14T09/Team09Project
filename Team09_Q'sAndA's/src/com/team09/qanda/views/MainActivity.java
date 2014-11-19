@@ -1,5 +1,6 @@
 package com.team09.qanda.views;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,10 +49,12 @@ import com.team09.qanda.models.User;
 
 public class MainActivity extends Activity{ //Main question view
 	
+	private static final String READ_LATER_FILENAME = "read_later.txt";
 	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads=new ThreadList();
 	private ThreadList readLaters;
+	private ArrayList<String> laterIds=new ArrayList<String>();
 	private ThreadListController laterController;
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
@@ -66,8 +69,10 @@ public class MainActivity extends Activity{ //Main question view
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		readLaters=lsh.getThreadList(context, "read_later.txt");
+		readLaters=lsh.getThreadList(context, READ_LATER_FILENAME);
 		laterController=new ThreadListController(readLaters);
+		
+		this.laterIds=lsh.getIds(this, "later_ids.txt");
 		
 		setUpActionBarSpinner();
 		
@@ -83,12 +88,16 @@ public class MainActivity extends Activity{ //Main question view
 					int position, long id) {
 				
 				if (id==-2) {
+					laterIds.remove(threads.get(-1*position).getId());
 					laterController.removeThread(threads.get(-1*position));
-					lsh.saveQuestionThreads(context, readLaters.getThreads(), "read_later.txt");
+					lsh.saveIds(context, laterIds, "later_ids.txt");
+					lsh.saveQuestionThreads(context, readLaters.getThreads(), READ_LATER_FILENAME);
 				}
 				else if (id==-1) {
+					laterIds.add(threads.get(-1*position).getId());
 					laterController.addThread(threads.get(-1*position));
-					lsh.saveQuestionThreads(context, readLaters.getThreads(), "read_later.txt");
+					lsh.saveIds(context, laterIds, "later_ids.txt");
+					lsh.saveQuestionThreads(context, readLaters.getThreads(), READ_LATER_FILENAME);
 				}
 				
 				else {
@@ -131,7 +140,7 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		if (id == R.id.saved) {
 			userThreadsActivity(
-					"read_later.txt");
+					READ_LATER_FILENAME);
 			return true;
 		}
 		if (id == R.id.my_questions) {
