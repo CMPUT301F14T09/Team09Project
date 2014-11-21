@@ -1,5 +1,7 @@
 package com.team09.qanda.views;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import com.team09.qanda.models.ThreadList;
 public class UserThreadsActivity extends Activity {
 
 	private ThreadList threads;
+	private ArrayList<String> laterIds=new ArrayList<String>();
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ListView userThreadList;
@@ -44,6 +47,7 @@ public class UserThreadsActivity extends Activity {
 		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");
 		threads=localStorageHandler.getThreadList(context, FILENAME);
 		tlc = new ThreadListController(threads);
+		this.laterIds=localStorageHandler.getIds(this, "later_ids.txt");
 		
 		
 		userThreadList.setOnItemClickListener(new OnItemClickListener() {
@@ -52,7 +56,9 @@ public class UserThreadsActivity extends Activity {
 
 				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
 				if (FILENAME.equals("read_later.txt")) {
+					laterIds.remove(selectedThread.getId());
 					tlc.removeThread(selectedThread);
+					localStorageHandler.saveIds(context, laterIds, "later_ids.txt");
 					localStorageHandler.saveQuestionThreads(context, threads.getThreads(), "read_later.txt");
 					adapter = new ThreadListAdapter(context, R.layout.user_row_layout, threads.getThreads(),false);
 					userThreadList.setAdapter(adapter);

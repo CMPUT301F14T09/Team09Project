@@ -88,14 +88,18 @@ public class MainActivity extends Activity{ //Main question view
 					int position, long id) {
 				
 				if (id==-2) {
+					Log.i("removing",laterIds.toString());
 					laterIds.remove(threads.get(-1*position).getId());
 					laterController.removeThread(threads.get(-1*position));
+					Log.i("removed",laterIds.toString());
 					lsh.saveIds(context, laterIds, "later_ids.txt");
 					lsh.saveQuestionThreads(context, readLaters.getThreads(), READ_LATER_FILENAME);
 				}
 				else if (id==-1) {
+					Log.i("adding",laterIds.toString());
 					laterIds.add(threads.get(-1*position).getId());
 					laterController.addThread(threads.get(-1*position));
+					Log.i("added",laterIds.toString());
 					lsh.saveIds(context, laterIds, "later_ids.txt");
 					lsh.saveQuestionThreads(context, readLaters.getThreads(), READ_LATER_FILENAME);
 				}

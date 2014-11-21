@@ -62,10 +62,10 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 					else {
 						list.performItemClick(null, -1*position, -1);
 					}
-					//ids=lsh.getIds(context, READ_LATER_FILENAME);
+					ids=lsh.getIds(context, "later_ids.txt");
 				}
 			});
-			if (ids.contains(thread.getId())) {
+			if (this.ids.contains(thread.getId())) {
 				later.setChecked(true);
 			}
 			else {
