@@ -14,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.team09.qanda.ApplicationState;
+import com.team09.qanda.Constants;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
@@ -30,14 +31,14 @@ import com.team09.qanda.models.ThreadList;
 public class UserThreadsActivity extends Activity {
 
 	private ThreadList threads;
-	private ArrayList<String> laterIds=new ArrayList<String>();
+	//private ArrayList<String> laterIds=new ArrayList<String>();
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ListView userThreadList;
 	private Context context=this;
 	private ApplicationState curState = ApplicationState.getInstance();
 	private String FILENAME;
-	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
+	private LocalStorageHandler lsh = new LocalStorageHandler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,9 @@ public class UserThreadsActivity extends Activity {
 		setContentView(R.layout.activity_user_threads);
 		userThreadList = (ListView) findViewById(R.id.UserListView);
 		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");
-		threads=localStorageHandler.getThreadList(context, FILENAME);
+		threads=lsh.getThreadList(context, FILENAME);
 		tlc = new ThreadListController(threads);
-		this.laterIds=localStorageHandler.getIds(this, "later_ids.txt");
+		//this.laterIds=localStorageHandler.getIds(this, "later_ids.txt");
 		
 		
 		userThreadList.setOnItemClickListener(new OnItemClickListener() {
@@ -55,11 +56,13 @@ public class UserThreadsActivity extends Activity {
 					int position, long id) {
 
 				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-				if (FILENAME.equals("read_later.txt")) {
-					laterIds.remove(selectedThread.getId());
+				if (FILENAME.equals(Constants.READ_LATER_FILENAME)) {
+					/*laterIds.remove(selectedThread.getId());
 					tlc.removeThread(selectedThread);
 					localStorageHandler.saveIds(context, laterIds, "later_ids.txt");
-					localStorageHandler.saveQuestionThreads(context, threads.getThreads(), "read_later.txt");
+					localStorageHandler.saveQuestionThreads(context, threads.getThreads(), "read_later.txt");*/
+					tlc.removeThread(selectedThread);
+					lsh.deleteQuestionThread(context, selectedThread, Constants.READ_LATER_FILENAME);
 					adapter = new ThreadListAdapter(context, R.layout.user_row_layout, threads.getThreads(),false);
 					userThreadList.setAdapter(adapter);
 				}

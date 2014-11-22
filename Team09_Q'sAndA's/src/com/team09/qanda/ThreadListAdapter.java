@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import com.team09.qanda.models.QuestionThread;
 
 public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 
-	private static final String READ_LATER_FILENAME = "read_later.txt";
 	private ArrayList<String> ids;
 	private LocalStorageHandler lsh;
 	private ArrayList<QuestionThread> threads;
@@ -31,7 +31,7 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		this.isMain=isMain;
 		this.resId=layoutResourceId;
 		this.lsh=new LocalStorageHandler();
-		this.ids=lsh.getIds(context, "later_ids.txt");
+		this.ids=lsh.getIds(context, Constants.LATER_IDS_FILENAME);
 	}
 	
 	@Override
@@ -55,14 +55,16 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 			later.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					ids=lsh.getIds(context, "later_ids.txt");
+					Log.i("clickStart",ids.toString());
+					ids=lsh.getIds(context, Constants.LATER_IDS_FILENAME);
+					//list.performItemClick(null,position,-1);
 					if (ids.contains(thread.getId())) {
-						list.performItemClick(null, -1*position, -2);
+						list.performItemClick(null, position, Constants.REMOVE_READ_LATER);
 					}
 					else {
-						list.performItemClick(null, -1*position, -1);
+						list.performItemClick(null, position, Constants.ADD_READ_LATER);
 					}
-					ids=lsh.getIds(context, "later_ids.txt");
+					ids=lsh.getIds(context, Constants.LATER_IDS_FILENAME);
 				}
 			});
 			if (this.ids.contains(thread.getId())) {

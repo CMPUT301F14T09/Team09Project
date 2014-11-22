@@ -10,7 +10,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -79,6 +78,14 @@ public class LocalStorageHandler {
 		return new ArrayList<String>();
 	}
 	
+	public void deleteId(Context context, String id, String filename) {
+		ArrayList<String> ids=getIds(context, filename);
+		while (ids.contains(id)) {
+			ids.remove(id);
+		}
+		saveIds(context, ids, filename);
+	}
+	
 	public ThreadList getThreadList(Context context, String filename) {
 		//Load all the Question threads from a given file (favourites or read later) and return a ThreadList containing them
 		try {
@@ -90,10 +97,16 @@ public class LocalStorageHandler {
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		return new ThreadList();
+	}
+	
+	public void deleteQuestionThread(Context context, QuestionThread qt, String filename) {
+		ThreadList tl=getThreadList(context, filename);
+		ThreadListController tlc = new ThreadListController(tl);
+		tlc.removeThread(qt);
+		saveQuestionThreads(context, tl.getThreads(), filename);
+		deleteId(context, qt.getId(), "later_ids.txt");
 	}
 	
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
@@ -107,6 +120,7 @@ public class LocalStorageHandler {
 					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(threadList, ThreadList.class, jw);
+			saveId(context, qt.getId(), "later_ids.txt");
 			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -119,14 +133,17 @@ public class LocalStorageHandler {
 		try {
 			ThreadList threadList = new ThreadList();
 			ThreadListController tlc = new ThreadListController(threadList);
+			ArrayList<String> laters=new ArrayList<String>();
 			for (QuestionThread qt:qts) {
 				tlc.addThread(qt);
+				laters.add(qt.getId());
 			}
 			deleteFile(context, filename);
 			OutputStreamWriter osw=new OutputStreamWriter(
 					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(threadList, ThreadList.class, jw);
+			saveIds(context, laters, "later_ids.txt");
 			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

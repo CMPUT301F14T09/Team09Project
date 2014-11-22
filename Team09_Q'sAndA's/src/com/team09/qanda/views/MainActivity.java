@@ -28,6 +28,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
+import com.team09.qanda.Constants;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
@@ -49,7 +50,6 @@ import com.team09.qanda.models.User;
 
 public class MainActivity extends Activity{ //Main question view
 	
-	private static final String READ_LATER_FILENAME = "read_later.txt";
 	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads=new ThreadList();
@@ -69,10 +69,10 @@ public class MainActivity extends Activity{ //Main question view
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		readLaters=lsh.getThreadList(context, READ_LATER_FILENAME);
+		readLaters=lsh.getThreadList(context, Constants.READ_LATER_FILENAME);
 		laterController=new ThreadListController(readLaters);
 		
-		this.laterIds=lsh.getIds(this, "later_ids.txt");
+		this.laterIds=lsh.getIds(this, Constants.LATER_IDS_FILENAME);
 		
 		setUpActionBarSpinner();
 		
@@ -87,21 +87,23 @@ public class MainActivity extends Activity{ //Main question view
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				if (id==-2) {
-					Log.i("removing",laterIds.toString());
+				if (id==Constants.REMOVE_READ_LATER) {
+					/*Log.i("removing",laterIds.toString());
 					laterIds.remove(threads.get(-1*position).getId());
 					laterController.removeThread(threads.get(-1*position));
 					Log.i("removed",laterIds.toString());
 					lsh.saveIds(context, laterIds, "later_ids.txt");
-					lsh.saveQuestionThreads(context, readLaters.getThreads(), READ_LATER_FILENAME);
+					lsh.saveQuestionThreads(context, readLaters.getThreads(), Constants.READ_LATER_FILENAME);*/
+					lsh.deleteQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME);
 				}
-				else if (id==-1) {
-					Log.i("adding",laterIds.toString());
+				else if (id==Constants.ADD_READ_LATER) {
+					/*Log.i("adding",laterIds.toString());
 					laterIds.add(threads.get(-1*position).getId());
 					laterController.addThread(threads.get(-1*position));
 					Log.i("added",laterIds.toString());
 					lsh.saveIds(context, laterIds, "later_ids.txt");
-					lsh.saveQuestionThreads(context, readLaters.getThreads(), READ_LATER_FILENAME);
+					lsh.saveQuestionThreads(context, readLaters.getThreads(), Constants.READ_LATER_FILENAME);*/
+					lsh.saveQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME);
 				}
 				
 				else {
@@ -144,7 +146,7 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		if (id == R.id.saved) {
 			userThreadsActivity(
-					READ_LATER_FILENAME);
+					Constants.READ_LATER_FILENAME);
 			return true;
 		}
 		if (id == R.id.my_questions) {
