@@ -53,9 +53,6 @@ public class MainActivity extends Activity{ //Main question view
 	private ArrayAdapter<String> spinner;
 	private ActionBar.OnNavigationListener listener;
 	private ThreadList threads=new ThreadList();
-	private ThreadList readLaters;
-	private ArrayList<String> laterIds=new ArrayList<String>();
-	private ThreadListController laterController;
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ListView mainThreadsList;
@@ -68,11 +65,6 @@ public class MainActivity extends Activity{ //Main question view
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		readLaters=lsh.getThreadList(context, Constants.READ_LATER_FILENAME);
-		laterController=new ThreadListController(readLaters);
-		
-		this.laterIds=lsh.getIds(this, Constants.LATER_IDS_FILENAME);
 		
 		setUpActionBarSpinner();
 		
@@ -128,13 +120,11 @@ public class MainActivity extends Activity{ //Main question view
 			return true;
 		}
 		if (id == R.id.favourites) {
-			userThreadsActivity(
-					"favourites.txt");
+			userThreadsActivity("favourites.txt");
 			return true;
 		}
 		if (id == R.id.saved) {
-			userThreadsActivity(
-					Constants.READ_LATER_FILENAME);
+			userThreadsActivity(Constants.READ_LATER_FILENAME);
 			return true;
 		}
 		if (id == R.id.my_questions) {
@@ -152,18 +142,6 @@ public class MainActivity extends Activity{ //Main question view
 		tlc=new ThreadListController(threads);
 		AsyncGet task=new AsyncGet();
 		task.execute(new ThreadListController[] {tlc});
-		//Post p=threads.get(0).getQuestion();
-		//PostController pc=new PostController(p);
-		//pc.addUp();
-		//tlc.refreshThreads();
-		//Log.i("threads loaded", threads.jsonify());
-		//populateList();
-		
-		//ArrayList<QuestionThread> testthreads = new ArrayList<QuestionThread>();
-		//testthreads.add(new QuestionThread(new Post(new User(), "Question 2?")));
-		//testAdapter = new ArrayAdapter<QuestionThread>(this,R.layout.list_item, testthreads);
-		//adapter = new ThreadListAdapter(this, R.layout.main_row_layout, threads.getThreads());
-		//mainThreadsList.setAdapter(adapter);
 		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads(),true);
 		mainThreadsList.setAdapter(adapter);
 		
