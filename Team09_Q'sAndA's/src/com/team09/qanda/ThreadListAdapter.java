@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,13 +50,10 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		final QuestionThread thread = threads.get(position);
 		
 		if (isMain) {
-			//ids=lsh.getIds(context, READ_LATER_FILENAME);
 			later.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Log.i("clickStart",ids.toString());
 					ids=lsh.getIds(context, Constants.LATER_IDS_FILENAME);
-					//list.performItemClick(null,position,-1);
 					if (ids.contains(thread.getId())) {
 						list.performItemClick(null, position, Constants.REMOVE_READ_LATER);
 					}

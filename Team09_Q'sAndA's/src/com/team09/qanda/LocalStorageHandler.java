@@ -106,7 +106,7 @@ public class LocalStorageHandler {
 		ThreadListController tlc = new ThreadListController(tl);
 		tlc.removeThread(qt);
 		saveQuestionThreads(context, tl.getThreads(), filename);
-		deleteId(context, qt.getId(), "later_ids.txt");
+		deleteId(context, qt.getId(), Constants.LATER_IDS_FILENAME);
 	}
 	
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
@@ -120,7 +120,7 @@ public class LocalStorageHandler {
 					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(threadList, ThreadList.class, jw);
-			saveId(context, qt.getId(), "later_ids.txt");
+			saveId(context, qt.getId(), Constants.LATER_IDS_FILENAME);
 			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -143,7 +143,7 @@ public class LocalStorageHandler {
 					context.openFileOutput(filename, Context.MODE_PRIVATE));
 			JsonWriter jw=new JsonWriter(osw);
 			gson.toJson(threadList, ThreadList.class, jw);
-			saveIds(context, laters, "later_ids.txt");
+			saveIds(context, laters, Constants.LATER_IDS_FILENAME);
 			osw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
