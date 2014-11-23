@@ -108,6 +108,39 @@ public class QuestionThreadActivity extends Activity {
 			}
 			return true;
 		}
+		if (id == R.id.remove_favourite) {
+			lsh.deleteQuestionThread(context, thread, Constants.FAVOURITES_FILENAME, Constants.FAVOURITE_IDS_FILENAME);
+			Toast.makeText(context, "Question removed from favourites", Toast.LENGTH_SHORT).show();
+			userThreadsActivity(Constants.FAVOURITES_FILENAME);
+			return true;
+		}
+		if (id == R.id.read_later) {
+			ArrayList<String> later_ids=lsh.getIds(context, Constants.LATER_IDS_FILENAME);
+			if (later_ids.contains(thread.getId())) {
+				Toast.makeText(context, "Question already marked as read later", Toast.LENGTH_SHORT).show();
+			}
+			else {
+				lsh.saveQuestionThread(context, thread, Constants.READ_LATER_FILENAME, Constants.LATER_IDS_FILENAME);
+				Toast.makeText(context, "Question marked as read later", Toast.LENGTH_SHORT).show();
+			}
+			return true;
+		}
+		if (id == R.id.main) {
+			startActivity(new Intent(QuestionThreadActivity.this, MainActivity.class));
+			return true;
+		}
+		if (id == R.id.favourites) {
+			userThreadsActivity(Constants.FAVOURITES_FILENAME);
+			return true;
+		}
+		if (id == R.id.readLater) {
+			userThreadsActivity(Constants.READ_LATER_FILENAME);
+			return true;
+		}
+		if (id == R.id.my_questions) {
+			userThreadsActivity(Constants.MY_QUESTIONS_FILENAME);
+			return true;
+		}
 		if (id == R.id.action_settings) {
 			return true;
 		}
@@ -118,6 +151,12 @@ public class QuestionThreadActivity extends Activity {
 		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
 		threadPostsList.setAdapter(adapter);
 
+	}
+	
+	public void userThreadsActivity(String FILENAME) {
+		Intent intent = new Intent(QuestionThreadActivity.this, UserThreadsActivity.class);
+		intent.putExtra("FILENAME", FILENAME);
+		startActivity(intent);
 	}
 	
 	/** This was moved and changed to instantiate(). I'm saving it for backup just in case anyone needs it.
