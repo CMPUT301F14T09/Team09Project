@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 import com.team09.qanda.ApplicationState;
+import com.team09.qanda.Constants;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.R.id;
@@ -22,9 +23,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -52,7 +57,7 @@ public class AddQuestionActivity extends Activity {
 	private String textFieldEntry;
 	private EditText textField;
 	private ApplicationState curState = ApplicationState.getInstance();
-	private LocalStorageHandler localStorageHandler = new LocalStorageHandler();
+	private LocalStorageHandler lsh = new LocalStorageHandler();
 	private Context context = this;
 	private byte[] image = null;
 
@@ -65,6 +70,23 @@ public class AddQuestionActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_add_question);		
 		textField = (EditText) findViewById(R.id.add_question_field);
+		String persistentText=lsh.getText(context, Constants.QUESTION_TEXT_FILE);
+		if (!persistentText.isEmpty()) {
+			textField.setText(persistentText);
+		}
+		textField.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				lsh.saveText(context, textField.getText().toString(), Constants.QUESTION_TEXT_FILE);
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
 		
 		textField.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
@@ -156,19 +178,34 @@ public class AddQuestionActivity extends Activity {
     * @see 
     */
 	public void submitQuestion(View v) {
-		textFieldEntry = textField.getText().toString();
-    	Post newPost = new Post(curState.getUser(), textFieldEntry);
-    	PostController pc = new PostController(newPost);
-    	if (image != null) {
-    		pc.attachImage(image);
-    	}
-    	QuestionThread newQuestion = new QuestionThread(newPost);
-    	QuestionThreadController qtc = new QuestionThreadController(newQuestion);
-    	//localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
-    	AsyncSave task=new AsyncSave();
-		task.execute(new QuestionThreadController[] {qtc});
-		// set image to null to avoid lingering attachment
-		image = null;
+		if (isConnected()) {
+			textFieldEntry = textField.getText().toString();
+			Post newPost = new Post(curState.getUser(), textFieldEntry);
+			PostController pc = new PostController(newPost);
+			if (image != null) {
+				pc.attachImage(image);
+			}
+			QuestionThread newQuestion = new QuestionThread(newPost);
+			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
+			//localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
+			AsyncSave task=new AsyncSave();
+			task.execute(new QuestionThreadController[] {qtc});
+			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
+			// set image to null to avoid lingering attachment
+			image = null;
+		}
+		else {
+			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private boolean isConnected() {
+		//Determine if the user has connectivity
+		//http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
+		//22 November, 2014
+		ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+		return activeNetwork != null && activeNetwork.isConnected();
 	}
 	
 	/**

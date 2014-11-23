@@ -68,7 +68,7 @@ public class QuestionThreadActivity extends Activity {
 		fromFavourite=getIntent().getExtras().getBoolean("favourite");
 		fromLater=getIntent().getExtras().getBoolean("later");
 		threadPostsList = (ExpandableListView) findViewById(R.id.ThreadPostsView);
-		answerFilename=Constants.ANSWER_TEXT_FILE+thread.getId();
+		answerFilename="answer"+thread.getId()+".txt";
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
 		String persistentText=lsh.getText(context, answerFilename);
 		if (!persistentText.isEmpty()) {
@@ -263,7 +263,7 @@ public class QuestionThreadActivity extends Activity {
 			image = null;
 		}
 		else {
-			Toast.makeText(context, "Could not post answer. Check network connection", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Could not post answer. Check network connection and try again", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
