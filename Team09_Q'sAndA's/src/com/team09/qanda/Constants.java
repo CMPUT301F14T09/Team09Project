@@ -8,4 +8,7 @@ public class Constants {
 	public static final String FAVOURITES_FILENAME="favourites.txt";
 	public static final String FAVOURITE_IDS_FILENAME="favourite_ids.txt";
 	public static final String MY_QUESTIONS_FILENAME="My Questions.txt";
+	public static final String ANSWER_TEXT_FILE="answer.txt";
+	public static final String QUESTION_TEXT_FILE="question.txt";
+	public static final String REPLY_TEXT_FILE="reply.txt";
 }

@@ -10,9 +10,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +54,7 @@ public class QuestionThreadActivity extends Activity {
 	private boolean fromMain;
 	private boolean fromFavourite;
 	private boolean fromLater;
+	private String answerFilename;
 	private Context context=this;
 	private LocalStorageHandler lsh=new LocalStorageHandler();
 
@@ -63,8 +68,27 @@ public class QuestionThreadActivity extends Activity {
 		fromFavourite=getIntent().getExtras().getBoolean("favourite");
 		fromLater=getIntent().getExtras().getBoolean("later");
 		threadPostsList = (ExpandableListView) findViewById(R.id.ThreadPostsView);
-
+		answerFilename=Constants.ANSWER_TEXT_FILE+thread.getId();
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
+		String persistentText=lsh.getText(context, answerFilename);
+		if (!persistentText.isEmpty()) {
+			answerTextField.setText(persistentText);
+		}
+		
+		answerTextField.addTextChangedListener(new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				lsh.saveText(context, answerTextField.getText().toString(), answerFilename);
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
 
 		// Instantiate thread
 		instantiate();
@@ -218,23 +242,38 @@ public class QuestionThreadActivity extends Activity {
 	
 	// Method called by the onClick of answerSubmissionButton
 	public void submitAnswer(View v) {
-		System.out.println("Answer Count : " + thread.getAnswers().size());
-		String answerText = answerTextField.getText().toString();
-		// Create a Post object for the answer
-		Post answer = new Post(curState.getUser(), answerText);
-		PostController pc = new PostController(answer);
-		if (image!= null) {
-			pc.attachImage(image);
+		if (isConnected()) {
+			System.out.println("Answer Count : " + thread.getAnswers().size());
+			String answerText = answerTextField.getText().toString();
+			// Create a Post object for the answer
+			Post answer = new Post(curState.getUser(), answerText);
+			PostController pc = new PostController(answer);
+			if (image!= null) {
+				pc.attachImage(image);
+			}
+			// PostController for QuestionThread
+			QuestionThreadController qtc = new QuestionThreadController(thread);
+			qtc.addAnswer(answer);
+			System.out.println("New Answer Count : " + thread.getAnswers().size());
+			AsyncSave task=new AsyncSave();
+			task.execute(new QuestionThreadController[] {qtc});
+			answerTextField.setText("");
+			lsh.deleteFile(context, answerFilename);
+			// set image null to avoid lingering image
+			image = null;
 		}
-		// PostController for QuestionThread
-		QuestionThreadController qtc = new QuestionThreadController(thread);
-		qtc.addAnswer(answer);
-		System.out.println("New Answer Count : " + thread.getAnswers().size());
-		AsyncSave task=new AsyncSave();
-		task.execute(new QuestionThreadController[] {qtc});
-		answerTextField.setText("");
-		// set image null to avoid lingering image
-		image = null;
+		else {
+			Toast.makeText(context, "Could not post answer. Check network connection", Toast.LENGTH_SHORT).show();
+		}
+	}
+	
+	private boolean isConnected() {
+		//Determine if the user has connectivity
+		//http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
+		//22 November, 2014
+		ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+		return activeNetwork != null && activeNetwork.isConnected();
 	}
 		
 	public void viewImage(View v) {
