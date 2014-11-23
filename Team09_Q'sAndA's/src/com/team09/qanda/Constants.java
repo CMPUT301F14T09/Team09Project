@@ -7,4 +7,5 @@ public class Constants {
 	public static final String LATER_IDS_FILENAME="later_ids.txt";
 	public static final String FAVOURITES_FILENAME="favourites.txt";
 	public static final String FAVOURITE_IDS_FILENAME="favourite_ids.txt";
+	public static final String MY_QUESTIONS_FILENAME="My Questions.txt";
 }

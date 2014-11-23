@@ -32,5 +32,7 @@
     <string name="namePrompt">Enter Username:</string>
     <string name="readLaters">Read laters</string>
     <string name="readLater">Read later</string>
+    <string name="main">Main screen</string>
+    <string name="remove_favourite">Remove from favourites</string>
 
 </resources>

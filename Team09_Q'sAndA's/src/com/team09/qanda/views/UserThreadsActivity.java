@@ -36,6 +36,8 @@ public class UserThreadsActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private String FILENAME;
 	private LocalStorageHandler lsh = new LocalStorageHandler();
+	private boolean fromFavourite=false;
+	private boolean fromLater=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,12 @@ public class UserThreadsActivity extends Activity {
 		setContentView(R.layout.activity_user_threads);
 		userThreadList = (ListView) findViewById(R.id.UserListView);
 		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");
+		if (FILENAME.equals(Constants.FAVOURITES_FILENAME)) {
+			fromFavourite=true;
+		}
+		else if (FILENAME.equals(Constants.READ_LATER_FILENAME)) {
+			fromLater=true;
+		}
 		threads=lsh.getThreadList(context, FILENAME);
 		tlc = new ThreadListController(threads);
 		
@@ -96,6 +104,9 @@ public class UserThreadsActivity extends Activity {
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(UserThreadsActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);
+		intent.putExtra("main", false);
+		intent.putExtra("favourite", fromFavourite);
+		intent.putExtra("later", fromLater);
 		startActivity(intent);
 	}
 }

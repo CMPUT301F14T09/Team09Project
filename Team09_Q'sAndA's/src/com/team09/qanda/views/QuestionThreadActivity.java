@@ -3,6 +3,7 @@ package com.team09.qanda.views;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
@@ -46,6 +47,9 @@ public class QuestionThreadActivity extends Activity {
 	private PostController questionPostController;
 	private static int IMAGE_REQUEST = 1;
 	private byte[] image = null;
+	private boolean fromMain;
+	private boolean fromFavourite;
+	private boolean fromLater;
 	private Context context=this;
 	private LocalStorageHandler lsh=new LocalStorageHandler();
 
@@ -55,7 +59,9 @@ public class QuestionThreadActivity extends Activity {
 		setContentView(R.layout.activity_question_thread);
 
 		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
-		
+		fromMain=getIntent().getExtras().getBoolean("main");
+		fromFavourite=getIntent().getExtras().getBoolean("favourite");
+		fromLater=getIntent().getExtras().getBoolean("later");
 		threadPostsList = (ExpandableListView) findViewById(R.id.ThreadPostsView);
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
@@ -67,7 +73,21 @@ public class QuestionThreadActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.question_thread, menu);
+		if (fromMain) {
+			getMenuInflater().inflate(R.menu.question_thread, menu);
+		}
+		else {
+			if (fromFavourite) {
+				getMenuInflater().inflate(R.menu.favourites, menu);
+			}
+			else if (fromLater) {
+				getMenuInflater().inflate(R.menu.read_later, menu);
+			}
+			else {
+				getMenuInflater().inflate(R.menu.my_questions, menu);
+			}
+		}
+		//getMenuInflater().inflate(R.menu.question_thread, menu);
 		return true;
 	}
 
@@ -78,8 +98,14 @@ public class QuestionThreadActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.favourite_question) {
-			lsh.saveQuestionThread(context, thread, Constants.FAVOURITES_FILENAME, Constants.FAVOURITE_IDS_FILENAME);
-			Toast.makeText(context, "Question added to favourites", Toast.LENGTH_SHORT).show();
+			ArrayList<String> favourite_ids=lsh.getIds(context, Constants.FAVOURITE_IDS_FILENAME);
+			if (favourite_ids.contains(thread.getId())) {
+				Toast.makeText(context, "Question already in favourites", Toast.LENGTH_SHORT).show();
+			}
+			else {
+				lsh.saveQuestionThread(context, thread, Constants.FAVOURITES_FILENAME, Constants.FAVOURITE_IDS_FILENAME);
+				Toast.makeText(context, "Question added to favourites", Toast.LENGTH_SHORT).show();
+			}
 			return true;
 		}
 		if (id == R.id.action_settings) {

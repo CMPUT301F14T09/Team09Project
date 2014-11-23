@@ -128,7 +128,7 @@ public class MainActivity extends Activity{ //Main question view
 			return true;
 		}
 		if (id == R.id.my_questions) {
-			userThreadsActivity("My Questions.txt");
+			userThreadsActivity(Constants.MY_QUESTIONS_FILENAME);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -220,6 +220,7 @@ public class MainActivity extends Activity{ //Main question view
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);
+		intent.putExtra("main", true);
 		startActivity(intent);
 	}
 	
