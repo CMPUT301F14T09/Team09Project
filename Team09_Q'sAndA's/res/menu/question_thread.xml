@@ -3,11 +3,11 @@
     tools:context="com.team09.qanda.QuestionThreadActivity" >
     
     <item
-        android:id="@+id/save_question"
+        android:id="@+id/read_later"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_menu_add"
-        android:title="@string/save_question"/>
+        android:title="@string/readLater"/>
     
     <item
         android:id="@+id/favourite_question"
@@ -23,10 +23,10 @@
         android:title="@string/favourites"/>
     
     <item
-        android:id="@+id/saved_questions"
+        android:id="@+id/read_laters"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/saved_questions"/>
+        android:title="@string/readLaters"/>
     
     <item
         android:id="@+id/user_questions"

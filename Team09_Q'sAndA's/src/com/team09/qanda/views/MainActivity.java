@@ -80,10 +80,10 @@ public class MainActivity extends Activity{ //Main question view
 					int position, long id) {
 				
 				if (id==Constants.REMOVE_READ_LATER) {
-					lsh.deleteQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME);
+					lsh.deleteQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME, Constants.LATER_IDS_FILENAME);
 				}
 				else if (id==Constants.ADD_READ_LATER) {
-					lsh.saveQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME);
+					lsh.saveQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME, Constants.LATER_IDS_FILENAME);
 				}
 				
 				else {
@@ -120,10 +120,10 @@ public class MainActivity extends Activity{ //Main question view
 			return true;
 		}
 		if (id == R.id.favourites) {
-			userThreadsActivity("favourites.txt");
+			userThreadsActivity(Constants.FAVOURITES_FILENAME);
 			return true;
 		}
-		if (id == R.id.saved) {
+		if (id == R.id.readLater) {
 			userThreadsActivity(Constants.READ_LATER_FILENAME);
 			return true;
 		}

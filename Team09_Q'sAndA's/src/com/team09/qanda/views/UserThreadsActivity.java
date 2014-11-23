@@ -54,7 +54,7 @@ public class UserThreadsActivity extends Activity {
 				QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
 				if (FILENAME.equals(Constants.READ_LATER_FILENAME)) {
 					tlc.removeThread(selectedThread);
-					lsh.deleteQuestionThread(context, selectedThread, Constants.READ_LATER_FILENAME);
+					lsh.deleteQuestionThread(context, selectedThread, Constants.READ_LATER_FILENAME, Constants.LATER_IDS_FILENAME);
 					adapter = new ThreadListAdapter(context, R.layout.user_row_layout, threads.getThreads(),false);
 					userThreadList.setAdapter(adapter);
 				}

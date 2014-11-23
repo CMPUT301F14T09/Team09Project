@@ -18,11 +18,9 @@
     <string name="attach_image">Attach</string>
     <string name="submit_question_btn">Submit Question</string>
     <string name="askAQuestion">Ask a Question</string>
-    <string name="save_question">Save</string>
     <string name="favourite_question">Favourite</string>
     <string name="favourites">Favourites</string>
     <string name="user_questions">My Questions</string>
-    <string name="saved_questions">Saved</string>
     <string name="action_Search">Find</string>
     <string name="title_activity_search">SearchActivity</string>
     <string name="see_replies">See Replies</string>
@@ -32,5 +30,7 @@
     <string name="answerAttachmentButton">A</string>
     <string name="answerSubmissionButton">Submit</string>
     <string name="namePrompt">Enter Username:</string>
+    <string name="readLaters">Read laters</string>
+    <string name="readLater">Read later</string>
 
 </resources>

@@ -2,20 +2,10 @@ package com.team09.qanda.views;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-
-import com.team09.qanda.ApplicationState;
-import com.team09.qanda.R;
-import com.team09.qanda.ThreadAdapter;
-import com.team09.qanda.controllers.PostController;
-import com.team09.qanda.controllers.QuestionThreadController;
-import com.team09.qanda.models.Post;
-import com.team09.qanda.models.QuestionThread;
-import com.team09.qanda.models.Reply;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,10 +17,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
-import android.widget.ExpandableListView.OnGroupExpandListener;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
+
+import com.team09.qanda.ApplicationState;
+import com.team09.qanda.Constants;
+import com.team09.qanda.LocalStorageHandler;
+import com.team09.qanda.R;
+import com.team09.qanda.ThreadAdapter;
+import com.team09.qanda.controllers.PostController;
+import com.team09.qanda.controllers.QuestionThreadController;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
 
 /**
  * 
@@ -49,6 +46,8 @@ public class QuestionThreadActivity extends Activity {
 	private PostController questionPostController;
 	private static int IMAGE_REQUEST = 1;
 	private byte[] image = null;
+	private Context context=this;
+	private LocalStorageHandler lsh=new LocalStorageHandler();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +59,7 @@ public class QuestionThreadActivity extends Activity {
 		threadPostsList = (ExpandableListView) findViewById(R.id.ThreadPostsView);
 
 		answerTextField = (EditText) findViewById(R.id.editAnswerText);
-		
-		
-		
-		
+
 		// Instantiate thread
 		instantiate();
 	}
@@ -81,6 +77,11 @@ public class QuestionThreadActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		if (id == R.id.favourite_question) {
+			lsh.saveQuestionThread(context, thread, Constants.FAVOURITES_FILENAME, Constants.FAVOURITE_IDS_FILENAME);
+			Toast.makeText(context, "Question added to favourites", Toast.LENGTH_SHORT).show();
+			return true;
+		}
 		if (id == R.id.action_settings) {
 			return true;
 		}

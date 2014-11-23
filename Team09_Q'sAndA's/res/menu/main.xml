@@ -8,8 +8,8 @@
         android:showAsAction="ifRoom|collapseActionView"
         android:actionViewClass="android.widget.SearchView"
         android:icon="@drawable/ic_action_search" />
-	<item android:id="@+id/favourites" android:title="Favourites"></item>
-	<item android:id="@+id/saved" android:title="Read laters"></item>
-	<item android:id="@+id/my_questions" android:title="My Questions"></item>
+	<item android:id="@+id/favourites" android:title="@string/favourites"></item>
+	<item android:id="@+id/readLater" android:title="@string/readLaters"></item>
+	<item android:id="@+id/my_questions" android:title="@string/user_questions"></item>
 
 </menu>
