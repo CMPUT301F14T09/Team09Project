@@ -183,7 +183,7 @@ public class AddQuestionActivity extends Activity {
 			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
 			AsyncSave task=new AsyncSave();
 			task.execute(new QuestionThreadController[] {qtc});
-			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME);
+			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME,Constants.MY_QUESTIONS_IDS_FILENAME);
 			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
 			// set image to null to avoid lingering attachment
 			image = null;
