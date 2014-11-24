@@ -1,6 +1,5 @@
 package com.team09.qanda.views;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
