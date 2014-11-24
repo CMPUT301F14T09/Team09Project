@@ -10,6 +10,7 @@ import com.team09.qanda.models.ThreadList;
 
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,17 +42,6 @@ public class SearchActivity extends Activity {
 		tlc= new ThreadListController(tl);
 		adapter=new ThreadListAdapter(this, R.layout.main_row_layout, tl.getThreads(),false);
 		((ListView)findViewById(R.id.listView_search)).setAdapter(adapter);
-		((ListView)findViewById(R.id.listView_search)).setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent = new Intent(SearchActivity.this, QuestionThreadActivity.class);
-				intent.putExtra("Selected Thread", adapter.getItemId(position));
-				startActivity(intent);
-				
-			}
-		});
 		getSearchQuery(getIntent());
 	}
 
@@ -96,7 +86,8 @@ public class SearchActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(Void result) {
-			adapter.notifyDataSetChanged();
+			adapter.clear();
+			adapter.addAll(tl.getThreads());
 		}
 		
 	}

@@ -31,17 +31,25 @@ public class ESHTest extends InstrumentationTestCase {
 	
 	//Use case #15: Search for questions and answers
 	public void testNumberOfAnswers(){
-		ThreadListController  threadController = new ThreadListController(new ThreadList());
+		ElasticSearchHandler handler=new ElasticSearchHandler("http://cmput301.softwareprocess.es:8080", "cmput301f14t09","searchTests");
+		ThreadListController  threadController = new ThreadListController(new ThreadList(),handler);
+		
 		Post questionText=new Post(new User(context),"This is a question.");
 		QuestionThread qThread=new QuestionThread(questionText);
-		QuestionThreadController qctl = new QuestionThreadController(qThread);
+		QuestionThreadController qctl = new QuestionThreadController(qThread,handler);
 		Post answer1=new Post(new User(context),"Do upvotes work?");
 		qctl.addAnswer(answer1);
-		threadController.addThread(qThread);
-		threadController.addThread(new QuestionThread(new Post(new User(context),"Does this work?")));
-		threadController.addThread(new QuestionThread(new Post(new User(context),"This will not be returned.")));
-		ElasticSearchHandler esh = new ElasticSearchHandler();
-		ArrayList<QuestionThread> searchResults = esh.search("do");
+		qctl.saveThread();
+		
+		Post questionText2=new Post(new User(context),"Does this work?");
+		QuestionThread qThread2=new QuestionThread(questionText2);
+		QuestionThreadController qct2 = new QuestionThreadController(qThread2,handler);
+		qct2.saveThread();
+		
+		QuestionThreadController qct3 = new QuestionThreadController(new QuestionThread(new Post(new User(context),"This should not match?")),handler);
+		qct3.saveThread();
+		
+		ArrayList<QuestionThread> searchResults = handler.search("do");
 		assertEquals(searchResults.size(),2);
 	}
 	
