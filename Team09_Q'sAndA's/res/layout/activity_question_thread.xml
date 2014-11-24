@@ -15,7 +15,8 @@
         android:layout_above="@+id/editAnswerText"
         android:layout_alignParentTop="true"
         android:groupIndicator="@null"
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical"
+        android:descendantFocusability="afterDescendants" >
     </ExpandableListView>
     
     <EditText
@@ -23,8 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:ems="10"
         android:hint="@string/edit_answer_text_hint"
-        android:ems="10" />
+        android:maxLines="2" />
 
     <ImageButton
         android:id="@+id/answerAttachmentButton"

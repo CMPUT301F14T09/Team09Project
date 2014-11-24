@@ -267,7 +267,7 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		else {
 			convertView = inflater.inflate(R.layout.add_reply_layout, null);
 			
-			Button submitReplyButton = (Button) convertView.findViewById(R.id.submitReplyBtn);
+			ImageButton submitReplyButton = (ImageButton) convertView.findViewById(R.id.submitReplyBtn);
 			
 			final EditText replyTextField = (EditText) convertView.findViewById(R.id.editReplyText);
 			

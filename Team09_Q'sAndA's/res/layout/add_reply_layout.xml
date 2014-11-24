@@ -8,19 +8,26 @@
         android:id="@+id/editReplyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/submitReplyBtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignBaseline="@+id/submitReplyBtn"
-        android:ems="10" >
+        android:hint="@string/edit_reply_text_hint"
+        android:ems="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:maxLines="2" >
+
     </EditText>
 
-    <Button
+    <ImageButton
         android:id="@+id/submitReplyBtn"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Submit" />
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_menu_send"
+        android:contentDescription="@string/replySubmissionButton" />
     
 </RelativeLayout>
