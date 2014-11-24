@@ -27,7 +27,7 @@ public class SimpleSortFactory {
 			}
 		}
 		else if(category.equals(MostRecent) || category.equals(Oldest)){
-			sort="relativeDate";
+			sort="question.relativeDate";
 			if(category.equals(Oldest)){
 				direction=Sorting.ASC;
 			}
