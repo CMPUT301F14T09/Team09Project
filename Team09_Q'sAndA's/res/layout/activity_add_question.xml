@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/add_question_hint"
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="10" />
 
     <Button
         android:id="@+id/submit_question_btn"
