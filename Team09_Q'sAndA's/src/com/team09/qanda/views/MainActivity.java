@@ -13,6 +13,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -73,6 +75,25 @@ public class MainActivity extends Activity{ //Main question view
                 false);
 		mainThreadsList.addFooterView(footer);
 		mainThreadsList.setOnItemClickListener(new ThreadClickListener(lsh, context, threads));
+		
+		final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
+		
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_blue_dark, android.R.color.holo_blue_light);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                ( new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	AsyncGet task=new AsyncGet();
+                		task.execute(new ThreadListController[] {tlc});
+                        swipeView.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
+
 		
 	}
 
