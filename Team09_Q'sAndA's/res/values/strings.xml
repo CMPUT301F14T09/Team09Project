@@ -34,5 +34,7 @@
     <string name="readLater">Read later</string>
     <string name="main">Main screen</string>
     <string name="remove_favourite">Remove from favourites</string>
+    <string name="replySubmissionButton">Submit</string>
+    <string name="edit_reply_text_hint">Enter reply here...</string>
 
 </resources>
