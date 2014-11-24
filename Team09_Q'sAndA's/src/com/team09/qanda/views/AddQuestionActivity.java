@@ -2,21 +2,7 @@ package com.team09.qanda.views;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-
-import com.team09.qanda.ApplicationState;
-import com.team09.qanda.Constants;
-import com.team09.qanda.LocalStorageHandler;
-import com.team09.qanda.R;
-import com.team09.qanda.R.id;
-import com.team09.qanda.R.layout;
-import com.team09.qanda.R.menu;
-import com.team09.qanda.controllers.PostController;
-import com.team09.qanda.controllers.QuestionThreadController;
-import com.team09.qanda.models.Post;
-import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
 import android.content.Context;
@@ -38,8 +24,16 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+
+import com.team09.qanda.ApplicationState;
+import com.team09.qanda.Constants;
+import com.team09.qanda.LocalStorageHandler;
+import com.team09.qanda.R;
+import com.team09.qanda.controllers.PostController;
+import com.team09.qanda.controllers.QuestionThreadController;
+import com.team09.qanda.models.Post;
+import com.team09.qanda.models.QuestionThread;
 
 /**
  * 
@@ -187,9 +181,9 @@ public class AddQuestionActivity extends Activity {
 			}
 			QuestionThread newQuestion = new QuestionThread(newPost);
 			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
-			//localStorageHandler.saveQuestionThread(context, newQuestion, "My Questions.txt");
 			AsyncSave task=new AsyncSave();
 			task.execute(new QuestionThreadController[] {qtc});
+			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME);
 			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
 			// set image to null to avoid lingering attachment
 			image = null;

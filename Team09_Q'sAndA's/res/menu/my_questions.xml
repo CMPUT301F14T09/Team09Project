@@ -9,7 +9,6 @@
         android:title="@string/readLater"/>
     <item
         android:id="@+id/favourite_question"
-        android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:icon="@drawable/btn_star_holo_light"
         android:title="@string/favourite_question"/>
