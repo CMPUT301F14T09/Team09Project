@@ -1,6 +1,5 @@
 package com.team09.qanda.views;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,14 +12,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -75,6 +74,25 @@ public class MainActivity extends Activity{ //Main question view
                 false);
 		mainThreadsList.addFooterView(footer);
 		mainThreadsList.setOnItemClickListener(new ThreadClickListener(lsh, context, threads));
+		
+		final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe);
+		
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_blue_dark, android.R.color.holo_blue_light);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                ( new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                    	AsyncGet task=new AsyncGet();
+                		task.execute(new ThreadListController[] {tlc});
+                        swipeView.setRefreshing(false);
+                    }
+                }, 1000);
+            }
+        });
+
 		
 	}
 
