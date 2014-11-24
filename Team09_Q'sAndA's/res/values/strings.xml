@@ -5,10 +5,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_thread_display">ThreadDisplay</string>
-    <string name="title_activity_user_threads">UserThreadsActivity</string>
-    <string name="title_activity_question_thread">QuestionThreadActivity</string>
+    <string name="title_activity_user_threads"></string>
+    <string name="title_activity_question_thread"></string>
     <string name="title_activity_add_question">Add a Question</string>
-    <string name="title_activity_picture_view">PictureViewActivity</string>
+    <string name="title_activity_picture_view">Picture</string>
     <string name="sort_HasPicture">Has Picture</string>
     <string name="sort_MostRecent">Newest</string>
     <string name="sort_Oldest">Oldest</string>
