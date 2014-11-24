@@ -3,6 +3,7 @@ package com.team09.qanda.views;
 /*
  * This actvity is necessary for searching 
  */
+import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadListAdapter;
 import com.team09.qanda.controllers.ThreadListController;
@@ -32,6 +33,7 @@ public class SearchActivity extends Activity {
 	private ThreadListController tlc;
 	private ThreadListAdapter adapter;
 	private ThreadList tl;
+	private LocalStorageHandler lsh=new LocalStorageHandler();
 	private String query;
 	
 	@Override
@@ -41,7 +43,9 @@ public class SearchActivity extends Activity {
 		tl=new ThreadList();
 		tlc= new ThreadListController(tl);
 		adapter=new ThreadListAdapter(this, R.layout.main_row_layout, tl.getThreads(),false);
-		((ListView)findViewById(R.id.listView_search)).setAdapter(adapter);
+		ListView lv=((ListView)findViewById(R.id.listView_search));
+		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(new ThreadClickListener(lsh, this, tl));
 		getSearchQuery(getIntent());
 	}
 
@@ -88,6 +92,10 @@ public class SearchActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			adapter.clear();
 			adapter.addAll(tl.getThreads());
+			adapter.notifyDataSetChanged();
+			if(adapter.getCount()==0){
+				Toast.makeText(SearchActivity.this,"No results", Toast.LENGTH_LONG).show();
+			}
 		}
 		
 	}

@@ -74,25 +74,7 @@ public class MainActivity extends Activity{ //Main question view
 		ViewGroup footer = (ViewGroup) getLayoutInflater().inflate(R.layout.load_more_footer, mainThreadsList,
                 false);
 		mainThreadsList.addFooterView(footer);
-		
-		mainThreadsList.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				
-				if (id==Constants.REMOVE_READ_LATER) {
-					lsh.deleteQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME, Constants.LATER_IDS_FILENAME);
-				}
-				else if (id==Constants.ADD_READ_LATER) {
-					lsh.saveQuestionThread(context, threads.get(position), Constants.READ_LATER_FILENAME, Constants.LATER_IDS_FILENAME);
-				}
-				
-				else {
-					QuestionThread selectedThread = (QuestionThread) parent.getItemAtPosition(position);
-					displayThread(selectedThread);
-				}
-												
-			}
-		});
+		mainThreadsList.setOnItemClickListener(new ThreadClickListener(lsh, context, threads));
 		
 	}
 
@@ -217,12 +199,7 @@ public class MainActivity extends Activity{ //Main question view
     * @see 
     */
 	
-	public void displayThread(QuestionThread thread) {
-		Intent intent = new Intent(MainActivity.this, QuestionThreadActivity.class);
-		intent.putExtra("Selected Thread", thread);
-		intent.putExtra("main", true);
-		startActivity(intent);
-	}
+	
 	
 	
 	/**
