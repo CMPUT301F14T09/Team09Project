@@ -9,8 +9,6 @@ import io.searchbox.core.search.sort.Sort;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.searchly.jestdroid.DroidClientConfig;
@@ -21,7 +19,8 @@ import com.team09.qanda.models.ThreadList;
 
 /**
  * 
- * This class is used to connect with ElasticSearch and receive questionsThreads and upload new questionsThreads.
+ * This class deals with all of the communication with the elasticsearch server.
+ * It saves and loads questions if the user has a connection.
  *
  */
 
@@ -89,7 +88,7 @@ public class ElasticSearchHandler {
 	private String makeQueryString(String id) {
 		return "{\"query\": {\"query_string\": {\"query\": \""+id+"\"}}}";
 	}
-	
+
 	public QuestionThread getThread(String id) {
 		String query=makeQueryString(id);
 		Search search=(Search) new Search.Builder(query).addIndex(INDEX).addType(TYPE).build();
@@ -125,7 +124,7 @@ public class ElasticSearchHandler {
 			return false;
 		}
 	}
-	
+
 	public boolean saveThreads(ThreadList thread){
 		for(QuestionThread q: thread.getThreads()){
 			if(!saveThread(q)) {
@@ -143,7 +142,7 @@ public class ElasticSearchHandler {
 	}
 	
 	public ArrayList<QuestionThread> search(String searchString) {
-		String query="{\"query\":{\"filtered\": {\"query\":{\"query_string\":{\"fields\": [\"answers.text\", \"question.text\"],\"query\": \"/.*"+searchString+".*/\"}},\"filter\": {}}}}";
+		String query="{\"query\":{\"filtered\": {\"query\":{\"query_string\":{\"fields\": [\"answers.text\", \"question.text\"],\"query\": \"/"+searchString+".*/\"}},\"filter\": {}}}}";
 		return getThreads(query, new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(), 10);
 	}
 	
