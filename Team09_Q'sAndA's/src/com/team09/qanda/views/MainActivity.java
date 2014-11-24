@@ -209,18 +209,6 @@ public class MainActivity extends Activity{ //Main question view
 	
 	    alertD.show();
 	}
-
-	/**
-    *
-    * This method starts the question thread viewing activity.
-    * It uses the intent to pass the selected thread.
-    *
-    * @param 
-    * @see 
-    */
-	
-	
-	
 	
 	/**
     *

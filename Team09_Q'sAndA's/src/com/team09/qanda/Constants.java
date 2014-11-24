@@ -1,5 +1,10 @@
 package com.team09.qanda;
 
+/**
+ * This class is used to provide constants which are used
+ * frequently across multiple files. 
+ * Mostly filenames for local storage
+ */
 public class Constants {
 	public static final int ADD_READ_LATER=-1;
 	public static final int REMOVE_READ_LATER=-2;

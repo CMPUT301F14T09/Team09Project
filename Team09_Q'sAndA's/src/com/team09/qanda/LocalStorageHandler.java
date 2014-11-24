@@ -21,76 +21,29 @@ import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 
+/**
+ * This class handles all of the logic behind saving things to and getting
+ * things from the phone's local storage. Objects are stored as their JSON
+ * equivalent string using GSON.
+ */
 public class LocalStorageHandler {
-	//For local data storage using GSON/JSON
 	private FileOutputStream os;
 	private Gson gson;
 	private static final String FILENAME = "user.txt";
 	private ElasticSearchHandler esh;
 	
 	public LocalStorageHandler() {
-		this.gson=new GsonBuilder().setPrettyPrinting().create();
+		this.gson=new GsonBuilder().create();
 		this.esh=new ElasticSearchHandler();
 	}
 	
-	public void saveId(Context context, String id, String filename) {
-		try {
-			ArrayList<String> ids=getIds(context, filename);
-			ids.add(id);
-			deleteFile(context, filename);
-			OutputStreamWriter osw = new OutputStreamWriter(
-					context.openFileOutput(filename, Context.MODE_PRIVATE));
-			JsonWriter jw=new JsonWriter(osw);
-			gson.toJson(ids,new TypeToken<ArrayList<String>>(){}.getType(),jw);
-			osw.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void saveIds(Context context, ArrayList<String> ids, String filename) {
-		try {
-			deleteFile(context, filename);
-			OutputStreamWriter osw = new OutputStreamWriter(
-					context.openFileOutput(filename, Context.MODE_PRIVATE));
-			JsonWriter jw=new JsonWriter(osw);
-			gson.toJson(ids,new TypeToken<ArrayList<String>>(){}.getType(),jw);
-			osw.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public ArrayList<String> getIds(Context context, String filename) {
-		InputStreamReader in;
-		try {
-			in = new InputStreamReader(context.openFileInput(filename));
-			JsonReader reader=new JsonReader(in);
-			ArrayList<String> ids=gson.fromJson(reader, new TypeToken<ArrayList<String>>(){}.getType());
-			in.close();
-			return ids;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<String>();
-	}
-	
-	public void deleteId(Context context, String id, String filename) {
-		ArrayList<String> ids=getIds(context, filename);
-		while (ids.contains(id)) {
-			ids.remove(id);
-		}
-		saveIds(context, ids, filename);
-	}
-	
+	/**
+	 * This method loads a ThreadList from local storage
+	 * @param context The context from which the method is being called
+	 * @param filename The file to get the ThreadList from
+	 * @return The ThreadList from the file
+	 */
 	public ThreadList getThreadList(Context context, String filename) {
-		//Load all the Question threads from a given file (favourites or read later) and return a ThreadList containing them
 		try {
 			ThreadList tl=new ThreadList();
 			InputStreamReader in=new InputStreamReader(context.openFileInput(filename));
@@ -104,6 +57,12 @@ public class LocalStorageHandler {
 		return new ThreadList();
 	}
 	
+	/**
+	 * Deletes a given QuestionThread from local storage
+	 * @param context The context from which the method is being called
+	 * @param qt The QuestionThread to be deleted
+	 * @param filename The file to delete the QuestionThread from
+	 */
 	public void deleteQuestionThread(Context context, QuestionThread qt, String filename) {
 		ThreadList tl=getThreadList(context, filename);
 		ThreadListController tlc = new ThreadListController(tl);
@@ -111,6 +70,14 @@ public class LocalStorageHandler {
 		saveQuestionThreads(context, tl.getThreads(), filename);
 	}
 	
+	/**
+	 * Deletes a given QuestionThread from local storage, as well as
+	 * its associated id
+	 * @param context The context from which the method is being called
+	 * @param qt The QuestionThread to be deleted
+	 * @param filename The file to delete the QuestionThread from
+	 * @param id_filename The file to delete the id from
+	 */
 	public void deleteQuestionThread(Context context, QuestionThread qt, String filename, String id_filename) {
 		ThreadList tl=getThreadList(context, filename);
 		ThreadListController tlc = new ThreadListController(tl);
@@ -119,8 +86,13 @@ public class LocalStorageHandler {
 		deleteId(context, qt.getId(), id_filename);
 	}
 	
+	/**
+	 * Adds a QuestionThread to a ThreadList in local storage
+	 * @param context The context from which the method is being called
+	 * @param qt The QuestionThread to be saved
+	 * @param filename The file to save the QuestionThread to
+	 */
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename) {
-		//Save a single question thread to a file. Can be used for favourite and read later.
 		try {
 			ThreadList threadList = getThreadList(context, filename);
 			ThreadListController tlc = new ThreadListController(threadList);
@@ -138,8 +110,15 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Adds a QuestionThread to a ThreadList in local storage, as well as its
+	 * associated id to a separate file
+	 * @param context The context from which the method is being called
+	 * @param qt The QuestionThread to be saved
+	 * @param filename The file to save the QuestionThread to
+	 * @param id_filename The file to save the id to
+	 */
 	public void saveQuestionThread(Context context, QuestionThread qt, String filename, String id_filename) {
-		//Save a single question thread to a file. Can be used for favourite and read later.
 		try {
 			ThreadList threadList = getThreadList(context, filename);
 			ThreadListController tlc = new ThreadListController(threadList);
@@ -158,6 +137,12 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Makes a ThreadList from a list of QuestionThreads and saves it to local storage
+	 * @param context The context from which the method is being called
+	 * @param qts The list of QuestionThreads to be saved
+	 * @param filename The file to save the ThreadList to
+	 */
 	public void saveQuestionThreads(Context context, ArrayList<QuestionThread> qts, String filename) {
 		try {
 			ThreadList threadList = new ThreadList();
@@ -178,6 +163,14 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Makes a ThreadList from a list of QuestionThreads and saves it to local storage, as
+	 * well as saving all of their associated ids to a separate file
+	 * @param context The context from which the method is being called
+	 * @param qts The list of QuestionThreads to be saved
+	 * @param filename The file to save the ThreadList to
+	 * @param id_filename The file to save the ids to
+	 */
 	public void saveQuestionThreads(Context context, ArrayList<QuestionThread> qts, String filename, String id_filename) {
 		try {
 			ThreadList threadList = new ThreadList();
@@ -199,6 +192,69 @@ public class LocalStorageHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private void saveId(Context context, String id, String filename) {
+		try {
+			ArrayList<String> ids=getIds(context, filename);
+			ids.add(id);
+			deleteFile(context, filename);
+			OutputStreamWriter osw = new OutputStreamWriter(
+					context.openFileOutput(filename, Context.MODE_PRIVATE));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(ids,new TypeToken<ArrayList<String>>(){}.getType(),jw);
+			osw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveIds(Context context, ArrayList<String> ids, String filename) {
+		try {
+			deleteFile(context, filename);
+			OutputStreamWriter osw = new OutputStreamWriter(
+					context.openFileOutput(filename, Context.MODE_PRIVATE));
+			JsonWriter jw=new JsonWriter(osw);
+			gson.toJson(ids,new TypeToken<ArrayList<String>>(){}.getType(),jw);
+			osw.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Gets a list of ids from local storage. Can be used to check which
+	 * questions are currently saved. Faster than loading all of the questions
+	 * @param context The context from which the method is being called
+	 * @param filename The file to get the ids from
+	 * @return An ArrayList of strings
+	 */
+	public ArrayList<String> getIds(Context context, String filename) {
+		InputStreamReader in;
+		try {
+			in = new InputStreamReader(context.openFileInput(filename));
+			JsonReader reader=new JsonReader(in);
+			ArrayList<String> ids=gson.fromJson(reader, new TypeToken<ArrayList<String>>(){}.getType());
+			in.close();
+			return ids;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<String>();
+	}
+	
+	private void deleteId(Context context, String id, String filename) {
+		ArrayList<String> ids=getIds(context, filename);
+		while (ids.contains(id)) {
+			ids.remove(id);
+		}
+		saveIds(context, ids, filename);
 	}
 	
 	public String getUsername(Context context) {
@@ -229,6 +285,12 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Saves a string to local storage. Used to make text boxes persistent
+	 * @param context The context from which the method is being called
+	 * @param text Text to be saved
+	 * @param filename The file to save the text to
+	 */
 	public void saveText(Context context, String text, String filename) {
 		try {
 			os=context.openFileOutput(filename, Context.MODE_PRIVATE);
@@ -241,6 +303,12 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Gets a string from local storage. Used to set the text of the text boxes
+	 * @param context The context from which the method is being called
+	 * @param filename The file to get the text from
+	 * @return A string containing the contents of the file
+	 */
 	public String getText(Context context, String filename) {
 		try {
 			BufferedReader br=new BufferedReader(new InputStreamReader(
@@ -264,7 +332,13 @@ public class LocalStorageHandler {
 		return "";
 	}
 	
-	//Gets the latest version of the QuestionThreads stored in local storage
+	/**
+	 * This method retrieves all of the questions which are in local storage
+	 * from the server and saves them again to their files. This ensures
+	 * users have the most current version of their saved questions.
+	 * 
+	 * @param context The context from which the method is being called
+	 */
 	public void refreshLocals(Context context) {
 		ArrayList<String> later_ids=getIds(context, Constants.LATER_IDS_FILENAME);
 		ArrayList<String> favourite_ids=getIds(context, Constants.FAVOURITE_IDS_FILENAME);
@@ -274,7 +348,6 @@ public class LocalStorageHandler {
 		refreshLocal(context, Constants.MY_QUESTIONS_FILENAME, my_qs_ids);
 	}
 	
-	//Goes through the list of ids, makes a ThreadList, and saves it to the file
 	private void refreshLocal(Context context,String filename, ArrayList<String> ids) {
 		ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
 		for (String id:ids) {
