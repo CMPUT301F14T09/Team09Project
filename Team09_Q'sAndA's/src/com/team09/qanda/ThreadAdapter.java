@@ -7,6 +7,7 @@ import java.util.Comparator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -147,6 +148,7 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			TextView text = (TextView) convertView.findViewById(R.id.post);
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
+			TextView replyCount = (TextView) convertView.findViewById(R.id.replyCount);
 			ImageButton attachmentButton = (ImageButton) convertView.findViewById(R.id.attachmentButton);
 			
 			Post post;
@@ -159,6 +161,7 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			}
 			
 			text.setText(post.getText());
+			replyCount.setText(String.valueOf(post.getReplies().size()));
 			
 			if (post.getUps() == 1) {
 				upvotes.setText(post.getUps() + " Point  ");
@@ -272,6 +275,21 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			final EditText replyTextField = (EditText) convertView.findViewById(R.id.editReplyText);
 			
 			final int position_copy = groupPosition;
+			
+			//replyTextField.setOnClickListener(l)
+			/*
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					if (replyTextField != null) {
+						replyTextField.requestFocus();
+					}
+					
+				}
+			}, 100);
+			*/
 			
 			submitReplyButton.setOnClickListener(new View.OnClickListener() {
 				

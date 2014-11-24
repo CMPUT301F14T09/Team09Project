@@ -58,6 +58,20 @@
         android:layout_alignBottom="@+id/upvoteCheckbox"
         android:layout_alignParentLeft="true"
         android:button="@drawable/btn_replies" />
+    
+
+    <TextView
+        android:id="@+id/replyCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:layout_below="@id/postAuthor"
+        android:layout_toRightOf="@+id/repliesButton"
+        android:paddingLeft="5dp"
+        android:text="0"
+        android:textSize="12sp" >
+
+    </TextView>
 
     <ImageButton
         android:id="@+id/attachmentButton"
@@ -67,7 +81,7 @@
         android:layout_alignBottom="@+id/upvoteCheckbox"
         android:layout_alignTop="@+id/upvoteCheckbox"
         android:layout_toEndOf="@id/editAnswerText"
-        android:layout_toRightOf="@+id/repliesButton"
+        android:layout_toRightOf="@+id/replyCount"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton"
         android:src="@drawable/ic_menu_attachment" />

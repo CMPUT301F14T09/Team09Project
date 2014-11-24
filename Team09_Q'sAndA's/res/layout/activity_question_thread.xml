@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:groupIndicator="@null"
         android:scrollbars="vertical"
-        android:descendantFocusability="afterDescendants" >
+        android:descendantFocusability="beforeDescendants" >
     </ExpandableListView>
     
     <EditText
