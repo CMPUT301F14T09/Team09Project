@@ -111,7 +111,6 @@ public class QuestionThreadActivity extends Activity {
 				getMenuInflater().inflate(R.menu.my_questions, menu);
 			}
 		}
-		//getMenuInflater().inflate(R.menu.question_thread, menu);
 		return true;
 	}
 
