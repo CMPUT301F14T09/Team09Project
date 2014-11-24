@@ -251,6 +251,9 @@ public class LocalStorageHandler {
 			while ((line=br.readLine())!=null) {
 				text+=line;
 			}
+			if (text.equals("null")) {
+				text="";
+			}
 			br.close();
 			return text;
 		} catch (FileNotFoundException e) {
