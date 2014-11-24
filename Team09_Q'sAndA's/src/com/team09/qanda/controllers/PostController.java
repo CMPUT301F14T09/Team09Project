@@ -58,7 +58,7 @@ public class PostController {
 	}
 	
 	// Sets the posts image
-	public void attachImage(byte[] image) {
+	public void attachImage(String image) {
 		post.setImage(image);
 		post.setHasPicture(true);
 	}

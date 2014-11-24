@@ -25,7 +25,7 @@ public class Post extends QModel<QView> implements Serializable {
 	//This is needed as the ArrayList shows up as an empty array on elastic search (unable to sort it)
 	private int upVotes;
 	private boolean hasPictures;
-	private byte[] image;
+	private String image;
 	private ArrayList<Reply> replies;
 	private Date timestamp;
 	//Strings are a little hard to sort on elastic search, so I'll use time in milliseconds
@@ -81,11 +81,11 @@ public class Post extends QModel<QView> implements Serializable {
 		return this.text;
 	}
 	
-	public byte[] getImage() {
+	public String getImage() {
 		return this.image;
 	}
 	
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 		setHasPicture(true);
 	}

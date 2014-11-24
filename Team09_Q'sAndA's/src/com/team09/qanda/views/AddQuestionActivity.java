@@ -3,6 +3,7 @@ package com.team09.qanda.views;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +56,7 @@ public class AddQuestionActivity extends Activity {
 	private LocalStorageHandler lsh = new LocalStorageHandler();
 	private Context context = this;
 	private byte[] image = null;
+	private String imageString = null;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	private static int IMAGE_REQUEST = 1;
@@ -149,6 +152,7 @@ public class AddQuestionActivity extends Activity {
 				int imageByteSize = out.toByteArray().length;
 				if (imageByteSize <= (64*1024)) {
 					image = out.toByteArray();
+					imageString = Base64.encodeToString(image, Base64.DEFAULT);
 					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 					imageView.setImageBitmap(selectedImage);
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
@@ -177,7 +181,7 @@ public class AddQuestionActivity extends Activity {
 			Post newPost = new Post(curState.getUser(), textFieldEntry);
 			PostController pc = new PostController(newPost);
 			if (image != null) {
-				pc.attachImage(image);
+				pc.attachImage(imageString);
 			}
 			QuestionThread newQuestion = new QuestionThread(newPost);
 			QuestionThreadController qtc = new QuestionThreadController(newQuestion);

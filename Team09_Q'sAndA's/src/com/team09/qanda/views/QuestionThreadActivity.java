@@ -248,7 +248,7 @@ public class QuestionThreadActivity extends Activity {
 			Post answer = new Post(curState.getUser(), answerText);
 			PostController pc = new PostController(answer);
 			if (image!= null) {
-				pc.attachImage(image);
+	//			pc.attachImage(image);
 			}
 			// PostController for QuestionThread
 			QuestionThreadController qtc = new QuestionThreadController(thread);
