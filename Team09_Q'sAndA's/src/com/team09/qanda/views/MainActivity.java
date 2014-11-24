@@ -140,8 +140,10 @@ public class MainActivity extends Activity{ //Main question view
 		// TODO Auto-generated method stub
 		super.onStart();
 		tlc=new ThreadListController(threads);
-		AsyncGet task=new AsyncGet();
-		task.execute(new ThreadListController[] {tlc});
+		AsyncGet getTask=new AsyncGet();
+		getTask.execute(new ThreadListController[] {tlc});
+		AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
+		refreshTask.execute(new LocalStorageHandler[] {lsh});
 		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads(),true);
 		mainThreadsList.setAdapter(adapter);
 		
@@ -253,6 +255,16 @@ public class MainActivity extends Activity{ //Main question view
 		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);
 		startActivity(intent);
+	}
+	
+	private class AsyncRefreshLocal extends AsyncTask<LocalStorageHandler,Void,Void> {
+		@Override
+		protected Void doInBackground(LocalStorageHandler... params) {
+			for (LocalStorageHandler lsh:params) {
+				lsh.refreshLocals(context);
+			}
+			return null;
+		}
 	}
 	
 	private class AsyncGet extends AsyncTask<ThreadListController, Void, Void> {

@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.team09.qanda.controllers.ThreadListController;
+import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 
@@ -25,9 +26,11 @@ public class LocalStorageHandler {
 	private FileOutputStream os;
 	private Gson gson;
 	private static final String FILENAME = "user.txt";
+	private ElasticSearchHandler esh;
 	
 	public LocalStorageHandler() {
 		this.gson=new GsonBuilder().setPrettyPrinting().create();
+		this.esh=new ElasticSearchHandler();
 	}
 	
 	public void saveId(Context context, String id, String filename) {
@@ -248,6 +251,9 @@ public class LocalStorageHandler {
 			while ((line=br.readLine())!=null) {
 				text+=line;
 			}
+			if (text.equals("null")) {
+				text="";
+			}
 			br.close();
 			return text;
 		} catch (FileNotFoundException e) {
@@ -256,6 +262,27 @@ public class LocalStorageHandler {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	//Gets the latest version of the QuestionThreads stored in local storage
+	public void refreshLocals(Context context) {
+		ArrayList<String> later_ids=getIds(context, Constants.LATER_IDS_FILENAME);
+		ArrayList<String> favourite_ids=getIds(context, Constants.FAVOURITE_IDS_FILENAME);
+		ArrayList<String> my_qs_ids=getIds(context, Constants.MY_QUESTIONS_IDS_FILENAME);
+		refreshLocal(context, Constants.READ_LATER_FILENAME, later_ids);
+		refreshLocal(context, Constants.FAVOURITES_FILENAME, favourite_ids);
+		refreshLocal(context, Constants.MY_QUESTIONS_FILENAME, my_qs_ids);
+	}
+	
+	//Goes through the list of ids, makes a ThreadList, and saves it to the file
+	private void refreshLocal(Context context,String filename, ArrayList<String> ids) {
+		ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
+		for (String id:ids) {
+			QuestionThread qt=esh.getThread(id);
+			qts.add(qt);
+		}
+		deleteFile(context, filename);
+		saveQuestionThreads(context, qts, filename);
 	}
 	
 	public boolean deleteFile(Context context, String filename) {
