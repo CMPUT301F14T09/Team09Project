@@ -143,7 +143,7 @@ public class ElasticSearchHandler {
 	}
 	
 	public ArrayList<QuestionThread> search(String searchString) {
-		String query="{\"query\":{\"filtered\": {\"query\":{\"query_string\":{\"fields\": [\"answers.text\", \"question.text\"],\"query\": \"/.*"+searchString+".*/\"}},\"filter\": {}}}}";
+		String query="{\"query\":{\"filtered\": {\"query\":{\"query_string\":{\"fields\": [\"answers.text\", \"question.text\"],\"query\": \"/"+searchString+".*/\"}},\"filter\": {}}}}";
 		return getThreads(query, new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(), 10);
 	}
 	
