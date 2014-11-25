@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
@@ -35,7 +36,8 @@ public class PictureViewActivity extends Activity {
 		ImageView postImage = (ImageView) findViewById(R.id.postImage);
 		TextView postText = (TextView) findViewById(R.id.postText);
 		TextView postAuthor = (TextView) findViewById(R.id.postAuthor);
-		Bitmap image = BitmapFactory.decodeByteArray(post.getImage(), 0, post.getImage().length);
+		byte[] decodeImage = Base64.decode(post.getImage(), 0);
+		Bitmap image = BitmapFactory.decodeByteArray(decodeImage, 0, decodeImage.length);
 		postImage.setImageBitmap(image);
 		postText.setText(post.getText());
 		postAuthor.setText("- "+post.getAuthor().getName());

@@ -3,6 +3,7 @@ package com.team09.qanda.views;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +55,7 @@ public class AddQuestionActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private LocalStorageHandler lsh = new LocalStorageHandler();
 	private Context context = this;
-	private byte[] image = null;
+	private String imageString = null;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	private static int IMAGE_REQUEST = 1;
@@ -148,7 +150,8 @@ public class AddQuestionActivity extends Activity {
 				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
 				int imageByteSize = out.toByteArray().length;
 				if (imageByteSize <= (64*1024)) {
-					image = out.toByteArray();
+					byte[] image = out.toByteArray();
+					imageString = Base64.encodeToString(image, Base64.DEFAULT);
 					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 					imageView.setImageBitmap(selectedImage);
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
@@ -176,8 +179,8 @@ public class AddQuestionActivity extends Activity {
 			textFieldEntry = textField.getText().toString();
 			Post newPost = new Post(curState.getUser(), textFieldEntry);
 			PostController pc = new PostController(newPost);
-			if (image != null) {
-				pc.attachImage(image);
+			if (imageString != null) {
+				pc.attachImage(imageString);
 			}
 			QuestionThread newQuestion = new QuestionThread(newPost);
 			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
@@ -185,8 +188,12 @@ public class AddQuestionActivity extends Activity {
 			saveQuestion(qtc);
 			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
 			// set image to null to avoid lingering attachment
+<<<<<<< HEAD
 			image = null;
 			finish();
+=======
+			imageString = null;
+>>>>>>> 52cee8beb390af95113cc67ac2321e9e9d887512
 		}
 		else {
 			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();
