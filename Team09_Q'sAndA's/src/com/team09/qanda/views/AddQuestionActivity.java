@@ -188,12 +188,8 @@ public class AddQuestionActivity extends Activity {
 			saveQuestion(qtc);
 			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
 			// set image to null to avoid lingering attachment
-<<<<<<< HEAD
-			image = null;
-			finish();
-=======
 			imageString = null;
->>>>>>> 52cee8beb390af95113cc67ac2321e9e9d887512
+			finish();
 		}
 		else {
 			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();
