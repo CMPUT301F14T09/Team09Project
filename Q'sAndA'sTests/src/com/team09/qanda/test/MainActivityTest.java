@@ -193,7 +193,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		    controller=new PostController(txt2);
 		    controller.addUp();
 		    
-			txt3.setImage(new byte[2]);
+			txt3.setImage("");
 			
 			one=new QuestionThread(txt);
 			two=new QuestionThread(txt2);
