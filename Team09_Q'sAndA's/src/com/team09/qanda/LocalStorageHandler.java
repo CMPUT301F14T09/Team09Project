@@ -342,10 +342,10 @@ public class LocalStorageHandler {
 	public void refreshLocals(Context context) {
 		ArrayList<String> later_ids=getIds(context, Constants.LATER_IDS_FILENAME);
 		ArrayList<String> favourite_ids=getIds(context, Constants.FAVOURITE_IDS_FILENAME);
-		ArrayList<String> my_qs_ids=getIds(context, Constants.MY_QUESTIONS_IDS_FILENAME);
+		//ArrayList<String> my_qs_ids=getIds(context, Constants.MY_QUESTIONS_IDS_FILENAME);
 		refreshLocal(context, Constants.READ_LATER_FILENAME, later_ids);
 		refreshLocal(context, Constants.FAVOURITES_FILENAME, favourite_ids);
-		refreshLocal(context, Constants.MY_QUESTIONS_FILENAME, my_qs_ids);
+		//refreshLocal(context, Constants.MY_QUESTIONS_FILENAME, my_qs_ids);
 	}
 	
 	private void refreshLocal(Context context,String filename, ArrayList<String> ids) {

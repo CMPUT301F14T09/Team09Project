@@ -62,7 +62,7 @@ public class AddQuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		setContentView(R.layout.activity_add_question);		
+		setContentView(R.layout.activity_add_question);
 		textField = (EditText) findViewById(R.id.add_question_field);
 		String persistentText=lsh.getText(context, Constants.QUESTION_TEXT_FILE);
 		if (!persistentText.isEmpty()) {
@@ -181,16 +181,21 @@ public class AddQuestionActivity extends Activity {
 			}
 			QuestionThread newQuestion = new QuestionThread(newPost);
 			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
-			AsyncSave task=new AsyncSave();
-			task.execute(new QuestionThreadController[] {qtc});
 			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME,Constants.MY_QUESTIONS_IDS_FILENAME);
+			saveQuestion(qtc);
 			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
 			// set image to null to avoid lingering attachment
 			image = null;
+			finish();
 		}
 		else {
 			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();
 		}
+	}
+	
+	private void saveQuestion(QuestionThreadController qtc) {
+		AsyncSave task=new AsyncSave();
+		task.execute(new QuestionThreadController[] {qtc});
 	}
 	
 	private boolean isConnected() {
@@ -219,12 +224,6 @@ public class AddQuestionActivity extends Activity {
 			}
 			return null;
 		}
-		
-		@Override
-		protected void onPostExecute(Void result) {
-			finish();
-		}
 	}
-	
 	
 }
