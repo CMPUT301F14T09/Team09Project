@@ -77,7 +77,7 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
     	setActivityIntent(intent);
 		
 		ta = getActivity();
-		int oldLength = ta.getAdapter().getCount();
+		int oldLength = ta.getAdapter().getGroupCount();
 		
 		assertEquals(2, oldLength);
 		
@@ -92,11 +92,11 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 		QuestionThreadActivity activity = getActivity();
 		ThreadAdapter adapter = activity.getAdapter();
 		
-		int oldLength = adapter.getCount();
+		int oldLength = adapter.getGroupCount();
 		
 		makeAnswer("Answer 1");
 		
-		assertEquals(oldLength+1,adapter.getCount());
+		assertEquals(oldLength+1,adapter.getGroupCount());
 		
 		ViewAsserts.assertOnScreen(activity.getWindow().getDecorView(), activity.findViewById(com.team09.qanda.R.id.post));
 		
