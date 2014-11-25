@@ -55,7 +55,6 @@ public class AddQuestionActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private LocalStorageHandler lsh = new LocalStorageHandler();
 	private Context context = this;
-	private byte[] image = null;
 	private String imageString = null;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
@@ -151,7 +150,7 @@ public class AddQuestionActivity extends Activity {
 				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
 				int imageByteSize = out.toByteArray().length;
 				if (imageByteSize <= (64*1024)) {
-					image = out.toByteArray();
+					byte[] image = out.toByteArray();
 					imageString = Base64.encodeToString(image, Base64.DEFAULT);
 					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 					imageView.setImageBitmap(selectedImage);
@@ -180,7 +179,7 @@ public class AddQuestionActivity extends Activity {
 			textFieldEntry = textField.getText().toString();
 			Post newPost = new Post(curState.getUser(), textFieldEntry);
 			PostController pc = new PostController(newPost);
-			if (image != null) {
+			if (imageString != null) {
 				pc.attachImage(imageString);
 			}
 			QuestionThread newQuestion = new QuestionThread(newPost);
@@ -190,7 +189,7 @@ public class AddQuestionActivity extends Activity {
 			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME,Constants.MY_QUESTIONS_IDS_FILENAME);
 			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
 			// set image to null to avoid lingering attachment
-			image = null;
+			imageString = null;
 		}
 		else {
 			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();

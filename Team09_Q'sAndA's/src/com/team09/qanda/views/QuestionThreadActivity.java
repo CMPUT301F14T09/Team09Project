@@ -17,11 +17,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
@@ -50,7 +52,7 @@ public class QuestionThreadActivity extends Activity {
 	private ApplicationState curState = ApplicationState.getInstance();
 	private PostController questionPostController;
 	private static int IMAGE_REQUEST = 1;
-	private byte[] image = null;
+	private String imageString = null;
 	private boolean fromMain;
 	private boolean fromFavourite;
 	private boolean fromLater;
@@ -227,7 +229,10 @@ public class QuestionThreadActivity extends Activity {
 				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);	
 				int imageByteSize = out.toByteArray().length;
 				if (imageByteSize <= (64*1024)) {
-					image = out.toByteArray();
+					byte[] image = out.toByteArray();
+					imageString = Base64.encodeToString(image, Base64.DEFAULT);
+					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
+					imageView.setImageBitmap(selectedImage);
 					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
 				}
 				// TODO: Implement image compression
@@ -247,8 +252,8 @@ public class QuestionThreadActivity extends Activity {
 			// Create a Post object for the answer
 			Post answer = new Post(curState.getUser(), answerText);
 			PostController pc = new PostController(answer);
-			if (image!= null) {
-	//			pc.attachImage(image);
+			if (imageString!= null) {
+				pc.attachImage(imageString);
 			}
 			// PostController for QuestionThread
 			QuestionThreadController qtc = new QuestionThreadController(thread);
@@ -259,7 +264,7 @@ public class QuestionThreadActivity extends Activity {
 			answerTextField.setText("");
 			lsh.deleteFile(context, answerFilename);
 			// set image null to avoid lingering image
-			image = null;
+			imageString = null;
 		}
 		else {
 			Toast.makeText(context, "Could not post answer. Check network connection and try again", Toast.LENGTH_SHORT).show();
