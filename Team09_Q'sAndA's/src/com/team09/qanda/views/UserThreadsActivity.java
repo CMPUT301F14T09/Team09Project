@@ -92,6 +92,10 @@ public class UserThreadsActivity extends Activity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.main) {
+			startActivity(new Intent(UserThreadsActivity.this, MainActivity.class));
+			return true;
+		}
 		if (id == R.id.favourites) {
 			userThreadsActivity(Constants.FAVOURITES_FILENAME);
 			return true;
