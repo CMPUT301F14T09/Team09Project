@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -124,6 +126,11 @@ public class QuestionThreadActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		if (id == R.id.help) {
+			onScreenHelp();
+			return true;
+		}
+		
 		if (id == R.id.favourite_question) {
 			ArrayList<String> favourite_ids=lsh.getIds(context, Constants.FAVOURITE_IDS_FILENAME);
 			if (favourite_ids.contains(thread.getId())) {
@@ -178,6 +185,20 @@ public class QuestionThreadActivity extends Activity {
 		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
 		threadPostsList.setAdapter(adapter);
 
+	}
+	
+	public void onScreenHelp() {
+		LayoutInflater li = LayoutInflater.from(this);
+		View view = li.inflate(R.layout.questionactivity_help, null);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("On-Screen Help");
+		builder.setView(view);
+		
+		// create an alert dialog
+	    AlertDialog alertD = builder.create();
+	    alertD.setCanceledOnTouchOutside(true);
+	    alertD.show();
 	}
 	
 	public void userThreadsActivity(String FILENAME) {
