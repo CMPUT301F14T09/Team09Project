@@ -90,13 +90,10 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/upvoteCheckbox"
-        android:layout_alignTop="@+id/upvoteCheckbox"
-        android:layout_toEndOf="@id/editAnswerText"
+        android:layout_alignBottom="@+id/repliesButton"
         android:layout_toRightOf="@+id/replyCount"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton"
         android:src="@drawable/ic_menu_attachment" />
-    
     
 </RelativeLayout>
