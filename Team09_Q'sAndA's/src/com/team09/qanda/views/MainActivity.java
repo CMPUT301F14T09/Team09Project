@@ -174,6 +174,11 @@ public class MainActivity extends Activity{ //Main question view
 	/**
     *
     * This method creates a prompt for setting username
+    * Once the username has been set, it can never be changed.
+    * The user can choose to skip setting a username which will make
+    * the system generate a random username during the app use. The
+    * app will once again prompt the user for a username the next time
+    * the user opens the app if they skipped setting a username.
     */	
 	public void setUsername(){
 		LayoutInflater layoutInflater = LayoutInflater.from(this);

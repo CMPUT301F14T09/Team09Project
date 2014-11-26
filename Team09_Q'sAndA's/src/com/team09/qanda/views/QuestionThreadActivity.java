@@ -158,11 +158,11 @@ public class QuestionThreadActivity extends Activity {
 			userThreadsActivity(Constants.FAVOURITES_FILENAME);
 			return true;
 		}
-		if (id == R.id.readLater) {
+		if (id == R.id.read_laters) {			
 			userThreadsActivity(Constants.READ_LATER_FILENAME);
 			return true;
 		}
-		if (id == R.id.my_questions) {
+		if (id == R.id.user_questions) {
 			userThreadsActivity(Constants.MY_QUESTIONS_FILENAME);
 			return true;
 		}
