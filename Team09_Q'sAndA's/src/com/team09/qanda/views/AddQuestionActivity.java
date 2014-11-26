@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +21,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,6 +117,10 @@ public class AddQuestionActivity extends Activity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.help) {
+			onScreenHelp();
+			return true;
+		}
 		if (id == R.id.attach_image) {
 			attachImage();
 		}
@@ -200,6 +206,20 @@ public class AddQuestionActivity extends Activity {
 	private void saveQuestion(QuestionThreadController qtc) {
 		AsyncSave task=new AsyncSave();
 		task.execute(new QuestionThreadController[] {qtc});
+	}
+	
+	public void onScreenHelp() {
+		LayoutInflater li = LayoutInflater.from(this);
+		View view = li.inflate(R.layout.addquestion_help, null);
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("On-Screen Help");
+		builder.setView(view);
+		
+		// create an alert dialog
+	    AlertDialog alertD = builder.create();
+	    alertD.setCanceledOnTouchOutside(true);
+	    alertD.show();
 	}
 	
 	private boolean isConnected() {
