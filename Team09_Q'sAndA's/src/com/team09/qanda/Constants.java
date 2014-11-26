@@ -3,7 +3,8 @@ package com.team09.qanda;
 /**
  * This class is used to provide constants which are used
  * frequently across multiple files. 
- * Mostly filenames for local storage
+ * Mostly filenames for local storage.
+ * Prevents the need to create local constants in multiple classes.
  */
 public class Constants {
 	public static final int ADD_READ_LATER=-1;
