@@ -10,6 +10,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -83,10 +85,14 @@ public class MainActivity extends Activity{ //Main question view
             public void onRefresh() {
                 swipeView.setRefreshing(true);
                 ( new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    	AsyncGet task=new AsyncGet();
-                		task.execute(new ThreadListController[] {tlc});
+                	@Override
+                	public void run() {
+                		AsyncGet getTask=new AsyncGet();
+                		getTask.execute(new ThreadListController[] {tlc});
+                		if (isConnected()) {
+                			AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
+                			refreshTask.execute(new LocalStorageHandler[] {lsh});
+                		}
                         swipeView.setRefreshing(false);
                     }
                 }, 1000);
@@ -142,8 +148,10 @@ public class MainActivity extends Activity{ //Main question view
 		tlc=new ThreadListController(threads);
 		AsyncGet getTask=new AsyncGet();
 		getTask.execute(new ThreadListController[] {tlc});
-		AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
-		refreshTask.execute(new LocalStorageHandler[] {lsh});
+		if (isConnected()) {
+			AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
+			refreshTask.execute(new LocalStorageHandler[] {lsh});
+		}
 		adapter = new ThreadListAdapter(context, R.layout.main_row_layout, threads.getThreads(),true);
 		mainThreadsList.setAdapter(adapter);
 		
@@ -238,6 +246,14 @@ public class MainActivity extends Activity{ //Main question view
 	    startActivity(intent);
 	}
 	
+	private boolean isConnected() {
+		//Determine if the user has connectivity
+		//http://developer.android.com/training/monitoring-device-state/connectivity-monitoring.html
+		//22 November, 2014
+		ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+		return activeNetwork != null && activeNetwork.isConnected();
+	}
 	
 	public void userThreadsActivity(String FILENAME) {
 		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
