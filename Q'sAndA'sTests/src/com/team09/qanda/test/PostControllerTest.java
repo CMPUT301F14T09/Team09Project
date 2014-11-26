@@ -8,6 +8,7 @@ import android.test.AndroidTestCase;
 import android.test.InstrumentationTestCase;
 import android.test.mock.MockContext;
 
+import com.team09.qanda.GPSHandler;
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.models.Post;
@@ -135,5 +136,14 @@ public class PostControllerTest extends InstrumentationTestCase {
 		PostController cn1=new PostController(txt);
 		cn1.addUp();
 		assertTrue(txt.getUps()==1);
+	}
+	
+	//Use Case 24: location attached to my post
+	public void testSetLocation(){
+		User user1 = new User(context);
+		Post txt = new Post(user1,"add city pls");
+		PostController pc = new PostController(txt);
+		pc.addCity(new GPSHandler(context).getCity());
+		assertTrue(!txt.getCity().equalsIgnoreCase("N/A"));
 	}
 }

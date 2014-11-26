@@ -57,7 +57,7 @@ public class GPSHandler {
 		
 		private class MyLocationListener implements LocationListener {
 	    	
-			//TODO: Following toasts were for testing remove when everything confirmed to work
+			//TODO: Following toasts were for testing, remove when everything confirmed to work
 	        public void onLocationChanged(Location location) {
 	            String message = String.format(
 	                    "New Location \n Longitude: %1$s \n Latitude: %2$s",
