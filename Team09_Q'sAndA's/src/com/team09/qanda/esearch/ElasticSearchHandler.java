@@ -75,7 +75,7 @@ public class ElasticSearchHandler {
 			threads.clear();
 			for (int i=0;i<esResults.size();i++) {
 				QuestionThread qt=esResults.get(i).get_source();
-				qt.setId(esResults.get(i).get_id());
+				//qt.setId(esResults.get(i).get_id());
 				threads.add(qt);
 			}
 			return threads;

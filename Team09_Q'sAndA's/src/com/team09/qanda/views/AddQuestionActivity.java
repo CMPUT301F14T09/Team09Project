@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.content.Context;
@@ -56,6 +57,7 @@ public class AddQuestionActivity extends Activity {
 	private LocalStorageHandler lsh = new LocalStorageHandler();
 	private Context context = this;
 	private String imageString = null;
+	private String saveId;
 
 	static final String ADD_QUESTION_RESULT = "RESULT";
 	private static int IMAGE_REQUEST = 1;
@@ -183,6 +185,8 @@ public class AddQuestionActivity extends Activity {
 				pc.attachImage(imageString);
 			}
 			QuestionThread newQuestion = new QuestionThread(newPost);
+			saveId=UUID.randomUUID().toString();
+			newQuestion.setId(saveId);
 			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
 			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME,Constants.MY_QUESTIONS_IDS_FILENAME);
 			saveQuestion(qtc);
@@ -223,7 +227,7 @@ public class AddQuestionActivity extends Activity {
 		@Override
 		protected Void doInBackground(QuestionThreadController... params) {
 			for (QuestionThreadController qtc:params) {
-		    	qtc.saveThread();
+		    	qtc.saveThread(saveId);
 			}
 			return null;
 		}
