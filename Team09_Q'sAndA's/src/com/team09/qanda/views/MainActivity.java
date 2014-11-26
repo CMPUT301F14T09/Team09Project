@@ -274,7 +274,7 @@ public class MainActivity extends Activity{ //Main question view
 	public void onScreenHelp() {
 		LayoutInflater li = LayoutInflater.from(this);
 		View view = li.inflate(R.layout.main_help, null);
-
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("On-Screen Help");
 		builder.setView(view);
