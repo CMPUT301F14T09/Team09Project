@@ -50,7 +50,7 @@
     	android:layout_height="wrap_content"
     	android:paddingTop="10sp"
     	android:textSize="12sp"
-    	android:layout_below="@id/authorMain"
+    	android:layout_below="@id/locMain"
     	android:layout_alignParentLeft="true">
     </TextView>
     
@@ -59,7 +59,7 @@
 	    android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:paddingTop="10sp"
-    	android:layout_below="@id/authorMain"
+    	android:layout_below="@id/locMain"
     	android:layout_alignParentRight="true"
     	android:textSize="12sp">
     </TextView>
