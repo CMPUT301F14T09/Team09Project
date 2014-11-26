@@ -91,6 +91,18 @@ public class UserThreadsActivity extends Activity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.favourites) {
+			userThreadsActivity(Constants.FAVOURITES_FILENAME);
+			return true;
+		}
+		if (id == R.id.read_laters) {
+			userThreadsActivity(Constants.READ_LATER_FILENAME);
+			return true;
+		}
+		if (id == R.id.user_questions) {
+			userThreadsActivity(Constants.MY_QUESTIONS_FILENAME);
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -99,6 +111,12 @@ public class UserThreadsActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onStart();
  
+	}
+	
+	public void userThreadsActivity(String FILENAME) {
+		Intent intent = new Intent(UserThreadsActivity.this, UserThreadsActivity.class);
+		intent.putExtra("FILENAME", FILENAME);
+		startActivity(intent);
 	}
 	
 	public void displayThread(QuestionThread thread) {
