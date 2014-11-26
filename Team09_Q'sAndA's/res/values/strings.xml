@@ -37,5 +37,6 @@
     <string name="replySubmissionButton">Submit</string>
     <string name="edit_reply_text_hint">Enter reply here...</string>
     <string name="help">Help</string>
+    <string name="locPrompt">Attach Location?</string>
 
 </resources>
