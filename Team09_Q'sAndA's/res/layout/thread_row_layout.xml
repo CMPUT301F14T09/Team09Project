@@ -26,12 +26,24 @@
     </TextView>
     
     <TextView
+        android:id="@+id/postLoc"
+	    android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/postAuthor"
+        android:paddingLeft="5dp"
+        android:text="LOC"
+        android:textColor="@color/grey"
+        android:textSize="12sp" >
+    </TextView>
+    
+    <TextView
         android:id="@+id/postUpvotes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/postAuthor"
+        android:layout_below="@id/postLoc"
         android:paddingLeft="5dp"
         android:text="x Point(s)"
         android:textSize="12sp" >
@@ -78,13 +90,10 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/upvoteCheckbox"
-        android:layout_alignTop="@+id/upvoteCheckbox"
-        android:layout_toEndOf="@id/editAnswerText"
+        android:layout_alignBottom="@+id/repliesButton"
         android:layout_toRightOf="@+id/replyCount"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/answerAttachmentButton"
         android:src="@drawable/ic_menu_attachment" />
-    
     
 </RelativeLayout>

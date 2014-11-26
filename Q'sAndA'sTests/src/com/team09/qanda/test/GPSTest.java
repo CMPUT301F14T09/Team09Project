@@ -1,20 +1,21 @@
 package com.team09.qanda.test;
 
+import com.team09.qanda.views.MainActivity;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.InstrumentationTestCase;
 
-public class GPSTest extends InstrumentationTestCase {
+public class GPSTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	private Context context;
+	private Context context = getActivity().getApplicationContext();
 
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-		context = getInstrumentation().getContext();
+	public GPSTest() {
+		super(MainActivity.class);
+		
 	}
 	
 	//Use case #24-27: test Location manager

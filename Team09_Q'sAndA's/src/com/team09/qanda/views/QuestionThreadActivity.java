@@ -124,11 +124,6 @@ public class QuestionThreadActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if ( id == android.R.id.home) {
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
-
 		if (id == R.id.favourite_question) {
 			ArrayList<String> favourite_ids=lsh.getIds(context, Constants.FAVOURITE_IDS_FILENAME);
 			if (favourite_ids.contains(thread.getId())) {

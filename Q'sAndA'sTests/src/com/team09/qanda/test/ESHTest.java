@@ -3,7 +3,7 @@ package com.team09.qanda.test;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.test.InstrumentationTestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -13,21 +13,20 @@ import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
+import com.team09.qanda.views.MainActivity;
 
 import junit.framework.TestCase;
 
 
-public class ESHTest extends InstrumentationTestCase {
+public class ESHTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	private Context context;
-
-
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-		context = getInstrumentation().getContext();
+	public ESHTest() {
+		super(MainActivity.class);
+		// TODO Auto-generated constructor stub
 	}
+
+	private Context context = getActivity().getApplicationContext();
+
 	
 	//Use case #15: Search for questions and answers
 	public void testNumberOfAnswers(){

@@ -16,19 +16,10 @@ import android.test.ActivityInstrumentationTestCase2;
 public class ThreadListControllerTest extends
 		ActivityInstrumentationTestCase2<MainActivity> {
 	
-	private Context context;
+	private Context context = getActivity().getApplicationContext();
 
 	public ThreadListControllerTest() {
 		super(MainActivity.class);
-	}
-	
-	
-	
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-		context = getInstrumentation().getContext();
 	}
 
 

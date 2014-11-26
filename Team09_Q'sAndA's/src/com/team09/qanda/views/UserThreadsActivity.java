@@ -42,6 +42,7 @@ public class UserThreadsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.activity_user_threads);
 		userThreadList = (ListView) findViewById(R.id.UserListView);
 		FILENAME = (String) getIntent().getExtras().getSerializable("FILENAME");

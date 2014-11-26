@@ -114,10 +114,7 @@ public class AddQuestionActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
-		}// else if (id == android.R.id.home) {
-		//	NavUtils.navigateUpFromSameTask(this);
-	     //   return true;
-		//}
+		}
 		if (id == R.id.attach_image) {
 			attachImage();
 		}

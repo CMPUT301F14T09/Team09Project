@@ -147,6 +147,7 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		else {
 			TextView text = (TextView) convertView.findViewById(R.id.post);
 			TextView author = (TextView) convertView.findViewById(R.id.postAuthor);
+			TextView location = (TextView) convertView.findViewById(R.id.postLoc);
 			TextView upvotes = (TextView) convertView.findViewById(R.id.postUpvotes);
 			TextView replyCount = (TextView) convertView.findViewById(R.id.replyCount);
 			ImageButton attachmentButton = (ImageButton) convertView.findViewById(R.id.attachmentButton);
@@ -176,7 +177,9 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			catch (NullPointerException e) {
 				author.setText("- Null");
 			}
-				
+			
+			location.setText("Posted from: " + post.getCity());
+			
 			if (post.isImageSet() == false) {
 				attachmentButton.setVisibility(View.INVISIBLE);
 			}

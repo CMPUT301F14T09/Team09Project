@@ -40,7 +40,8 @@
         </activity>
         <activity
             android:name="com.team09.qanda.views.UserThreadsActivity"
-            android:label="@string/title_activity_user_threads" >
+            android:label="@string/title_activity_user_threads"
+            android:parentActivityName="com.team09.qanda.views.MainActivity" >
         </activity>
         <activity
             android:name="com.team09.qanda.views.QuestionThreadActivity"

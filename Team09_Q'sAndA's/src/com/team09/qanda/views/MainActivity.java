@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
@@ -125,6 +126,11 @@ public class MainActivity extends Activity{ //Main question view
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.help) {
+			// TODO
+			onScreenHelp();
+			return true;
+		}
 		if (id == R.id.favourites) {
 			userThreadsActivity(Constants.FAVOURITES_FILENAME);
 			return true;
@@ -139,7 +145,6 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
 	
 	@Override
 	protected void onStart() {
@@ -264,6 +269,20 @@ public class MainActivity extends Activity{ //Main question view
 		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);
 		startActivity(intent);
+	}
+	
+	public void onScreenHelp() {
+		LayoutInflater li = LayoutInflater.from(this);
+		View view = li.inflate(R.layout.main_help, null);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("On-Screen Help");
+		builder.setView(view);
+		
+		// create an alert dialog
+	    AlertDialog alertD = builder.create();
+	    alertD.setCanceledOnTouchOutside(true);
+	    alertD.show();
 	}
 	
 	private class AsyncRefreshLocal extends AsyncTask<LocalStorageHandler,Void,Void> {

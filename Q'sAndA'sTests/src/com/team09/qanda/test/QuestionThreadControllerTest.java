@@ -5,6 +5,7 @@ import java.util.Date;
 
 import junit.framework.TestCase;
 import android.content.Context;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.InstrumentationTestCase;
 
 import com.team09.qanda.ApplicationState;
@@ -16,18 +17,17 @@ import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.Reply;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
+import com.team09.qanda.views.QuestionThreadActivity;
 
-public class QuestionThreadControllerTest extends InstrumentationTestCase {
-	private Context context;
+public class QuestionThreadControllerTest extends ActivityInstrumentationTestCase2<QuestionThreadActivity> {
 	
-	
-	
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-		context = getInstrumentation().getContext();
+	public QuestionThreadControllerTest() {
+		super(QuestionThreadActivity.class);
+		// TODO Auto-generated constructor stub
 	}
+
+	private Context context = getActivity().getApplicationContext();
+	
 
 	// Use Case #2 : View a question and its answers
 	public void testViewThread() {
