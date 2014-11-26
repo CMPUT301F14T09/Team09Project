@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import android.content.Context;
 import android.content.Intent;
+import android.test.ActivityInstrumentationTestCase2;
 import android.test.AndroidTestCase;
 import android.test.InstrumentationTestCase;
 import android.test.mock.MockContext;
@@ -15,18 +16,18 @@ import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.Reply;
 import com.team09.qanda.models.User;
+import com.team09.qanda.views.MainActivity;
 
-public class PostControllerTest extends InstrumentationTestCase {
+public class PostControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	private Context context;
+	private Context context = getActivity().getApplicationContext();
 
 
-	@Override
-	protected void setUp() throws Exception {
-		// TODO Auto-generated method stub
-		super.setUp();
-		context = getInstrumentation().getContext();
+	public PostControllerTest() {
+		super(MainActivity.class);
+		
 	}
+	
 
 	// Use Case #6 : As an author, I want to reply to questions and answers to clarify things.
 	public void testAddReplytoAnswer() {
