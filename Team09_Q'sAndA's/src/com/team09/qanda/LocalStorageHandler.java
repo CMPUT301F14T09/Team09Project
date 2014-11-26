@@ -32,6 +32,11 @@ public class LocalStorageHandler {
 	private static final String FILENAME = "user.txt";
 	private ElasticSearchHandler esh;
 	
+	/**
+	 * The constructor initializes Gson to convert objects to
+	 * saveable strings, as well as an ElasticSearchHandler
+	 * which is used to refresh the currently saved questions.
+	 */
 	public LocalStorageHandler() {
 		this.gson=new GsonBuilder().create();
 		this.esh=new ElasticSearchHandler();
