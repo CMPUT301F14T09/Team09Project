@@ -62,4 +62,8 @@ public class PostController {
 		post.setImage(image);
 		post.setHasPicture(true);
 	}
+	
+	public void addCity(String city) {
+		post.setCity(city);
+	}
 }

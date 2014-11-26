@@ -30,7 +30,20 @@ public class Post extends QModel<QView> implements Serializable {
 	private Date timestamp;
 	//Strings are a little hard to sort on elastic search, so I'll use time in milliseconds
 	private long relativeDate;
+	private String city = "N/A"; //defaults to N/A
 	
+	
+	public String getCity()
+	{
+		return city;
+	}
+
+	
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
+
 	public Post(User author, String text) {
 		this.author=author;
 		this.text=text;
