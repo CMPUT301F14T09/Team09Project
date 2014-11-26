@@ -45,7 +45,8 @@
         <activity
             android:name="com.team09.qanda.views.QuestionThreadActivity"
             android:label="@string/title_activity_question_thread"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName="com.team09.qanda.views.MainActivity" >
         </activity>
         <activity
             android:name="com.team09.qanda.views.AddQuestionActivity"

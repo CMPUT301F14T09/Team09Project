@@ -131,4 +131,11 @@ public class UserThreadsActivity extends Activity {
 		intent.putExtra("later", fromLater);
 		startActivity(intent);
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		startActivity(new Intent(UserThreadsActivity.this, MainActivity.class));
+	    finish();
+	}
 }
