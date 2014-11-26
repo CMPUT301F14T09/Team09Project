@@ -272,19 +272,15 @@ public class MainActivity extends Activity{ //Main question view
 	}
 	
 	public void onScreenHelp() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			    
-	    // setup a dialog window
-	    alertDialogBuilder
-	        .setCancelable(false)
-	        .setTitle("On-Screen Help")
-	        .setMessage("- View Question by clicking desired question"
-	        		+ "- Ask a Question by clicking 'Ask a Question' button"
-	        		+ "- 'Load More' button adds 10 more questions in the list"
-	        		+ "- Access Favourites, Read Laters and My Questions through the menus");
-	
-	    // create an alert dialog
-	    AlertDialog alertD = alertDialogBuilder.create();
+		LayoutInflater li = LayoutInflater.from(this);
+		View view = li.inflate(R.layout.main_help, null);
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("On-Screen Help");
+		builder.setView(view);
+		
+		// create an alert dialog
+	    AlertDialog alertD = builder.create();
 	    alertD.setCanceledOnTouchOutside(true);
 	    alertD.show();
 	}

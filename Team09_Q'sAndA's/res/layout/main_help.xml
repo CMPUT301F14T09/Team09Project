@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/help_main1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - View Question by clicking desired question" />
+
+    <TextView
+        android:id="@+id/help_main2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - Ask a Question by clicking &apos;Ask a Question&apos; button" />
+
+    <TextView
+        android:id="@+id/help_main3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - &apos;Load More&apos; button adds 10 more questions in the list" />
+
+    <TextView
+        android:id="@+id/help_main4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" - Access Favourites, Read Laters and My Questions through the menus" />
+
+</LinearLayout>
