@@ -38,7 +38,7 @@ public class LocalStorageHandler {
 	}
 	
 	/**
-	 * This method loads a ThreadList from local storage
+	 * This method loads a ThreadList object from local storage
 	 * @param context The context from which the method is being called
 	 * @param filename The file to get the ThreadList from
 	 * @return The ThreadList from the file
@@ -112,7 +112,8 @@ public class LocalStorageHandler {
 	
 	/**
 	 * Adds a QuestionThread to a ThreadList in local storage, as well as its
-	 * associated id to a separate file
+	 * associated id to a separate file. This allows more efficient
+	 * access to the list of questions saved locally.
 	 * @param context The context from which the method is being called
 	 * @param qt The QuestionThread to be saved
 	 * @param filename The file to save the QuestionThread to
@@ -194,6 +195,13 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Append an id in the form of a string to a file containing
+	 * a list of other ids.
+	 * @param context The context from which the method is being called
+	 * @param id The id to be saved
+	 * @param filename The file to save to
+	 */
 	private void saveId(Context context, String id, String filename) {
 		try {
 			ArrayList<String> ids=getIds(context, filename);
@@ -211,6 +219,13 @@ public class LocalStorageHandler {
 		}
 	}
 	
+	/**
+	 * Saves a list of strings to a file. This overwrites
+	 * anything currently in the file with the list of strings
+	 * @param context The context from which the method is being called
+	 * @param ids The list of strings representing ids
+	 * @param filename The file to save to
+	 */
 	private void saveIds(Context context, ArrayList<String> ids, String filename) {
 		try {
 			deleteFile(context, filename);
@@ -249,6 +264,13 @@ public class LocalStorageHandler {
 		return new ArrayList<String>();
 	}
 	
+	/**
+	 * Loads a list of ids from a file, then removes a specified id 
+	 * if it exists, and then saves the updated list of ids to the file.
+	 * @param context The context from which the method is being called
+	 * @param id The id to be removed
+	 * @param filename The file where the ids are stored
+	 */
 	private void deleteId(Context context, String id, String filename) {
 		ArrayList<String> ids=getIds(context, filename);
 		while (ids.contains(id)) {
@@ -348,6 +370,14 @@ public class LocalStorageHandler {
 		refreshLocal(context, Constants.MY_QUESTIONS_FILENAME, my_qs_ids);
 	}
 	
+	/**
+	 * Runs through the ids stored in a file and gets the latest version
+	 * of each associated question from the server, then saves the updated
+	 * questions back to the file.
+	 * @param context The context from which the method is being called
+	 * @param filename The file to update
+	 * @param ids The ids of the questions to be updated
+	 */
 	private void refreshLocal(Context context,String filename, ArrayList<String> ids) {
 		ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
 		for (String id:ids) {

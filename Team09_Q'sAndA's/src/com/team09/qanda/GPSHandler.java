@@ -4,13 +4,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
+import com.team09.qanda.models.Post;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 //http://www.javacodegeeks.com/2010/09/android-location-based-services.html Nov 22, 2014
@@ -32,6 +39,32 @@ public class GPSHandler {
 	                MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
 	                new MyLocationListener()
 	        );
+		}
+		
+		public AlertDialog getLocationPrompt(Post p) {
+			final Post post = p;
+			LayoutInflater layoutInflater = LayoutInflater.from(c);
+			View promptView = layoutInflater.inflate(R.layout.loc_prompt, null);
+			
+		    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(c);
+		
+		    // set loc_prompt.xml to be the layout file of the alertdialog builder
+		    alertDialogBuilder.setView(promptView);
+		    
+		    // setup a dialog window
+		    alertDialogBuilder
+		        .setCancelable(false)
+		        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int id) {
+		                post.setCity(getCity());
+		            }
+		        })
+		        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+		            public void onClick(DialogInterface dialog, int id) {
+		            	
+		            }
+		        });
+		    return alertDialogBuilder.create();
 		}
 		
 		public Location getLocation() {

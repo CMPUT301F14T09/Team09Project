@@ -43,6 +43,7 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		final ListView list=(ListView)parent.findViewById(R.id.MainListView);
 		TextView question = (TextView) convertView.findViewById(R.id.questionMain);
 		TextView author = (TextView) convertView.findViewById(R.id.authorMain);
+		TextView location = (TextView) convertView.findViewById(R.id.locMain);
 		TextView points = (TextView) convertView.findViewById(R.id.numOfPoints);
 		TextView answers = (TextView) convertView.findViewById(R.id.numOfAnswers);
 		CheckBox later = (CheckBox) convertView.findViewById(R.id.saveQuestion);
@@ -73,6 +74,7 @@ public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 		
 		question.setText(thread.getQuestion().getText());
 		author.setText(" - " + thread.getQuestion().getAuthor().getName());
+		location.setText("Posted from: " + thread.getQuestion().getCity());
 		if (thread.getQuestion().getUps() == 1) {
 			points.setText(thread.getQuestion().getUps() + " Point");		}
 		else { 
