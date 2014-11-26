@@ -15,6 +15,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -64,7 +65,8 @@ public class QuestionThreadActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_thread);
-
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+			
 		thread = (QuestionThread) getIntent().getExtras().getSerializable("Selected Thread");
 		fromMain=getIntent().getExtras().getBoolean("main");
 		fromFavourite=getIntent().getExtras().getBoolean("favourite");
@@ -122,6 +124,11 @@ public class QuestionThreadActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		if ( id == android.R.id.home) {
+			NavUtils.navigateUpFromSameTask(this);
+			return true;
+		}
+
 		if (id == R.id.favourite_question) {
 			ArrayList<String> favourite_ids=lsh.getIds(context, Constants.FAVOURITE_IDS_FILENAME);
 			if (favourite_ids.contains(thread.getId())) {
