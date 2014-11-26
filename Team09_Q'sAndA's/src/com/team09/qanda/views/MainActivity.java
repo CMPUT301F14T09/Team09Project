@@ -231,7 +231,9 @@ public class MainActivity extends Activity{ //Main question view
 	/**
     *
     * This method loads more threads using the elastic search handler
-    * through a thread list controller and notifies the adapter
+    * through a thread list controller and notifies the adapter.
+    * It adds up to 10 more questions every time it is clicked 
+    * to the current list of questions in the MainActivity
     *
     * @param 
     * @see 
@@ -270,6 +272,18 @@ public class MainActivity extends Activity{ //Main question view
 		intent.putExtra("FILENAME", FILENAME);
 		startActivity(intent);
 	}
+	
+	/**
+    *
+    * This method opens up the on-Screen Help dialog when called
+    * The on-Screen Help dialog contains helpful information regarding the
+    * current screen/activity the user is in. The information is stored in the
+    * res/layouts directory. This activity's help information is stored in
+    * res/layouts/main_help.xml
+    * 
+    * @param 
+    * @see 
+    */
 	
 	public void onScreenHelp() {
 		LayoutInflater li = LayoutInflater.from(this);
