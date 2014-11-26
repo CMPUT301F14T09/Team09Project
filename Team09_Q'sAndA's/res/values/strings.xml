@@ -36,5 +36,6 @@
     <string name="remove_favourite">Remove from favourites</string>
     <string name="replySubmissionButton">Submit</string>
     <string name="edit_reply_text_hint">Enter reply here...</string>
+    <string name="help">Help</string>
 
 </resources>

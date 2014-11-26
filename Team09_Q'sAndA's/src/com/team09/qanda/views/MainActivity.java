@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
@@ -125,6 +126,11 @@ public class MainActivity extends Activity{ //Main question view
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.help) {
+			// TODO
+			onScreenHelp();
+			return true;
+		}
 		if (id == R.id.favourites) {
 			userThreadsActivity(Constants.FAVOURITES_FILENAME);
 			return true;
@@ -139,7 +145,6 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
 	
 	@Override
 	protected void onStart() {
@@ -264,6 +269,24 @@ public class MainActivity extends Activity{ //Main question view
 		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);
 		startActivity(intent);
+	}
+	
+	public void onScreenHelp() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+			    
+	    // setup a dialog window
+	    alertDialogBuilder
+	        .setCancelable(false)
+	        .setTitle("On-Screen Help")
+	        .setMessage("- View Question by clicking desired question"
+	        		+ "- Ask a Question by clicking 'Ask a Question' button"
+	        		+ "- 'Load More' button adds 10 more questions in the list"
+	        		+ "- Access Favourites, Read Laters and My Questions through the menus");
+	
+	    // create an alert dialog
+	    AlertDialog alertD = alertDialogBuilder.create();
+	    alertD.setCanceledOnTouchOutside(true);
+	    alertD.show();
 	}
 	
 	private class AsyncRefreshLocal extends AsyncTask<LocalStorageHandler,Void,Void> {
