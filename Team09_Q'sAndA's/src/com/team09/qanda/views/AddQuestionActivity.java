@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.Constants;
+import com.team09.qanda.GPSHandler;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.controllers.PostController;
@@ -177,6 +178,7 @@ public class AddQuestionActivity extends Activity {
 		if (isConnected()) {
 			textFieldEntry = textField.getText().toString();
 			Post newPost = new Post(curState.getUser(), textFieldEntry);
+			new GPSHandler(context).getLocationPrompt(newPost).show();
 			PostController pc = new PostController(newPost);
 			if (imageString != null) {
 				pc.attachImage(imageString);
