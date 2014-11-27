@@ -208,6 +208,18 @@ public class AddQuestionActivity extends Activity {
 		task.execute(new QuestionThreadController[] {qtc});
 	}
 	
+	
+	/**
+    *
+    * This method opens up the on-Screen Help dialog when called
+    * The on-Screen Help dialog contains helpful information regarding the
+    * current screen/activity the user is in. The information is stored in the
+    * res/layouts directory. This activity's help information is stored in
+    * res/layouts/addquestion_help.xml
+    * 
+    * @param 
+    * @see 
+    */
 	public void onScreenHelp() {
 		LayoutInflater li = LayoutInflater.from(this);
 		View view = li.inflate(R.layout.addquestion_help, null);
