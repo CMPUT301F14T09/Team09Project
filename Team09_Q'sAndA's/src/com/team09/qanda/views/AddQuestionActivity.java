@@ -17,6 +17,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -33,7 +35,9 @@ import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.Constants;
+import com.team09.qanda.GPSHandler;
 import com.team09.qanda.LocalStorageHandler;
+import com.team09.qanda.LocDialogFragment;
 import com.team09.qanda.R;
 import com.team09.qanda.controllers.PostController;
 import com.team09.qanda.controllers.QuestionThreadController;
@@ -51,7 +55,7 @@ import com.team09.qanda.models.QuestionThread;
  * 
  */
 
-public class AddQuestionActivity extends Activity {
+public class AddQuestionActivity extends FragmentActivity implements LocDialogFragment.LocDialogListener{
 
 	private String textFieldEntry;
 	private EditText textField;
@@ -180,9 +184,11 @@ public class AddQuestionActivity extends Activity {
     * @see 
     */
 	public void submitQuestion(View v) {
+		showNoticeDialog();
+	}
+	
+	public void submitQuestion(Post newPost) {
 		if (isConnected()) {
-			textFieldEntry = textField.getText().toString();
-			Post newPost = new Post(curState.getUser(), textFieldEntry);
 			PostController pc = new PostController(newPost);
 			if (imageString != null) {
 				pc.attachImage(imageString);
@@ -202,6 +208,30 @@ public class AddQuestionActivity extends Activity {
 			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+    public void showNoticeDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new LocDialogFragment();
+        dialog.show(getSupportFragmentManager(), "LocDialogFragment");
+    }
+
+    // The dialog fragment receives a reference to this Activity through the
+    // Fragment.onAttach() callback, which it uses to call the following methods
+    // defined by the NoticeDialogFragment.NoticeDialogListener interface
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+    	textFieldEntry = textField.getText().toString();
+		Post newPost = new Post(curState.getUser(), textFieldEntry);
+		newPost.setCity(new GPSHandler(context).getCity());
+		submitQuestion(newPost);
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+    	textFieldEntry = textField.getText().toString();
+		Post newPost = new Post(curState.getUser(), textFieldEntry);
+		submitQuestion(newPost);
+    }
 	
 	private void saveQuestion(QuestionThreadController qtc) {
 		AsyncSave task=new AsyncSave();
