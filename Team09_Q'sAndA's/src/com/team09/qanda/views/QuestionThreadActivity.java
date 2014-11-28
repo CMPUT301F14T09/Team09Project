@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,6 +17,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +34,8 @@ import android.widget.Toast;
 
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.Constants;
+import com.team09.qanda.GPSHandler;
+import com.team09.qanda.LocDialogFragment;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.ThreadAdapter;
@@ -46,7 +51,7 @@ import com.team09.qanda.models.QuestionThread;
  *
  */
 
-public class QuestionThreadActivity extends Activity {
+public class QuestionThreadActivity extends FragmentActivity implements LocDialogFragment.LocDialogListener{
 
 	private QuestionThread thread;
 	private ThreadAdapter adapter;
@@ -280,11 +285,12 @@ public class QuestionThreadActivity extends Activity {
 	
 	// Method called by the onClick of answerSubmissionButton
 	public void submitAnswer(View v) {
+		showLocDialog();
+	}
+	
+	public void submitAnswer(Post answer) {
 		if (isConnected()) {
 			System.out.println("Answer Count : " + thread.getAnswers().size());
-			String answerText = answerTextField.getText().toString();
-			// Create a Post object for the answer
-			Post answer = new Post(curState.getUser(), answerText);
 			PostController pc = new PostController(answer);
 			if (imageString!= null) {
 				pc.attachImage(imageString);
@@ -304,6 +310,32 @@ public class QuestionThreadActivity extends Activity {
 			Toast.makeText(context, "Could not post answer. Check network connection and try again", Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+    public void showLocDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new LocDialogFragment();
+        dialog.show(getSupportFragmentManager(), "LocDialogFragment");
+    }
+
+    // The dialog fragment receives a reference to this Activity through the
+    // Fragment.onAttach() callback, which it uses to call the following methods
+    // defined by the NoticeDialogFragment.NoticeDialogListener interface
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+    	String answerText = answerTextField.getText().toString();
+		// Create a Post object for the answer
+		Post answer = new Post(curState.getUser(), answerText);
+		answer.setCity(new GPSHandler(context).getCity());
+		submitAnswer(answer);
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+    	String answerText = answerTextField.getText().toString();
+		// Create a Post object for the answer
+		Post answer = new Post(curState.getUser(), answerText);
+		submitAnswer(answer);
+    }
 	
 	private boolean isConnected() {
 		//Determine if the user has connectivity

@@ -184,7 +184,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
     * @see 
     */
 	public void submitQuestion(View v) {
-		showNoticeDialog();
+		showLocDialog();
 	}
 	
 	public void submitQuestion(Post newPost) {
@@ -209,7 +209,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 		}
 	}
 	
-    public void showNoticeDialog() {
+    public void showLocDialog() {
         // Create an instance of the dialog fragment and show it
         DialogFragment dialog = new LocDialogFragment();
         dialog.show(getSupportFragmentManager(), "LocDialogFragment");
