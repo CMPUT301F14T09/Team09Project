@@ -7,7 +7,8 @@ import com.team09.qanda.views.QView;
 
 /**
  * 
- * Class for storing everything from a question, including the question post and any answers.
+ * This class is used to represent a thread consisting of a question
+ * and its answers, as well as all of their contained information.
  *
  */
 
@@ -17,7 +18,7 @@ public class QuestionThread extends QModel<QView> implements Serializable {
 	private ArrayList<Post> answers;
 	
 	/**
-	 * A QeustionThread features a Question (a Post object) and any of its related answers (also a Post object),
+	 * A QuestionThread features a Question (a Post object) and any of its related answers (also a Post object),
 	 * and replies 
 	 * @param question, the main Post of the QuestionThread(ie. the question)
 	 */
