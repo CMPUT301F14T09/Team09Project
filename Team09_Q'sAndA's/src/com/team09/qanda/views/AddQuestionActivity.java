@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.Constants;
 import com.team09.qanda.GPSHandler;
+import com.team09.qanda.ImageHandler;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.LocDialogFragment;
 import com.team09.qanda.R;
@@ -146,43 +147,11 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 		
 		if (resultCode == RESULT_OK) {
 			if (requestCode == IMAGE_REQUEST) {
-				Uri uri = data.getData();
-				InputStream input = null; 
-				try {
-					input = getContentResolver().openInputStream(uri);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Bitmap selectedImage = BitmapFactory.decodeStream(input);
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
-				int imageByteSize = out.toByteArray().length;
-				if (imageByteSize <= (64*1024)) {
-					byte[] image = out.toByteArray();
-					imageString = Base64.encodeToString(image, Base64.DEFAULT);
-					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
-					imageView.setImageBitmap(selectedImage);
-					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
-				}
-				// TODO: Implement image compression
-				else {
-					BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
-					int size = 2;
-					// Image actually gets compressed more than this
-					while ((imageByteSize/size) > (64*1024*2)) {
-						size+=1;
-					}
-					bmpFactoryOptions.inSampleSize = size;
-				    Bitmap bitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.toByteArray().length, bmpFactoryOptions);
-					ByteArrayOutputStream newOut = new ByteArrayOutputStream();
-				    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, newOut);
-				    imageString = Base64.encodeToString(newOut.toByteArray(), Base64.DEFAULT);
-					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
-					imageView.setImageBitmap(bitmap);
-					imageByteSize = newOut.toByteArray().length;
-					Toast.makeText(this, "Image compressed.", Toast.LENGTH_SHORT).show();
-				}
+				ImageHandler imageHandler = new ImageHandler();
+				Bitmap image = imageHandler.handleImage(data, this.context);
+				ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
+				imageView.setImageBitmap(image);
+				imageString = imageHandler.toString();
 			}
 		}
 	}
