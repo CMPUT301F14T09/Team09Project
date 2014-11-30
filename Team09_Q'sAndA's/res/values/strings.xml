@@ -16,7 +16,7 @@
     <string name="sort_LeastUpvoted">Least Upvoted</string>
     <string name="add_question_hint">Write question here</string>
     <string name="attach_image">Attach</string>
-    <string name="submit_question_btn">Submit Question</string>
+    <string name="submit_question_btn">Submit</string>
     <string name="askAQuestion">Ask a Question</string>
     <string name="favourite_question">Favourite</string>
     <string name="favourites">Favourites</string>

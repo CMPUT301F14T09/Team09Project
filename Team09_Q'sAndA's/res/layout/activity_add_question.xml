@@ -8,29 +8,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.team09.qanda.views.AddQuestionActivity" >
 
-    <EditText
-        android:id="@+id/add_question_field"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/add_question_hint"
-        android:imeOptions="actionDone"
-        android:inputType="textCapSentences|textMultiLine"
-        android:maxLines="10" />
-
     <Button
         android:id="@+id/submit_question_btn"
         android:layout_width="1000dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/add_question_field"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:onClick="submitQuestion"
         android:text="@string/submit_question_btn" />
+    
+    <EditText
+        android:id="@+id/add_question_field"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/submit_question_btn"
+        android:hint="@string/add_question_hint"
+        android:imeOptions="actionDone"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="10"
+        android:background="@android:color/background_light" />
 
     <ImageView
         android:id="@+id/attachedImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/submit_question_btn"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="5dp"
         android:layout_alignLeft="@+id/add_question_field"
         android:layout_alignRight="@+id/add_question_field"
         android:layout_below="@+id/add_question_field" />
