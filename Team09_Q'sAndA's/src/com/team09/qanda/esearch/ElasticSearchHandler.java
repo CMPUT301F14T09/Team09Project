@@ -194,8 +194,15 @@ public class ElasticSearchHandler {
 	public boolean delete(Post P) {
 		return true;
 	}
-	
+	/**
+	 * the search method queries the Elastic Search server for QuestionThreads
+	 * based on the query provided by the searchString. The search method queries
+	 * the question.text and answer.text field of a QuestionThread.
+	 * @param searchString
+	 * @return
+	 */
 	public ArrayList<QuestionThread> search(String searchString) {
+		//Here be dragons
 		String query="{\"query\":{\"filtered\": {\"query\":{\"query_string\":{\"fields\": [\"answers.text\", \"question.text\"],\"query\": \"*"+searchString+"*\"}},\"filter\": {}}}}";
 		return getThreads(query, new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(), 10);
 	}
