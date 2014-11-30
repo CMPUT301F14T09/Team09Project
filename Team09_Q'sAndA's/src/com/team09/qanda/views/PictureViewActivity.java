@@ -2,23 +2,16 @@ package com.team09.qanda.views;
 
 import com.team09.qanda.ImageHandler;
 import com.team09.qanda.R;
-import com.team09.qanda.R.id;
-import com.team09.qanda.R.layout;
-import com.team09.qanda.R.menu;
 import com.team09.qanda.models.Post;
-import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;

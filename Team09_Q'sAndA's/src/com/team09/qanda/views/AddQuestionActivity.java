@@ -132,14 +132,25 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 		return super.onOptionsItemSelected(item);
 	}
 	
-	
+	/**
+	 * 
+	 * attachImage
+	 * Calls an Intent to allow user to attach an image.
+	 * Called when user presses attach button.
+	 * 
+	 */
 	public void attachImage() {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
 		startActivityForResult(intent, IMAGE_REQUEST);
 	}
 	
-	// Called when an image has been chosen by the user
+	
+	/**
+	 *  onActivityResult
+	 *  Called when an image has been chosen by the user, starts ImageHandler
+	 *  
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -160,6 +171,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 
 	/**
     *
+    * submitQuestion
     * This method submits a new question to the server, with the current
     * user as its author. It creates a new post object and coverts it to
     * a question thread object.
@@ -171,6 +183,12 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 		showLocDialog();
 	}
 	
+	
+	/**
+	 * submitQuestion
+	 * Packages everything needed for a question post and then submits it to ElasticSearch.
+	 * @param newPost
+	 */
 	public void submitQuestion(Post newPost) {
 		if (isConnected()) {
 			PostController pc = new PostController(newPost);
@@ -225,6 +243,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 	
 	/**
     *
+    * onScreenHelp
     * This method opens up the on-Screen Help dialog when called
     * The on-Screen Help dialog contains helpful information regarding the
     * current screen/activity the user is in. The information is stored in the
