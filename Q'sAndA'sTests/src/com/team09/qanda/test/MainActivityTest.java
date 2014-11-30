@@ -24,7 +24,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	ThreadListAdapter adapter;
 	MainActivity mainAct;
 	ArrayAdapter<String> spinner;
-	private Context context;
 	ElasticSearchHandler esh;
 	QuestionThread one;
 	QuestionThread two;

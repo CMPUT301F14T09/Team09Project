@@ -16,13 +16,18 @@ import android.test.ActivityInstrumentationTestCase2;
 public class ThreadListControllerTest extends
 		ActivityInstrumentationTestCase2<MainActivity> {
 	
-	private Context context = getActivity().getApplicationContext();
+	private Context context;
 
 	public ThreadListControllerTest() {
 		super(MainActivity.class);
 	}
 
 
+	@Override
+	protected void setUp() throws Exception {
+		context = getActivity().getApplicationContext();
+		super.setUp();
+	}
 
 	// Use Case #1 : Browse questions
 	public void testBrowseQuestions() {

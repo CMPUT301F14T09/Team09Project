@@ -1,5 +1,9 @@
 package com.team09.qanda.esearch;
 
+/**
+ * This class contains an individual result returned from a query
+ * to the elasticsearch server.
+ */
 import com.team09.qanda.models.QuestionThread;
 
 public class ESResult {

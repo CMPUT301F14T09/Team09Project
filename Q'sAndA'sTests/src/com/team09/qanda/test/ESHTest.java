@@ -25,8 +25,13 @@ public class ESHTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		// TODO Auto-generated constructor stub
 	}
 
-	private Context context = getActivity().getApplicationContext();
+	private Context context;
 
+	@Override
+	protected void setUp() throws Exception {
+		context = getActivity().getApplicationContext();
+		super.setUp();
+	}
 	
 	//Use case #15: Search for questions and answers
 	public void testNumberOfAnswers(){

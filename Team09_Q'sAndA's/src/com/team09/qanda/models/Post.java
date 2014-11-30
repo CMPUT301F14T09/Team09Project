@@ -4,16 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-
 import com.team09.qanda.views.QView;
 
 /**
  * 
  * This is the Post class. 
- * Whenever a new question is asked or answer posted, a Post is created.
+ * Posts are used to represent both questions and answers.
+ * They are differentiated at a higher level in the QuestionThread class.
  * This class stores the name of the author of the post, the text of the post,
  * a list of all replies, and the number of upvotes that the post has, including a list of
  * everyone who upvoted the post, to prevent a single user from upvoting a post twice.

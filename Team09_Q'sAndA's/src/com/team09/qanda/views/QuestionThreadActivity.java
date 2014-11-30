@@ -59,7 +59,6 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	private ExpandableListView threadPostsList;
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
-	private PostController questionPostController;
 	private static int IMAGE_REQUEST = 1;
 	private String imageString = null;
 	private boolean fromMain;
@@ -240,14 +239,25 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	}
 	*/
 
-	public void attachImage(View v) {
+	/**
+	 * 
+	 * attachImage
+	 * Calls an Intent to allow user to attach an image.
+	 * Called when user presses attach button.
+	 * 
+	 */
+	public void attachImage() {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
 		startActivityForResult(intent, IMAGE_REQUEST);
-		
 	}
 	
-	// Called when an image has been chosen by the user
+	
+	/**
+	 *  onActivityResult
+	 *  Called when an image has been chosen by the user, starts ImageHandler
+	 *  
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

@@ -61,11 +61,6 @@ public class ElasticSearchHandler {
 		client=f.getObject();
 	}
 	
-	//this version defaults to sort by upvotes
-	//could change the design of this method to reduce repetition
-	//more overloading could be done for when no arguments are passed
-	//or just sortstyle is passed and not numQuestions **will be a data type problem 
-	//but could be resolved by changing sortStyle to char or something, if necessary**
 	/**
 	 * Gets the list of questions stored on the server based on the 
 	 * url, index, and type passed to the constructor.
@@ -76,11 +71,7 @@ public class ElasticSearchHandler {
 	public ArrayList<QuestionThread> getThreads() {
 		return getThreads(new SimpleSortFactory(SimpleSortFactory.MostUpvotes).createSort(),10);
 	}
-	
-	//sortStyle is id of the element found at the
-	//the index of the spinner element found in the string resource
-	//overloaded more specific version, for sorting
-	//this is default version
+
 	/**
 	 * Gets the questions stored on the server with optional parameters
 	 * to specify the sorting and number of threads to return.
