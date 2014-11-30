@@ -20,14 +20,22 @@ import com.team09.qanda.views.MainActivity;
 
 public class PostControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	private Context context = getActivity().getApplicationContext();
+	private Context context;
 
 
 	public PostControllerTest() {
 		super(MainActivity.class);
 		
 	}
-	
+
+	@Override
+	protected void setUp() throws Exception {
+		context = getActivity().getApplicationContext();
+		super.setUp();
+	}
+
+
+
 
 	// Use Case #6 : As an author, I want to reply to questions and answers to clarify things.
 	public void testAddReplytoAnswer() {

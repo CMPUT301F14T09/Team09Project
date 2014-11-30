@@ -3,10 +3,8 @@ package com.team09.qanda.test;
 import java.util.ArrayList;
 import java.util.Date;
 
-import junit.framework.TestCase;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.InstrumentationTestCase;
 
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.LocalStorageHandler;
@@ -26,7 +24,13 @@ public class QuestionThreadControllerTest extends ActivityInstrumentationTestCas
 		// TODO Auto-generated constructor stub
 	}
 
-	private Context context = getActivity().getApplicationContext();
+	private Context context;
+	
+	@Override
+	protected void setUp() throws Exception {
+		context = getActivity().getApplicationContext();
+		super.setUp();
+	}
 	
 
 	// Use Case #2 : View a question and its answers

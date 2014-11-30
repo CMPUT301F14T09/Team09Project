@@ -19,7 +19,7 @@ public class OfflineTest extends ActivityInstrumentationTestCase2<QuestionThread
 	
 	public OfflineTest() {
 		super(QuestionThreadActivity.class);
-		this.context=getInstrumentation().getContext();
+		this.context=getActivity().getApplicationContext();
 	}
 	
 	//Use case 19: Offline viewing

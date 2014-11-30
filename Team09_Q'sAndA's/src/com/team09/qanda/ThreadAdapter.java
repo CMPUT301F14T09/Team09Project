@@ -192,7 +192,7 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 						// TODO Auto-generated method stub
 						Intent intent = new Intent(context, PictureViewActivity.class);
 						intent.putExtra("Selected Post", post_copy);
-						context.startActivity(intent);
+						context.startActivity(intent); 
 					}
 				});
 			}

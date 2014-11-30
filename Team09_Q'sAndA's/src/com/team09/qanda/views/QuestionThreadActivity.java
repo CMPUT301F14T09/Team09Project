@@ -240,14 +240,25 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	}
 	*/
 
-	public void attachImage(View v) {
+	/**
+	 * 
+	 * attachImage
+	 * Calls an Intent to allow user to attach an image.
+	 * Called when user presses attach button.
+	 * 
+	 */
+	public void attachImage() {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
 		startActivityForResult(intent, IMAGE_REQUEST);
-		
 	}
 	
-	// Called when an image has been chosen by the user
+	
+	/**
+	 *  onActivityResult
+	 *  Called when an image has been chosen by the user, starts ImageHandler
+	 *  
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -260,6 +271,7 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 				ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 				imageView.setImageBitmap(image);
 				imageString = imageHandler.toString();
+          		Toast.makeText(getApplicationContext(), "Image attached.", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

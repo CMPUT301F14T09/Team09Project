@@ -11,12 +11,19 @@ import android.test.InstrumentationTestCase;
 
 public class GPSTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	private Context context = getActivity().getApplicationContext();
+	private Context context;
 
 	public GPSTest() {
 		super(MainActivity.class);
 		
 	}
+	
+	@Override
+	protected void setUp() throws Exception {
+		context = getActivity().getApplicationContext();
+		super.setUp();
+	}
+	
 	
 	//Use case #24-27: test Location manager
 	public void testGPS() {
