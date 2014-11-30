@@ -10,6 +10,7 @@ import com.team09.qanda.models.QuestionThread;
  * 
  * This class makes updates to a QuestionThread object. The object passed to the
  * constructor will be the one that will be changed.
+ * The methods use the getters and setters in QuestionThread to perform more meaningful actions
  *
  */
 
