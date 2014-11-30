@@ -1,3 +1,6 @@
+/**
+ * A Generic class representing an Active Model (of Active Model MVC)
+ */
 package com.team09.qanda.models;
 
 import java.util.ArrayList;
