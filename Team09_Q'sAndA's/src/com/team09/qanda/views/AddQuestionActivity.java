@@ -156,7 +156,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 				}
 				Bitmap selectedImage = BitmapFactory.decodeStream(input);
 				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);
+				selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
 				int imageByteSize = out.toByteArray().length;
 				if (imageByteSize <= (64*1024)) {
 					byte[] image = out.toByteArray();
@@ -167,7 +167,21 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 				}
 				// TODO: Implement image compression
 				else {
-					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
+					BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+					int size = 2;
+					// Image actually gets compressed more than this
+					while ((imageByteSize/size) > (64*1024*2)) {
+						size+=1;
+					}
+					bmpFactoryOptions.inSampleSize = size;
+				    Bitmap bitmap = BitmapFactory.decodeByteArray(out.toByteArray(), 0, out.toByteArray().length, bmpFactoryOptions);
+					ByteArrayOutputStream newOut = new ByteArrayOutputStream();
+				    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, newOut);
+				    imageString = Base64.encodeToString(newOut.toByteArray(), Base64.DEFAULT);
+					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
+					imageView.setImageBitmap(bitmap);
+					imageByteSize = newOut.toByteArray().length;
+					Toast.makeText(this, "Image compressed.", Toast.LENGTH_SHORT).show();
 				}
 			}
 		}
