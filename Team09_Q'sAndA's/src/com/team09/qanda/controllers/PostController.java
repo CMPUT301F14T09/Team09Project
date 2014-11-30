@@ -2,31 +2,35 @@ package com.team09.qanda.controllers;
 
 import java.util.ArrayList;
 
-import android.graphics.Bitmap;
-
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.models.Post;
 import com.team09.qanda.models.Reply;
 import com.team09.qanda.models.User;
 
 /**
- * 
- * This is the PostController class.
- * This class makes changes to the Post class.
- * When a post is upvoted, this class checks for duplicates and then adds or does not add an upvote based on the result.
- * This class also adds replies to a post and attaches an image to a post.
+ * This class is used to make updates to an instance of a Post.
+ * It is initialized with a Post object, and then it can operate on that Post
+ * The methods use the getters and setters in Post to perform more meaningful actions
  * 
  */
 
 public class PostController {
-	//Handles individual posts
+	
 	private Post post;
 	
+	/**
+	 * The constructor takes in a Post object, which it will act upon
+	 * @param post The Post that will be updated
+	 */
 	public PostController(Post post) {
 		this.post=post;
 	}
 	
-	// Called to add an upvote. Checks alreadyUpvoted() to see if user has already voted.
+	/**
+	 * Adds an upvote to the post. Performs a check to see if the user
+	 * has already upvoted the post, so each user can only upvote an
+	 * individual post once.
+	 */
 	public void addUp() {
 		ArrayList<User> ups = post.getUpsList();
 		ApplicationState state = ApplicationState.getInstance();
@@ -37,7 +41,11 @@ public class PostController {
 		}
 	}
 	
-	// Checks to see if user has already voted
+	/**
+	 * Performs a check to see if the user attempting to upvote
+	 * a post has previously upvoted it.
+	 * @return True if they have, false otherwise
+	 */
 	public boolean alreadyUpvoted() {
 		ArrayList<User> ups = post.getUpsList();
 		ApplicationState state = ApplicationState.getInstance();
@@ -50,7 +58,10 @@ public class PostController {
 		return false;
 	}
 	
-	// Adds a reply to a post
+	/**
+	 * Adds a reply to the current list of replies for a single post
+	 * @param reply The reply to be added
+	 */
 	public void addReply(Reply reply) {
 		ArrayList<Reply> replies=post.getReplies();
 		replies.add(reply);
