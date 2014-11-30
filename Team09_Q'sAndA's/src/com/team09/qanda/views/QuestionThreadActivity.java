@@ -59,7 +59,6 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	private ExpandableListView threadPostsList;
 	private EditText answerTextField;
 	private ApplicationState curState = ApplicationState.getInstance();
-	private PostController questionPostController;
 	private static int IMAGE_REQUEST = 1;
 	private String imageString = null;
 	private boolean fromMain;

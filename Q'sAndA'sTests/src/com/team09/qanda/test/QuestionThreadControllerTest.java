@@ -15,13 +15,13 @@ import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.Reply;
 import com.team09.qanda.models.ThreadList;
 import com.team09.qanda.models.User;
+import com.team09.qanda.views.MainActivity;
 import com.team09.qanda.views.QuestionThreadActivity;
 
-public class QuestionThreadControllerTest extends ActivityInstrumentationTestCase2<QuestionThreadActivity> {
+public class QuestionThreadControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
 	public QuestionThreadControllerTest() {
-		super(QuestionThreadActivity.class);
-		// TODO Auto-generated constructor stub
+		super(MainActivity.class);
 	}
 
 	private Context context;
