@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * 
- * Activity used to view an image attached to a post.
+ * PictureViewActivity
+ * Activity used to view an image attached to a post (and save it if wanted).
  *
  */
 public class PictureViewActivity extends Activity {
@@ -46,13 +46,17 @@ public class PictureViewActivity extends Activity {
 		postImage.setLongClickable(true);
 		postImage.setOnLongClickListener(new ImageView.OnLongClickListener() { 
 	        public boolean onLongClick(View v) {
-	        	imageClick();
+	        	saveImage();
 	            return true;
 	        }
 	    });
 	}
 	
-	public void imageClick() {
+	/**
+	 * saveImage
+	 * Creates a dialog that allows the user to save the image. Called when User long clicks on the image.
+	 */
+	public void saveImage() {
 		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 		dialog.setMessage("Save image?")
                .setPositiveButton("Save", new DialogInterface.OnClickListener() {
@@ -77,24 +81,5 @@ public class PictureViewActivity extends Activity {
                });
 		dialog.create();
 		dialog.show();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.picture_view, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 }
