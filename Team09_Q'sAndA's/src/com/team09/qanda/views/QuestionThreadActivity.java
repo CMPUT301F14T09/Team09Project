@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.team09.qanda.ApplicationState;
 import com.team09.qanda.Constants;
 import com.team09.qanda.GPSHandler;
+import com.team09.qanda.ImageHandler;
 import com.team09.qanda.LocDialogFragment;
 import com.team09.qanda.LocalStorageHandler;
 import com.team09.qanda.R;
@@ -254,31 +255,11 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 		
 		if (resultCode == RESULT_OK) {
 			if (requestCode == IMAGE_REQUEST) {
-				Uri uri = data.getData();
-				InputStream input = null; 
-				try {
-					input = getContentResolver().openInputStream(uri);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				Bitmap selectedImage = BitmapFactory.decodeStream(input);
-				int imageSize = selectedImage.getByteCount();
-				ByteArrayOutputStream out = new ByteArrayOutputStream();
-				selectedImage.compress(Bitmap.CompressFormat.PNG, 100, out);	
-				int imageByteSize = out.toByteArray().length;
-				if (imageByteSize <= (64*1024)) {
-					byte[] image = out.toByteArray();
-					imageString = Base64.encodeToString(image, Base64.DEFAULT);
-					ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
-					imageView.setImageBitmap(selectedImage);
-					Toast.makeText(this, "Image attached.", Toast.LENGTH_SHORT).show();
-				}
-				// TODO: Implement image compression
-				else {
-					Toast.makeText(this, "Image too large.", Toast.LENGTH_SHORT).show();
-				}
-				
+				ImageHandler imageHandler = new ImageHandler();
+				Bitmap image = imageHandler.handleImage(data, this.context);
+				ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
+				imageView.setImageBitmap(image);
+				imageString = imageHandler.toString();
 			}
 		}
 	}
