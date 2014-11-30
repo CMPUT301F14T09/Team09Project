@@ -260,6 +260,7 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 				ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 				imageView.setImageBitmap(image);
 				imageString = imageHandler.toString();
+          		Toast.makeText(getApplicationContext(), "Image attached.", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}

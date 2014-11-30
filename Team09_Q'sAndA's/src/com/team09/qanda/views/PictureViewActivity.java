@@ -1,5 +1,6 @@
 package com.team09.qanda.views;
 
+import com.team09.qanda.ImageHandler;
 import com.team09.qanda.R;
 import com.team09.qanda.R.id;
 import com.team09.qanda.R.layout;
@@ -8,15 +9,20 @@ import com.team09.qanda.models.Post;
 import com.team09.qanda.models.QuestionThread;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -26,6 +32,7 @@ import android.widget.TextView;
 public class PictureViewActivity extends Activity {
 
 	private Post post;
+	private Bitmap image;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +43,47 @@ public class PictureViewActivity extends Activity {
 		ImageView postImage = (ImageView) findViewById(R.id.postImage);
 		TextView postText = (TextView) findViewById(R.id.postText);
 		TextView postAuthor = (TextView) findViewById(R.id.postAuthor);
-		byte[] decodeImage = Base64.decode(post.getImage(), 0);
-		Bitmap image = BitmapFactory.decodeByteArray(decodeImage, 0, decodeImage.length);
+		ImageHandler imageHandler = new ImageHandler();
+		String imageString = post.getImage();
+		image = imageHandler.stringToBitmap(imageString);
 		postImage.setImageBitmap(image);
 		postText.setText(post.getText());
 		postAuthor.setText("- "+post.getAuthor().getName());
 
-		
+		postImage.setLongClickable(true);
+		postImage.setOnLongClickListener(new ImageView.OnLongClickListener() { 
+	        public boolean onLongClick(View v) {
+	        	imageClick();
+	            return true;
+	        }
+	    });
+	}
+	
+	public void imageClick() {
+		AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+		dialog.setMessage("Save image?")
+               .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                	   try {
+                		   if (MediaStore.Images.Media.insertImage(getContentResolver(), image, "Image by " + post.getAuthor().getName() + " from Team09_Q'sAndA's" , post.getText()) != null) {
+                			   Toast.makeText(getApplicationContext(), "Image saved.", Toast.LENGTH_SHORT).show();
+                		   }
+                		   else {
+      		            		Toast.makeText(getApplicationContext(), "Image not saved.", Toast.LENGTH_SHORT).show();
+                		   }
+
+                	   } catch(Exception E) {
+   		            		Toast.makeText(getApplicationContext(), "Image not saved.", Toast.LENGTH_SHORT).show();
+                	   }
+                   }
+               })
+               .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       
+                   }
+               });
+		dialog.create();
+		dialog.show();
 	}
 
 	@Override

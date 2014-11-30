@@ -69,4 +69,10 @@ public class ImageHandler {
 		image = getImageFromArray(imageByte, bmpFactoryOptions);
 		return image;
 	}
+	
+	public Bitmap stringToBitmap(String string) {
+		byte[] decodeImage = Base64.decode(string, 0);
+		Bitmap image = BitmapFactory.decodeByteArray(decodeImage, 0, decodeImage.length);
+		return image;
+	}
 }
