@@ -19,7 +19,7 @@ public class PostController {
 	private Post post;
 	
 	/**
-	 * The constructor takes in a Post object, which it will act upon
+	 * The constructor takes in a Post object, which it will mutate
 	 * @param post The Post that will be updated
 	 */
 	public PostController(Post post) {
@@ -44,7 +44,7 @@ public class PostController {
 	/**
 	 * Performs a check to see if the user attempting to upvote
 	 * a post has previously upvoted it.
-	 * @return True if they have, false otherwise
+	 * @return true if they have, false otherwise
 	 */
 	public boolean alreadyUpvoted() {
 		ArrayList<User> ups = post.getUpsList();
@@ -68,12 +68,21 @@ public class PostController {
 		post.setReplies(replies);
 	}
 	
-	// Sets the posts image
+	/**
+	 * Attach an image to the Post Controller's underlying Post.
+	 * The image should be in the form of a Base64 byte array encoded into a String
+	 * @param image, an image encoded into a String
+	 */
 	public void attachImage(String image) {
 		post.setImage(image);
 		post.setHasPicture(true);
 	}
-	
+	/**
+	 * Set the city where the Post is to created from.
+	 * For testing purposes only! The actual real-world location should be set using
+	 * the GPSHandler
+	 * @param city, a String representation of the Post's origin
+	 */
 	public void addCity(String city) {
 		post.setCity(city);
 	}
