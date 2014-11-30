@@ -346,28 +346,7 @@ public class MainActivity extends Activity{ //Main question view
 		}
 		
 	}
-	/**For testing purposes only!
-	 * Gets the spinner of the Main Activity's Action Bar
-	 * @return the Spinner Adapter
-	 */
-	public ArrayAdapter<String> getSpinnerAdapter(){
-		return spinner;
-	}
-	public ActionBar.OnNavigationListener getNavigationListener(){
-		return listener;
-	}
 	
-	/** TESTING PURPOSES - to open and test AddQuestionActivity */
-	public void testButton(MenuItem item) {
-	    Intent intent = new Intent(this, AddQuestionActivity.class);
-	    startActivity(intent);
-	}
-	
-	/** TESTING PURPOSES - to open and test QuestionThreadActivity */
-	public void testQThreadButton(MenuItem item) {
-	    Intent intent = new Intent(this, QuestionThreadActivity.class);
-	    startActivity(intent);
-	}
 	private SearchManager getSearchManager(){
 		return (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 	}
@@ -391,6 +370,30 @@ public class MainActivity extends Activity{ //Main question view
 		};
 		bar.setListNavigationCallbacks(spinner,listener);
 	}
+	
+	/**For testing purposes only!
+	 * Gets the spinner of the Main Activity's Action Bar
+	 * @return the Spinner Adapter
+	 */
+	public ArrayAdapter<String> getSpinnerAdapter(){
+		return spinner;
+	}
+	public ActionBar.OnNavigationListener getNavigationListener(){
+		return listener;
+	}
+	
+	/** TESTING PURPOSES - to open and test AddQuestionActivity */
+	public void testButton(MenuItem item) {
+	    Intent intent = new Intent(this, AddQuestionActivity.class);
+	    startActivity(intent);
+	}
+	
+	/** TESTING PURPOSES - to open and test QuestionThreadActivity */
+	public void testQThreadButton(MenuItem item) {
+	    Intent intent = new Intent(this, QuestionThreadActivity.class);
+	    startActivity(intent);
+	}
+	
 	/**For testing purposes only!
 	 * Gets the ThreadList of the Main Activity
 	 * @return threads, the ThreadList of the Main Activity
