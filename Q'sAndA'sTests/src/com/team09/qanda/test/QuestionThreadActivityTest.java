@@ -27,7 +27,7 @@ public class QuestionThreadActivityTest extends ActivityInstrumentationTestCase2
 	protected void setUp() throws Exception {
 		// TODO Auto-generated method stub
 		super.setUp();
-		context = getInstrumentation().getContext();
+		context = getActivity().getApplicationContext();
 		
 		Post question = new Post(new User(context), "Question 1");
 		thread = new QuestionThread(question);
