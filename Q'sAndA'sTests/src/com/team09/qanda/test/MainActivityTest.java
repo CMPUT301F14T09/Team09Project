@@ -72,8 +72,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		//Did we get all the items in the list (or did my crude timer not work?)
 		assertEquals(mainAct.getThreadList().getThreads().size(),3);
 		
-		//QuestionThread three should be at the bottom of the list
-		QuestionThread q=mainAct.getThreadList().getThreads().get(2);
+		//QuestionThread three should be at the top of the list
+		QuestionThread q=mainAct.getThreadList().getThreads().get(0);
 		
 		//Just make sure its the same question
 		assertTrue(q.getQuestion().getText().equals(three.getQuestion().getText()));
@@ -91,8 +91,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		//Did we get all the items in the list (or did my crude timer not work?)
 		assertEquals(mainAct.getThreadList().getThreads().size(),3);
 		
-		//QuestionThread three should be at the bottom of the list
-		QuestionThread q=mainAct.getThreadList().getThreads().get(0);
+		//QuestionThread three should be at the top of the list
+		QuestionThread q=mainAct.getThreadList().getThreads().get(2);
 		
 		//Just make sure its the same question
 
@@ -154,11 +154,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
 		
 	}	
-	@UiThreadTest
-	public void testSpinnerAdapter() {
-		//TODO
-	}
-	
 	//Use Case #23: As an author, I set my username.
 	//ensures the alertdialog actually shows up
 	public void testSetUsername() throws Throwable{
