@@ -73,7 +73,7 @@ public class UserThreadsActivity extends Activity {
 		});
 		
 		adapter = new ThreadListAdapter(context, R.layout.user_row_layout, threads.getThreads(),false);
-		userThreadList.setAdapter(adapter);
+		userThreadList.setAdapter(adapter); 
 	}
 
 	@Override
