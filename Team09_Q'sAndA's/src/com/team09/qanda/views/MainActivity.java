@@ -131,14 +131,26 @@ public class MainActivity extends Activity{ //Main question view
 			return true;
 		}
 		if (id == R.id.favourites) {
+			if (isConnected()) {
+				AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
+				refreshTask.execute(new LocalStorageHandler[] {lsh});
+			}
 			userThreadsActivity(Constants.FAVOURITES_FILENAME);
 			return true;
 		}
 		if (id == R.id.readLater) {
+			if (isConnected()) {
+				AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
+				refreshTask.execute(new LocalStorageHandler[] {lsh});
+			}
 			userThreadsActivity(Constants.READ_LATER_FILENAME);
 			return true;
 		}
 		if (id == R.id.my_questions) {
+			if (isConnected()) {
+				AsyncRefreshLocal refreshTask=new AsyncRefreshLocal();
+				refreshTask.execute(new LocalStorageHandler[] {lsh});
+			}
 			userThreadsActivity(Constants.MY_QUESTIONS_FILENAME);
 			return true;
 		}
