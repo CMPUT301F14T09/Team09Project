@@ -45,9 +45,8 @@ public class Post extends QModel<QView> implements Serializable {
 
 	/**
 	 * Set the name of the city in which the Post was created.
-	 * This method should not be invoked directly. Rather, it should be invoked by its corresponding
-	 * PostController when a call to the GPS Handler 
-	 * (which attempts to get the real-world location of the end user making the post) is made
+	 * This method should be invoked when a call to the GPS Handler 
+	 * (which attempts to get the real-world location of the end user making the post) is made.
 	 * @param city the name of the city where the post will be created
 	 */
 	public void setCity(String city)
