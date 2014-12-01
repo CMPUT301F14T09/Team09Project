@@ -42,17 +42,18 @@ public class ESHTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		QuestionThread qThread=new QuestionThread(questionText);
 		QuestionThreadController qctl = new QuestionThreadController(qThread,handler);
 		Post answer1=new Post(new User(context),"Do upvotes work?");
-		qctl.addAnswer(answer1);
-		qctl.saveThread();
+		
 		
 		Post questionText2=new Post(new User(context),"Does this work?");
 		QuestionThread qThread2=new QuestionThread(questionText2);
 		QuestionThreadController qct2 = new QuestionThreadController(qThread2,handler);
-		qct2.saveThread();
 		
 		QuestionThreadController qct3 = new QuestionThreadController(new QuestionThread(new Post(new User(context),"This should not match?")),handler);
-		qct3.saveThread();
-		
+		if(handler.getThreads().size()==0){
+			qct3.saveThread();
+			qct2.saveThread();
+			qctl.saveThread();
+		}
 		ArrayList<QuestionThread> searchResults = handler.search("do");
 		assertEquals(searchResults.size(),2);
 	}
