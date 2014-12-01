@@ -204,7 +204,23 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 	}
 
 	/**
+	 * Returns a View that displays a row in the main list
+	 * Depending on the index in the main list, it can be the question, an answer
+	 * or the heading above the answers which displays the number of answers.
 	 * 
+	 * It inflates a layout depending on whether the index is 1 (answer heading)
+	 * or not (all the posts). For a post, it grabs all the information (text, author, location,
+	 * number of points, and the number of replies) from the QuestionThread object
+	 * passed in through the constructor and populates the TextViews in the custom layout
+	 * of the row.
+	 * 
+	 * This method also implements onClickListeners for the upvote button, the replies
+	 * button and if the post has an attachment, a button to view the attachment.
+	 * 
+	 * @param groupPosition The index of the row in the main groups list
+	 * @param isExpanded Whether the group row has been expanded by clicking on replies button
+	 * @param convertView View used in the previous row
+	 * @param parent The parent that this view will be attached to
 	 */
 	@Override
 	public View getGroupView(final int groupPosition, final boolean isExpanded,
@@ -331,7 +347,25 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 	}
 
 	/**
+	 * Returns a View that displays a row in a child list
+	 * Depending on the index in the main list, and the index in its respective
+	 * child list, the View for a reply is prepared.
 	 * 
+	 * It inflates a layout depending on whether the index is the last index (textbox to 
+	 * add a reply and a submit button) or not (layout for replies). For a reply, it grabs
+	 * the text and the name of the author from its respective index in the list of replies
+	 * for the particular post in the QuestionThread object passed in through the constructor
+	 * and populates the TextViews in the custom layout of the row.
+	 * 
+	 * This method also implements onClickListener for the reply submission button in the
+	 * the last row of the child list
+	 * 
+	 * @param groupPosition The index of the row in the main groups list
+	 * @param childPosition The index of the row in the sub-list expanded by
+	 * a row in the main list displaying the replies
+	 * @param isLastChild Whether this row in the child list is the last row
+	 * @param convertView View used in the previous row
+	 * @param parent The parent that this view will be attached to
 	 */
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
@@ -366,21 +400,6 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 			final EditText replyTextField = (EditText) convertView.findViewById(R.id.editReplyText);
 			
 			final int position_copy = groupPosition;
-			
-			//replyTextField.setOnClickListener(l)
-			/*
-			Handler handler = new Handler();
-			handler.postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-					if (replyTextField != null) {
-						replyTextField.requestFocus();
-					}
-					
-				}
-			}, 100);
-			*/
 			
 			submitReplyButton.setOnClickListener(new View.OnClickListener() {
 				
