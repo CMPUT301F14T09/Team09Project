@@ -390,21 +390,22 @@ public class LocalStorageHandler {
 	private void refreshLocal(Context context,String filename, ArrayList<String> ids) {
 		ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
 		for (String id:ids) {
-			QuestionThread qt = null;
-			if (esh.getThread(id) == null) {
-				ThreadList tl = getThreadList(context, Constants.MY_QUESTIONS_FILENAME);
-				QuestionThreadController qtc = null;
-				int i = 0;
-				i = ids.indexOf(id);
+			try {
+				QuestionThread qt = null;
+				if (esh.getThread(id) == null) {
+					ThreadList tl = getThreadList(context, Constants.MY_QUESTIONS_FILENAME);
+					QuestionThreadController qtc = null;
+					int i = 0;
+					i = ids.indexOf(id);
 				
-				QuestionThread thread = tl.get(i);
-				qtc = new QuestionThreadController(thread);
-				AsyncSave task=new AsyncSave();
-				task.execute(new QuestionThreadController[] {qtc});
-				
-			} 
-			qt=esh.getThread(id);
-			qts.add(qt);
+					QuestionThread thread = tl.get(i);
+					qtc = new QuestionThreadController(thread);
+					AsyncSave task=new AsyncSave();
+					task.execute(new QuestionThreadController[] {qtc});
+				}
+				qt=esh.getThread(id);
+				qts.add(qt);
+			} catch (Exception e) {}
 		} 
 		deleteFile(context, filename);
 		saveQuestionThreads(context, qts, filename);
