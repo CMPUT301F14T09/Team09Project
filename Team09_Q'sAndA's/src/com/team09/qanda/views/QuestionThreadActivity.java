@@ -57,6 +57,7 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	private boolean fromLater;
 	private String answerFilename;
 	private Context context=this;
+	private PostController questionPostController;
 	private LocalStorageHandler lsh=new LocalStorageHandler();
 
 	@Override
@@ -180,7 +181,6 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	public void instantiate() {
 		adapter = new ThreadAdapter(this, thread);
 		threadPostsList.setAdapter(adapter);
-
 	}
 	
 	/**
@@ -208,6 +208,14 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	    alertD.show();
 	}
 	
+	/**
+    *
+    * This method allows navigation to lists of locally saved questions (favourites,
+    * my questions and read laters) upon selection from the menu.
+    * It starts the UserThreadsActivity to display these lists.
+    * 
+    * @param FILENAME The file which saves the questions locally
+    */
 	public void userThreadsActivity(String FILENAME) {
 		Intent intent = new Intent(QuestionThreadActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);
@@ -237,10 +245,10 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	 * Called when user presses attach button.
 	 * 
 	 */
-	public void attachImage() {
+	public void attachImage(View v) {
 		Intent intent = new Intent(Intent.ACTION_PICK);
 		intent.setType("image/*");
-		startActivityForResult(intent, IMAGE_REQUEST);
+		startActivityForResult(intent, IMAGE_REQUEST);  
 	}
 	
 	
@@ -258,12 +266,10 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 			if (requestCode == IMAGE_REQUEST) {
 				ImageHandler imageHandler = new ImageHandler();
 				Bitmap image = imageHandler.handleImage(data, this.context);
-				ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
-				imageView.setImageBitmap(image);
-				imageString = imageHandler.toString();
+				imageString = imageHandler.imageToString(image);
           		Toast.makeText(getApplicationContext(), "Image attached.", Toast.LENGTH_SHORT).show();
 			}
-		}
+		} 
 	}
 	
 	// Method called by the onClick of answerSubmissionButton

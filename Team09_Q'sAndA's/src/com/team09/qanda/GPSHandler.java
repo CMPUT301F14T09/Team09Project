@@ -67,8 +67,8 @@ public class GPSHandler {
 	        }
 
 	        public void onStatusChanged(String s, int i, Bundle b) {
-	            Toast.makeText(c, "Provider status changed",
-	                    Toast.LENGTH_LONG).show();
+	     //       Toast.makeText(c, "Provider status changed",
+	     //               Toast.LENGTH_LONG).show();
 	        }
 
 	        public void onProviderDisabled(String s) {

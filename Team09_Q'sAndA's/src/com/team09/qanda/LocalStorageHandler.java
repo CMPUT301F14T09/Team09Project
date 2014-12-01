@@ -10,16 +10,20 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.team09.qanda.controllers.QuestionThreadController;
 import com.team09.qanda.controllers.ThreadListController;
 import com.team09.qanda.esearch.ElasticSearchHandler;
 import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.ThreadList;
+import com.team09.qanda.views.AddQuestionActivity.AsyncSave;
 
 /**
  * This class handles all of the logic behind saving things to and getting
@@ -386,9 +390,23 @@ public class LocalStorageHandler {
 	private void refreshLocal(Context context,String filename, ArrayList<String> ids) {
 		ArrayList<QuestionThread> qts=new ArrayList<QuestionThread>();
 		for (String id:ids) {
-			QuestionThread qt=esh.getThread(id);
-			qts.add(qt);
-		}
+			try {
+				QuestionThread qt = null;
+				if (esh.getThread(id) == null) {
+					ThreadList tl = getThreadList(context, Constants.MY_QUESTIONS_FILENAME);
+					QuestionThreadController qtc = null;
+					int i = 0;
+					i = ids.indexOf(id);
+				
+					QuestionThread thread = tl.get(i);
+					qtc = new QuestionThreadController(thread);
+					AsyncSave task=new AsyncSave();
+					task.execute(new QuestionThreadController[] {qtc});
+				}
+				qt=esh.getThread(id);
+				qts.add(qt);
+			} catch (Exception e) {}
+		} 
 		deleteFile(context, filename);
 		saveQuestionThreads(context, qts, filename);
 	}
@@ -399,4 +417,15 @@ public class LocalStorageHandler {
 		return f.delete();
 	}
 
+	
+	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
+
+		@Override
+		protected Void doInBackground(QuestionThreadController... params) {
+			for (QuestionThreadController qtc:params) {
+		    	qtc.saveThread();
+			}
+			return null;
+		}
+	}
 }

@@ -118,12 +118,27 @@ public class UserThreadsActivity extends Activity {
  
 	}
 	
+	/**
+    *
+    * This method allows navigation to lists of locally saved questions (favourites,
+    * my questions and read laters) upon selection from the menu.
+    * It starts the UserThreadsActivity to display these lists.
+    * 
+    * @param FILENAME The file which saves the questions locally
+    */
 	public void userThreadsActivity(String FILENAME) {
 		Intent intent = new Intent(UserThreadsActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);
 		startActivity(intent);
 	}
 	
+	/**
+    *
+    * This method starts the QuestionThreadActivity to display a thread.
+    * It is called when any of the items in a list of questions is clicked.
+    * 
+    * @param thread The QuestionThread to be displayed
+    */
 	public void displayThread(QuestionThread thread) {
 		Intent intent = new Intent(UserThreadsActivity.this, QuestionThreadActivity.class);
 		intent.putExtra("Selected Thread", thread);

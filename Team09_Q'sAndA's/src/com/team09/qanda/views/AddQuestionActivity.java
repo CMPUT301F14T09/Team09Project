@@ -162,7 +162,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 				Bitmap image = imageHandler.handleImage(data, this.context);
 				ImageView imageView = (ImageView)findViewById(R.id.attachedImage); 
 				imageView.setImageBitmap(image);
-				imageString = imageHandler.toString();
+				imageString = imageHandler.imageToString(image);
           		Toast.makeText(getApplicationContext(), "Image attached.", Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -207,7 +207,20 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
 			finish();
 		}
 		else {
-			Toast.makeText(context, "Could not post question. Check network connection and try again", Toast.LENGTH_SHORT).show();
+			PostController pc = new PostController(newPost);
+			if (imageString != null) {
+				pc.attachImage(imageString);
+			}
+			QuestionThread newQuestion = new QuestionThread(newPost);
+			saveId=UUID.randomUUID().toString();
+			newQuestion.setId(saveId);
+			QuestionThreadController qtc = new QuestionThreadController(newQuestion);
+			lsh.saveQuestionThread(context, newQuestion, Constants.MY_QUESTIONS_FILENAME,Constants.MY_QUESTIONS_IDS_FILENAME);
+			lsh.deleteFile(context, Constants.QUESTION_TEXT_FILE);
+			// set image to null to avoid lingering attachment
+			imageString = null;
+			Toast.makeText(context, "Could not post question. Question will be submitted when connection is established.", Toast.LENGTH_SHORT).show();
+			finish();
 		}
 	}
 	
@@ -284,7 +297,7 @@ public class AddQuestionActivity extends FragmentActivity implements LocDialogFr
     * @param 
     * @see 
     */
-	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
+	public class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
 		@Override
 		protected Void doInBackground(QuestionThreadController... params) {

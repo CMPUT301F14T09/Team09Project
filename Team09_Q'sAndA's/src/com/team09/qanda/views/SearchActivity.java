@@ -25,7 +25,8 @@ import android.widget.Toast;
 
 /**
  * 
- * SearchActivity is used to search for questions and answers.
+ * SearchActivity is used to search for questions and answers.It is the
+ * defacto searchable activity of the Appplication
  *
  */
 
@@ -67,7 +68,19 @@ public class SearchActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	private void getSearchQuery(Intent intent){
+	/**
+	 * Grab the search query from the search intent
+	 * (if it is a search intent,i.e an intent with Intent.ACTION_SEARCH action). If the intent is not a
+	 * Search intent, the activity will display a toast and then close
+	 * @param intent, the search intent
+	 */
+	public void getSearchQuery(Intent intent){
+		/*
+		 * I found out about the Intent.ACTION_SEARCH action from the following Android Developer Guide (
+		 * by the Android Open Source Project): http://developer.android.com/guide/topics/search/search-dialog.html
+		 * Obtained: Nov 9, 2014
+		 * 
+		 */
 		if(Intent.ACTION_SEARCH.equals(intent.getAction())){
 			query = intent.getStringExtra(SearchManager.QUERY);
 			getSearchResults getter=new getSearchResults();

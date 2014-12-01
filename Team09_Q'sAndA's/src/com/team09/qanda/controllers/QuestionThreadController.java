@@ -54,7 +54,7 @@ public class QuestionThreadController {
 	 * Saves the QuestionThread to the server using the ElasticSearchHandler's settings.
 	 */
 	public void saveThread() {
-		esh.saveThread(this.thread);
+		esh.saveThread(this.thread, this.thread.getId());
 	}
 	
 	/**
