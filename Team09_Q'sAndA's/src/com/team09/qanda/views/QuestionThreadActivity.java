@@ -180,7 +180,6 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	public void instantiate() {
 		adapter = new ThreadAdapter(this, thread);
 		threadPostsList.setAdapter(adapter);
-
 	}
 	
 	/**
@@ -208,6 +207,14 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	    alertD.show();
 	}
 	
+	/**
+    *
+    * This method allows navigation to lists of locally saved questions (favourites,
+    * my questions and read laters) upon selection from the menu.
+    * It starts the UserThreadsActivity to display these lists.
+    * 
+    * @param FILENAME The file which saves the questions locally
+    */
 	public void userThreadsActivity(String FILENAME) {
 		Intent intent = new Intent(QuestionThreadActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);

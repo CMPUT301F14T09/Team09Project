@@ -46,8 +46,7 @@ import com.team09.qanda.models.User;
  * of the app. It displays a list of all the questions
  * and allows the user to navigate to other screens.
  *
- * @author 
- * @version 
+ * 
  */
 
 public class MainActivity extends Activity{ //Main question view
@@ -247,7 +246,7 @@ public class MainActivity extends Activity{ //Main question view
 	/**
     *
     * This method starts the add question thread activity.
-    * The adding of the questiong thread is done within the 
+    * The adding of the question thread is done within the 
     * AddQuestion Activity
     * 
     * @param 
@@ -267,6 +266,14 @@ public class MainActivity extends Activity{ //Main question view
 		return activeNetwork != null && activeNetwork.isConnected();
 	}
 	
+	/**
+    *
+    * This method allows navigation to lists of locally saved questions (favourites,
+    * my questions and read laters) upon selection from the menu.
+    * It starts the UserThreadsActivityto display these lists.
+    * 
+    * @param FILENAME The file which saves the questions locally
+    */
 	public void userThreadsActivity(String FILENAME) {
 		Intent intent = new Intent(MainActivity.this, UserThreadsActivity.class);
 		intent.putExtra("FILENAME", FILENAME);
