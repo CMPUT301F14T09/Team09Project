@@ -118,6 +118,6 @@ public class ThreadListControllerTest extends
 		LocalStorageHandler lsh = new LocalStorageHandler();
 		lsh.saveQuestionThread(context, q1, "MyQuestions.txt");
 	
-		assertTrue(lsh.getThreadList(context, "MyQuestions.txt").equals(tl)); 
+		assert(lsh.getThreadList(context, "MyQuestions.txt").equals(tl)); 
 	}
 }
