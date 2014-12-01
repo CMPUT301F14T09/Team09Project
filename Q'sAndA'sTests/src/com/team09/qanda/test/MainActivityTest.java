@@ -144,15 +144,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 		assertEquals(q.answerCount(),one.answerCount());
 	}
 	
+	//Use Case #1
 	@UiThreadTest
 	public void testListQuestions() {
 		MainActivity ma = getActivity();
-		int oldLength = ma.getAdapter().getCount();
-		
-		assertEquals(2, oldLength);
 		
 		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.MainListView));
-		
+		ViewAsserts.assertOnScreen(ma.getWindow().getDecorView(), ma.findViewById(com.team09.qanda.R.id.authorMain));
 	}	
 	//Use Case #23: As an author, I set my username.
 	//ensures the alertdialog actually shows up
