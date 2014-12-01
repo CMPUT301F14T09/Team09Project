@@ -108,7 +108,7 @@ public class MainActivity extends Activity{ //Main question view
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		//set up the search bar
-		/*The following Android Developer Guide was used, in order
+		/*The following Android Developer Guide (by the Android Open Source Project) was used, in order
 		 * to learn how to setup a Search Bar widget: http://developer.android.com/guide/topics/search/search-dialog.html
 		 * Obtained: Nov 9, 2014
 		 * */

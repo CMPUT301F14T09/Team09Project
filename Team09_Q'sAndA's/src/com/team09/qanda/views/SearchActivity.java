@@ -75,6 +75,12 @@ public class SearchActivity extends Activity {
 	 * @param intent, the search intent
 	 */
 	public void getSearchQuery(Intent intent){
+		/*
+		 * I found out about the Intent.ACTION_SEARCH action from the following Android Developer Guide (
+		 * by the Android Open Source Project): http://developer.android.com/guide/topics/search/search-dialog.html
+		 * Obtained: Nov 9, 2014
+		 * 
+		 */
 		if(Intent.ACTION_SEARCH.equals(intent.getAction())){
 			query = intent.getStringExtra(SearchManager.QUERY);
 			getSearchResults getter=new getSearchResults();
