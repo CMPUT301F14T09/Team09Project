@@ -7,12 +7,10 @@ import java.util.Comparator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -26,18 +24,45 @@ import com.team09.qanda.models.QuestionThread;
 import com.team09.qanda.models.Reply;
 import com.team09.qanda.views.PictureViewActivity;
 
+/**
+ * This is a custom adapter for displaying a question thread as a list
+ * which includes the question, a heading to display the number of answers
+ * followed by a list of answers.
+ * 
+ * It is used in the QuestionThreadActivity.
+ * 
+ * It extends BaseExpandableListAdapter so that posts can be display as
+ * group items and their replies as the child items which are expanded when
+ * a group item is clicked.
+ * 
+ */
+
+
 public class ThreadAdapter extends BaseExpandableListAdapter {
 
 	private QuestionThread thread;
 	private Context context;
 	private ApplicationState curState = ApplicationState.getInstance();
 	
-	public ThreadAdapter(Context context, int layoutResourceId, QuestionThread thread) {
+	/**
+	 * The constructor takes the context of the QuestionThreadActivity using the adapter
+	 * and the thread to be displayed.
+	 * 
+	 * @param context The context of the activity where the adapter is being used
+	 * @param thread The question thread to be displayed
+	 */
+	public ThreadAdapter(Context context, QuestionThread thread) {
 		
 		this.thread = thread;
 		this.context = context;
 	}
 
+	
+	/**
+	 * This method is used to sort answers before they are displayed
+	 * It is called every time an answer is upvoted so that the answers 
+	 * with most upvotes are displayed first 
+	 */
 	protected void sortAnswers() {
 		Collections.sort(thread.getAnswers(), new Comparator<Post>(){
 
@@ -51,6 +76,11 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		notifyDataSetChanged();
 	}
 
+	/**
+	 * Method to update the thread on the server asynchronously
+	 * This method is called every time an answer or a reply is added
+	 * or a post is upvoted
+	 */
 	private class AsyncSave extends AsyncTask<QuestionThreadController, Void, Void> {
 
 		@Override
@@ -62,11 +92,26 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
+	/**
+	 * Returns the number of rows to be displayed in the list
+	 * i.e. the number of answers plus a row for the question
+	 * and a row for displaying the heading for the answers
+	 */
 	@Override
 	public int getGroupCount() {
 		return thread.getAnswers().size() + 2;
 	}
 
+	/**
+	 * Returns the number of children each of the main rows has
+	 * i.e. the number of replies for each of the posts
+	 * Returns 0 for the second row which is the heading for
+	 * the answers
+	 * Returns 1 for a post that does not have any replies as a row
+	 * is used to display the text box to enter reply with a submit button
+	 * 
+	 * @param groupPosition The index of the main group row
+	 */
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		if (groupPosition == 0) {
@@ -80,6 +125,16 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
+	/**
+	 * Returns the post that needs to be displaying on a certain row
+	 * For example getGroup(0) will return the question of the thread
+	 * since it is displayed in the first row
+	 * getGroup(1) returns 0 since the second row in the list is just
+	 * a heading for the answers
+	 * 
+	 * @param groupPosition The index of the row in the list
+	 * 
+	 */
 	@Override
 	public Object getGroup(int groupPosition) {
 		if (groupPosition == 0) {
@@ -93,6 +148,15 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
+	/**
+	 * Returns the reply given the index of the row in the sub-list 
+	 * which is used to display the list of replies for a certain post
+	 * 
+	 * @param groupPosition The index of the row in the main list which is
+	 * displaying the posts
+	 * @param childPosition The index of the row in the sub-list expanded by
+	 * a row in the main list displaying the replies
+	 */
 	@Override
 	public Reply getChild(int groupPosition, int childPosition) {
 		if (groupPosition == 0) {
@@ -106,21 +170,42 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		}
 	}
 
+	/**
+	 * Returns the id of the group given the row index in the main list
+	 * In this case it just returns the index
+	 * 
+	 * @param groupPosition The index of the row in the main list
+	 */
 	@Override
 	public long getGroupId(int groupPosition) {
 		return groupPosition;
 	}
 
+	/**
+	 * Returns the id of the child given the row index in the child list
+	 * In this case it just returns the index
+	 * 
+	 * @param groupPosition The index of the row in the child list
+	 */
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
 
+	/**
+	 * Returns if the child and group IDs are stable across changes to
+	 * the underlying data.
+	 * 
+	 * In our case, this is false as the data is subject to change.
+	 */
 	@Override
 	public boolean hasStableIds() {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public View getGroupView(final int groupPosition, final boolean isExpanded,
 			View convertView, final ViewGroup parent) {
@@ -245,6 +330,9 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
@@ -327,6 +415,9 @@ public class ThreadAdapter extends BaseExpandableListAdapter {
 		return convertView;
 	}
 
+	/**
+	 * Indicates that the items in the child lists are not selectable
+	 */
 	@Override
 	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return false;

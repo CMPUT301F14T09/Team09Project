@@ -14,6 +14,15 @@ import android.widget.TextView;
 
 import com.team09.qanda.models.QuestionThread;
 
+/**
+ * This is a custom adapter for displaying a list of questions.
+ * 
+ * It is used in the MainActivity for the main list of questions
+ * and in the UserThreadsActivity to display locally stored questions
+ * with a few changes.
+ *
+ */
+
 public class ThreadListAdapter extends ArrayAdapter<QuestionThread> {
 
 	private ArrayList<String> ids;

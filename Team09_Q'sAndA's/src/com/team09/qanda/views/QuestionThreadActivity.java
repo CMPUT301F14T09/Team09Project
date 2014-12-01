@@ -1,28 +1,19 @@
 package com.team09.qanda.views;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.UUID;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -187,7 +178,7 @@ public class QuestionThreadActivity extends FragmentActivity implements LocDialo
 	}
 
 	public void instantiate() {
-		adapter = new ThreadAdapter(this, R.layout.thread_row_layout, thread);
+		adapter = new ThreadAdapter(this, thread);
 		threadPostsList.setAdapter(adapter);
 
 	}
